@@ -7,3 +7,11 @@ ref:
 #
 http://en.touhouwiki.net/wiki/White_Names_Spoiled_Past/Story
 
+<br><br>
+
+
+<br>
+
+
+a
+
