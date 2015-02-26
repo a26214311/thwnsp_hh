@@ -1,0 +1,175 @@
+#東方弾幕風[Single]
+#ScriptVersion[3]
+#Title["Exボス1　会話C-2"]
+#Text["Exボス1　会話C-2"]
+#Background[""]
+#System["./../../../system/System_Main.dnh"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_boss.dnh"
+#include"./../../../lib/lib_talk.dnh"
+
+// 各ボスのオブジェクトID
+
+@Event {
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+	BossEvent();
+}
+
+@Initialize {
+	Boss_Init();	//初期設定
+	objEnemy = CreateBossTalk(BOSS_ID_AZUMA);	//ボスセット
+	Obj_SetVisible(GetBossImageID(objEnemy), false);	//画像非表示
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	// 魔法陣リセット
+	BossEffect_ResetMagicCircle();
+
+	// 会話準備
+	StartTalk();
+
+	wait(30);
+	
+	//会話処理
+	FuncTalk();
+	
+	//次のシーンへ
+	FinishTalk(true);
+	Boss_Finalize(objEnemy, false, false);
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinBoss1   = CreateTalkObject(BOSS_ID_AZUMA, true);
+	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
+	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
+	let cutinDescri = CreateDescriptiveObject();
+	
+	// 画像ファイル
+	let pathBoss1 = imgCharaAzuma;
+	let pathPlayer1 = imgCharaSanae;
+	let pathPlayer2 = imgCharaMinayu;
+	
+	// 最初に前に出てくるキャラ
+	SetImageFoward(cutinPlayer1, true);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let xIni = CenX;
+		let yIni = 140;
+		
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinPlayer1, "やりました！");
+			SetFukidashiType(cutinPlayer1, FUKIDASHI_ANGER);
+		}
+		case(1)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+			SetTalkEx(cutinBoss1, "イテテ、[r]まさかこんな形で決着がつくとはな。");
+		}
+		case(2)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+			SetTalkEx(cutinBoss1, "もう八坂を封じる注連縄も[r]解除する時期って事か");
+		}
+		case(3)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinPlayer2, "じゃあこれで、神奈子様も諏訪子様[r]も幻想郷から出て行ってしまうんですか？");
+		}
+		case(4)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinPlayer1, "いえ、そんな事はありません。");
+		}
+		case(5)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinPlayer1, "私達は今の幻想郷が好きなんです。[r]今回の勝負は私の個人的なケジメです");
+		}
+		case(6)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinBoss1, "良い心意気だ。[r]私の軍に欲しいくらいだな");
+		}
+		case(7)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinPlayer1, "そんな貴方に守矢教はいかがでしょう？");
+		}
+		case(8)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
+			SetTalkEx(cutinPlayer2, "って、折角良い雰囲気だったのに[r]いつもの早苗さんに戻ってるーっ！！");
+			SetFukidashiType(cutinPlayer2, FUKIDASHI_ANGER);
+		}
+		case(9)
+		{
+			SetTalkEx(cutinDescri, "遠い昔、雷と神奈子は力比べをし、敗れた神奈子は諏訪の地に封じられた。");
+		}
+		case(10)
+		{
+			SetTalkEx(cutinDescri, "今その因縁に決着がつき、神奈子は自由の身となったのであった。");
+		}
+		case(11)
+		{
+			SetTalkEx(cutinDescri, "しかし、神奈子が今の守矢神社を捨て他の地へ移る事は無い。");
+		}
+		case(12)
+		{
+			SetTalkEx(cutinDescri, "何故なら守矢神社には、かけがえのない物が沢山詰まっているから……");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}

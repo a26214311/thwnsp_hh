@@ -1,0 +1,382 @@
+#include "../lib/lib_system.dnh"
+#include "../lib/lib_file.dnh"
+#include "../lib/lib_infomation.dnh"
+#include "../lib/lib_HighScore.dnh"
+#include "./lib/lib_systemscene.dnh"
+#include "./lib/Ed.dnh"
+
+
+//　ｴﾝﾃﾞｨﾝｸﾞ系ﾌｧｲﾙ読み込み
+//#include"../../lib/Lib_ED.dnh"
+
+
+@Initialize{
+	SetAutoDeleteObject(true);
+	
+	// クリア済みフラグON
+	SetAreaCommonData(CAREA_STAGE, "GAME_CLEAR", 1 );
+	SetHightScore();
+	TBackgroundD();
+}
+
+@MainLoop{
+	yield;
+}
+
+@Finalize{
+}
+
+task TBackgroundD()
+{
+	TDark();
+	if (GetLap() >= 1)
+	{
+		StaffRoll();
+	}
+	else
+	{
+		StaffRoll_Short();
+	}
+	TBackgroundEd();
+	loop(150) { yield; }
+	SetFlag();
+	TMenu();
+}
+
+task TMenu{
+	
+	//----------------------------------------------------------------
+	//----------------------------------------------------------------
+	//　メニュー作成関数
+	task TMenuItem(let index, let mx, let my, let text){
+		let alpha1	= 0;
+		let alphaA	= 0;
+		let move	= 32;
+		let move1	= 0;
+		let moveA	= 0;
+		let move2	= 0;
+		let moveB	= 0;
+		let move3	= 0;
+		let moveC	= 0;
+		let count	= 0;
+		function CreateTextObject(let mx, let my, let text){
+			let id		= ObjPrim_Create(OBJ_SPRITE_2D);
+			ObjRender_SetPosition(id, mx, my, 0 );
+			ObjPrim_SetTexture(id, imgFrontPause01 );
+			ObjRender_SetBlendType(id, BLEND_ALPHA );
+			ObjRender_SetAngleXYZ(id, 0, 0, 0 );
+			ObjRender_SetColor(id, 64, 64, 64 );
+			ObjRender_SetAlpha(id, 0 );
+			Obj_SetRenderPriorityI(id, 11 );
+			SetSceneSelectImage(id, text);
+			return id;
+		}
+		
+		let objText = CreateTextObject(mx, my, text);
+		let objSelect = CreateTextObject(mx, my, text);
+		loop{
+			alpha1 = 255 * sin( alphaA );
+			move3 = 1 * sin( moveC );
+			
+			//　選択中は横に移動
+			if( index == selectIndex ){
+				move2 = 0;
+				moveB = 0;
+				move1 = move * sin( moveA );
+				ObjRender_SetPosition(objText,mx+255/2-alpha1/2+move1,my,0);
+				ObjRender_SetPosition(objSelect,mx+255/2-alpha1/2+move1,my,0);
+				if( move1 < move ){ moveA += 10; }
+			}
+			else{
+				move1 = 0;
+				moveA = 0;
+				move2 = move * sin( moveB );
+				ObjRender_SetPosition(objText,mx+255/2-alpha1/2+move-move2,my,0);
+				ObjRender_SetPosition(objSelect,mx+255/2-alpha1/2+move-move2,my,0);
+				if( move2 < move ){ moveB += 10; }
+			}
+			
+			if( IsReplaySave ){
+				ObjRender_SetAlpha(objText, 255 - move3*255 );
+				ObjRender_SetAlpha(objSelect, 255 - move3*255 );
+				if( move3 < 1 ){ moveC += 10; }
+			}
+			else{
+				ObjRender_SetAlpha(objText, alpha1 );
+				ObjRender_SetAlpha(objSelect, alpha1 );
+				moveC = 0;
+			}
+			Obj_SetVisible(objSelect, index == selectIndex );
+			ObjRender_SetColor(objSelect, 255, 128, 128 );
+			
+			count += 8;
+			if( alpha1 < 255 ){ alphaA+=5; }
+			
+			yield;
+		}
+	}
+	//----------------------------------------------------------------
+	//----------------------------------------------------------------
+	
+	
+	//メニュー配置
+	let ID			= ObjPrim_Create(OBJ_SPRITE_2D);
+	let mode		= GetPlayMode();
+	let clear		= GetAreaCommonData(CAREA_SYSTEM, "ClearSpellPractice", false ) ;
+	let continue		= GetContinueCount();
+	let selectIndex		= 0;		//選択位置
+	let cc			= 0;
+	let mx			= GetScreenWidth/2;
+	let my			= 240;
+	let texts		= ["リプレイを保存する", "タイトルに戻る"];
+	let listResult		= [RESULT_SAVE_REPLAY, RESULT_END];
+	let rgb			= [64,160,160];
+
+	//　こんてぬー時
+	if( continue > 0 )
+	{
+		texts		= ["タイトルに戻る"];
+		listResult	= [RESULT_END];
+	}
+	
+	var countMenu	= length(texts);
+	
+	ascent(var iText in 0 .. countMenu){
+		TMenuItem(iText, mx, my, texts[iText]);
+		my += 48;
+	}
+	ObjRender_SetColor(ID, rgb[0], rgb[1], rgb[2] );
+	
+	//　8フレーム待機
+	loop( 8 ){ yield; }
+	
+	//キー状態がリセットされるまで待機
+	while( GetVirtualKeyState(VK_OK) != KEY_FREE ){ yield; }
+	
+	//メニュー選択処理
+	let frameKeyHold = 0;//キー押しっぱなしフレーム数
+	loop
+	{
+		//決定
+		if( GetVirtualKeyState(VK_OK) == KEY_PULL )
+		{
+			//　リザルトセット
+			SetScriptResult( listResult[selectIndex] );
+			
+			if( texts[ selectIndex ] == "リプレイを保存する" )
+			{
+				CallSoundPackage(sndTtDecide);
+				CallReplaySaveScene();
+			}
+			else
+			{
+				//　得点リセット
+				AddScore( -GetScore() );
+				//　スペプラクリアフラグリセット　かけら系リセット　点符リセット
+				menu_on = false;
+				CallSoundPackage(sndTtDecide);
+				loop( 12 ){ yield; }
+				CloseScript( GetOwnScriptID() );
+				return;
+			}
+		}
+		
+		//カーソル移動
+		if(GetVirtualKeyState(VK_UP) == KEY_PUSH)
+		{
+			selectIndex--;
+			CallSoundPackage(sndTtSelect);
+		}
+		else if(GetVirtualKeyState(VK_DOWN) == KEY_PUSH)
+		{
+			selectIndex++;
+			CallSoundPackage(sndTtSelect);
+		}
+		else if(GetVirtualKeyState(VK_UP) == KEY_HOLD)
+		{
+			frameKeyHold++;
+			if(frameKeyHold == 30 || (frameKeyHold > 30 && (frameKeyHold % 10 == 0)))
+			{
+				selectIndex--;
+				CallSoundPackage(sndTtSelect);
+			}
+		}
+		else if(GetVirtualKeyState(VK_DOWN) == KEY_HOLD)
+		{
+			frameKeyHold++;
+			if(frameKeyHold == 30 || (frameKeyHold > 30 && (frameKeyHold % 10 == 0)))
+			{
+				selectIndex++;
+				CallSoundPackage(sndTtSelect);
+			}
+		}
+		else
+		{
+			frameKeyHold = 0;
+		}
+		
+		if(selectIndex < 0) 
+		{
+			selectIndex = countMenu - 1;
+		}
+		else
+		{
+			selectIndex %= countMenu;
+		}
+		
+		cc++;
+		
+		yield;
+	}
+}
+
+
+function CallReplaySaveScene()
+{
+	let csd			= GetCurrentScriptDirectory();
+	let pathScript	= csd ~ "./Default_ReplaySaveScene.dnh";
+	let idScript	= LoadScript(pathScript);
+	let cc			= 0;
+	
+	IsReplaySave = true;
+//	SetScriptArgument(idScript, 0, 1);	//クリア時はキーボードを真ん中に
+	StartScript(idScript);
+	
+	while( !IsCloseScript(idScript) )
+	{
+		// はっぱっぱ
+		if( cc%10 == 0 ){
+			CreatePauseEffect([randEffect(32,32+384),randEffect(-64,256)], 90+randEffect(-32,32), 1, 0, 10,
+								[255,255,255], randEffect(32,64), 128 );
+		}
+		cc++;
+		yield;
+	}
+	
+	IsReplaySave = false;
+}
+
+// 解放フラグ
+function SetFlag()
+{
+	// クリアフラグ
+	CDM_SetAllClearFlag( GetPlayerTypeEx(), Difficult() , GetLap() );
+	// プラクティスフラグON（ロジプラ用）
+	CDM_SetPracticeStageFlag( GetPlayerType(), STAGE_ENDING, Difficult(), GetLap());
+	
+	if (GetLap() <= 0)
+	{
+		if (!GetAreaCommonData(CAREA_SAVE, "MESSAGE_CLEAR_01", 0 ))
+		{
+			SetAreaCommonData(CAREA_SAVE, "MESSAGE_CLEAR_01", 1 );
+
+			CallSoundPackage(sndTtPause);
+			MakeInfomation("1周目クリアおめでとう！[r]同じキャラでもう1度プレイしてみよう！");
+			MakeInfomation("ＳＴＧは2周目が難しい…[r]しかしこれは推理ＳＴＧ、2周目で難しくなるのは推理内容だ！");
+			loop(30) { yield; }
+		}
+	}
+	
+	if (GetLap() >= 1)
+	{
+		// Ex解放
+		CDM_SetExtraStageFlag( GetPlayerType() );
+		
+		if (!GetAreaCommonData(CAREA_SAVE, "MESSAGE_CLEAR_02", 0 ))
+		{
+			SetAreaCommonData(CAREA_SAVE, "MESSAGE_CLEAR_02", 1 );
+
+			CallSoundPackage(sndTtPause);
+			MakeInfomation("2周目クリアおめでとう！[r]Extraステージ開放条件は、事件の真相を解く事だ！");
+			loop(30) { yield; }
+		}
+	}
+
+	// 全キャラクリアチェック
+	if (!GetAreaCommonData(CAREA_SAVE, "HINT_EXTRA_SP1", 0 ))
+	{
+		let flg = 0;
+		ascent(i in 0 .. 4)
+		{
+			if (CDM_GetAllClearFlag( PLAYER_REIMU_A, i , 0 ) ||
+				CDM_GetAllClearFlag( PLAYER_REIMU_B, i , 0 ) ||
+				CDM_GetAllClearFlag( PLAYER_REIMU_C, i , 0 ) ) { flg++; }
+		}
+		ascent(i in 0 .. 4)
+		{
+			if (CDM_GetAllClearFlag( PLAYER_MARISA_A, i , 0 ) ||
+				CDM_GetAllClearFlag( PLAYER_MARISA_B, i , 0 ) ||
+				CDM_GetAllClearFlag( PLAYER_MARISA_C, i , 0 ) ) { flg++; }
+		}
+		ascent(i in 0 .. 4)
+		{
+			if (CDM_GetAllClearFlag( PLAYER_SANAE_A, i , 0 ) ||
+				CDM_GetAllClearFlag( PLAYER_SANAE_B, i , 0 ) ||
+				CDM_GetAllClearFlag( PLAYER_SANAE_C, i , 0 ) ) { flg++; }
+		}
+		if (flg >= 3)
+		{
+			SetAreaCommonData(CAREA_SAVE, "HINT_EXTRA_SP1", 1 );
+
+			CallSoundPackage(sndTtPause);
+			MakeInfomation("1周目全キャラクリアおめでとう！[r]新しいヒントを見られるようになったぞ！[r]見るかどうかは貴方次第…");
+			loop(30) { yield; }
+		}
+	}
+	// ２周目全キャラクリアチェック
+	if (!GetAreaCommonData(CAREA_SAVE, "HINT_EXTRA_SP2", 0 ))
+	{
+		let flg = 0;
+		ascent(i in 0 .. 4)
+		{
+			if (CDM_GetAllClearFlag( PLAYER_REIMU_A, i , 1 ) ||
+				CDM_GetAllClearFlag( PLAYER_REIMU_B, i , 1 ) ||
+				CDM_GetAllClearFlag( PLAYER_REIMU_C, i , 1 ) ) { flg++; }
+		}
+		ascent(i in 0 .. 4)
+		{
+			if (CDM_GetAllClearFlag( PLAYER_MARISA_A, i , 1 ) ||
+				CDM_GetAllClearFlag( PLAYER_MARISA_B, i , 1 ) ||
+				CDM_GetAllClearFlag( PLAYER_MARISA_C, i , 1 ) ) { flg++; }
+		}
+		ascent(i in 0 .. 4)
+		{
+			if (CDM_GetAllClearFlag( PLAYER_SANAE_A, i , 1 ) ||
+				CDM_GetAllClearFlag( PLAYER_SANAE_B, i , 1 ) ||
+				CDM_GetAllClearFlag( PLAYER_SANAE_C, i , 1 ) ) { flg++; }
+		}
+		if (flg >= 3)
+		{
+			SetAreaCommonData(CAREA_SAVE, "HINT_EXTRA_SP2", 1 );
+
+			CallSoundPackage(sndTtPause);
+			MakeInfomation("2周目全キャラクリアおめでとう！[r]最後の特大ヒントを見られるようになったぞ！[r]難しいステージをクリアしたご褒美だ！");
+			loop(30) { yield; }
+		}
+	}
+}
+
+// 暗転
+task TBackgroundEd
+{
+	// ベースの背景
+	let objBaseBg = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	ObjPrim_SetTexture(objBaseBg, imgEdBack);
+	ObjSprite2D_SetSourceRect(objBaseBg, 0, 0, GetScreenWidth, GetScreenHeight);
+	ObjSprite2D_SetDestRect(objBaseBg, 0, 0, GetScreenWidth, GetScreenHeight);
+	Obj_SetRenderPriorityI(objBaseBg, 0);
+}
+
+
+// ハイスコア保存
+function SetHightScore()
+{
+	if (GetPlayMode() == GAME_MAIN)
+	{
+		let com = "";
+		if (Difficult() == D_EXTRA) { com = "ExClear"; }
+		else { com = "Clear"; }
+		
+		AddHighScore(Difficult(), GetLap(), GetPlayerTypeEx(), GetScore(), com);
+	}
+}

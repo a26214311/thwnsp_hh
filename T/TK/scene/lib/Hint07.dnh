@@ -1,0 +1,121 @@
+//#東方弾幕風[Stage]
+#ScriptVersion[3]
+#Title["ヒントその7"]
+#Text["ヒントその7"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./lib_commontitle.dnh"
+#include"./lib_talkTitle.dnh"
+
+@Initialize {
+	SetAutoDeleteObject(true);
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	//会話処理
+	FuncTalk();
+
+	FinishTalk(true);
+	CloseScript( GetOwnScriptID() );
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinChara1   = CreateTalkObject(BOSS_ID_RINNE, false);
+	let cutinChara2   = CreateTalkObject(BOSS_ID_UKA, true);
+	
+	// 画像ファイル
+	ObjPrim_SetTexture(cutinChara1, imgCharaRinne[3]);
+	ObjPrim_SetTexture(cutinChara2, imgCharaUka[2]);
+	
+	SetImageFoward(cutinChara1, true);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetTalkEx(cutinChara1, "さて、ミステリーではタブーとされている[r]超能力を使った探偵をお呼びしましたよ");
+		}
+		case(1)
+		{
+			ObjPrim_SetTexture(cutinChara2, imgCharaUka[3]);
+			SetTalkEx(cutinChara2, "任せるであります！");
+		}
+		case(2)
+		{
+			ObjPrim_SetTexture(cutinChara1, imgCharaRinne[2]);
+			SetTalkEx(cutinChara1, "多分余りに影の薄い能力だから[r]皆さん忘れてると思いますが、");
+		}
+		case(3)
+		{
+			SetTalkEx(cutinChara1, "羽日は物の数を瞬時に把握する程度の能力");
+		}
+		case(4)
+		{
+			ObjPrim_SetTexture(cutinChara1, imgCharaRinne[3]);
+			SetTalkEx(cutinChara1, "この能力を持つ羽日に、ズバリ、[r]今回の異変の犯人を聞いてしまいましょう");
+		}
+		case(5)
+		{
+			ObjPrim_SetTexture(cutinChara2, imgCharaUka[5]);
+			SetTalkEx(cutinChara2, "わからないでありますっ！[r]申し訳ないでありますっ！");
+		}
+		case(6)
+		{
+			ObjPrim_SetTexture(cutinChara1, imgCharaRinne[5]);
+			SetTalkEx(cutinChara1, "犯人が誰かなんて聞いてません！[r]犯人は何人なんですか？");
+		}
+		case(7)
+		{
+			ObjPrim_SetTexture(cutinChara2, imgCharaUka[2]);
+			SetTalkEx(cutinChara2, "一人であります！");
+		}
+		case(8)
+		{
+			ObjPrim_SetTexture(cutinChara1, imgCharaRinne[4]);
+			SetTalkEx(cutinChara1, "ひ、一人！？[r]最初から最後まで通しでですか！？");
+		}
+		case(9)
+		{
+			SetTalkEx(cutinChara2, "そうでありますっ！[r]紛れも無く、終始一貫して一人の人物に[r]よって引き起こされているであります！");
+		}
+		case(10)
+		{
+			ObjPrim_SetTexture(cutinChara1, imgCharaRinne[5]);
+			SetTalkEx(cutinChara1, "これは意外な展開ですね");
+		}
+		case(11)
+		{
+			SetTalkEx(cutinChara1, "犯人が入れ替わらない限り、この複雑な[r]異変は成立しないと思ってたんですが…");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}

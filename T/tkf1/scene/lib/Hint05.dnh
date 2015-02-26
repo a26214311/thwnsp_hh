@@ -1,0 +1,108 @@
+//#東方弾幕風[Stage]
+#ScriptVersion[3]
+#Title["ヒントその5"]
+#Text["ヒントその5"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./lib_commontitle.dnh"
+#include"./lib_talkTitle.dnh"
+
+@Initialize {
+	SetAutoDeleteObject(true);
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	//会話処理
+	FuncTalk();
+
+	FinishTalk(true);
+	CloseScript( GetOwnScriptID() );
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinChara1   = CreateTalkObject(BOSS_ID_SANAE_L, false);
+	let cutinChara2   = CreateTalkObject(BOSS_ID_MINAYU, true);
+	
+	// 画像ファイル
+	ObjPrim_SetTexture(cutinChara1, imgCharaSanae[2]);
+	ObjPrim_SetTexture(cutinChara2, imgCharaMinayu[3]);
+	
+	SetImageFoward(cutinChara1, true);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetTalkEx(cutinChara1, "ここでヒントではないですが、[r]ミステリーにおけるルールをおさらいしましょう");
+		}
+		case(1)
+		{
+			SetTalkEx(cutinChara2, "やはり最大のルールは、答えはどこかから[r]降って湧くようなものではなく、必ず文章[r]中に根拠があるって事ですかね");
+		}
+		case(2)
+		{
+			SetTalkEx(cutinChara1, "よく、フーダニット（誰がやったか）[r]ハウダニット（どうやったか）ホワイダニット[r]（何故やったか）");
+		}
+		case(3)
+		{
+			SetTalkEx(cutinChara1, "…が推理要素になりますが、[r]今回はどうでしょう？");
+		}
+		case(4)
+		{
+			SetTalkEx(cutinChara2, "どうやって、というのは、私達みんな[r]不思議な力を使いますから、考えなくて[r]いいでしょう");
+		}
+		case(5)
+		{
+			SetTalkEx(cutinChara2, "問題は、誰がやったかと、何故やったか");
+		}
+		case(6)
+		{
+			ObjPrim_SetTexture(cutinChara1, imgCharaSanae[3]);
+			SetTalkEx(cutinChara1, "何故やったかって、あんまり推理して[r]考える要素じゃない気がしますね。");
+		}
+		case(7)
+		{
+			SetTalkEx(cutinChara1, "大抵犯人を追いつめたら崖っぷちで[r]刑事に向かってベラベラと喋り出す的な");
+		}
+		case(8)
+		{
+			ObjPrim_SetTexture(cutinChara2, imgCharaMinayu[2]);
+			SetTalkEx(cutinChara2, "しかしこの物語、この何故やったかが非常[r]に大きな役割を果たしている気がします");
+		}
+		case(9)
+		{
+			ObjPrim_SetTexture(cutinChara2, imgCharaMinayu[5]);
+			SetTalkEx(cutinChara2, "むしろこれのせいで[r]推理が難しくなってるような…");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}

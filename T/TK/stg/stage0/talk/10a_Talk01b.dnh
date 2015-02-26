@@ -1,0 +1,195 @@
+//東方弾幕風[Single]
+#ScriptVersion[3]
+#Title["0面　会話"]
+#Text["0面　会話"]
+#Background[""]
+#System["./../../../system/System_Main.dnh"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_boss.dnh"
+#include"./../../../lib/lib_talk.dnh"
+
+@Event {
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+	BossEvent();
+}
+
+@Initialize {
+	Boss_Init();	//初期設定
+	objEnemy = CreateBossTalk(BOSS_ID_RINNE);	//ボスセット
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	let xIni = CenX;
+	let yIni = 140;
+	
+	// 魔法陣リセット
+	BossEffect_ResetMagicCircle();
+	//ボスネーム表示状態
+	BossScene_SetNameVisible(objScene, false);
+
+	EnterBoss(objEnemy, xIni, yIni);
+
+	// 会話準備
+	StartTalk();
+	wait(60);
+	
+	//会話処理
+	FuncTalk();
+	wait(15);
+	
+	// 画面外へ
+	ObjMove_SetDestAtWeightSpeedUp(objEnemy, CenX+64, -256, 15, 3, 0.1, 12);
+	SetAction(objEnemy, ACT_MOVE, 60);
+
+	//次のシーンへ
+	FinishTalk(true);
+	Boss_Finalize(objEnemy, false, false);
+
+	// やっぱりショットボム禁止
+	SetForbidPlayerShot(true);
+	SetForbidPlayerSpell(true);
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinBoss1   = CreateTalkObject(BOSS_ID_RINNE, true);
+	let cutinPlayer1 = CreateTalkObject(BOSS_ID_MARISA_L, false);
+	
+	// 画像ファイル
+	let pathBoss1   = imgCharaRinne;
+	let pathPlayer1 = imgCharaMarisa;
+	
+	SetImageFoward(cutinPlayer1, true);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinPlayer1, "得敏を倒しても異変が解決しないんだが、[r]もしかして見当はずれだったか？");
+		}
+		case(1)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			SetTalkEx(cutinPlayer1, "そもそも何で奴を疑ったんだ？");
+		}
+		case(2)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[5]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			SetTalkEx(cutinBoss1, "奴は自分の能力の正体がよく解って[r]いないので、様々な仮説のもとその[r]能力の研究を行っているのです");
+		}
+		case(3)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[5]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinPlayer1, "へえ、その研究の一環として[r]異変を起こしたと？");
+		}
+		case(4)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinBoss1, "余りに難解なので概要だけ言いますが、");
+		}
+		case(5)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinBoss1, "幻想郷の住民の今の記憶と、[r]平行世界に存在する記憶をごっちゃに[r]する事が可能らしいのです");
+		}
+		case(6)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinPlayer1, "とんでもない話だな");
+		}
+		case(7)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinPlayer1, "確かにそんな力が有るのなら異変を起こす[r]事も可能だが、現に収まってないぜ？");
+		}
+		case(8)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinBoss1, "そうですね。異変解決の方は別途乗り出す[r]必要がありそうですね");
+		}
+		case(9)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinBoss1, "特に、 得敏を襲った記憶を司る[r]神というのが怪しいです");
+		}
+		case(10)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinPlayer1, "今回も一緒に出陣か？");
+		}
+		case(11)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinBoss1, "はい。異変を解決したとなれば、[r]私の手柄にもなりますし");
+		}
+		case(12)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinPlayer1, "お前、意外と腹黒そうだな…");
+		}
+		case(13)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinBoss1, "さあさあ、出発進行～！");
+			SetFukidashiType(cutinBoss1, FUKIDASHI_ANGER);
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}
+
+
+task EnterBoss(objEnemy, xIni, yIni)
+{
+	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
+	
+	SetMovePositionHermite(objEnemy, xIni, yIni,
+		600, 90, 100, 210, 60);
+	SetAction(objEnemy, ACT_MOVE_L, 60);
+}

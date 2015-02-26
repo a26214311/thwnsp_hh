@@ -1,0 +1,166 @@
+//#東方弾幕風[Single]
+#ScriptVersion[3]
+#Title["3面2周目　ラスペ前"]
+#Text["3面2周目　ラスペ前"]
+#Background[""]
+#System["./../../../system/System_Main.dnh"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_boss.dnh"
+#include"./../../../lib/lib_talk.dnh"
+
+
+@Event {
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+	BossEvent();
+}
+
+@Initialize {
+	Boss_Init();	//初期設定
+	objEnemy  = CreateBossTalk(BOSS_ID_RINNE);
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	// 魔法陣リセット
+	BossEffect_ResetMagicCircle();
+
+	// 会話準備
+	StartTalk();
+
+	// 登場モーション（最初は非表示）
+	let xIni = CenX;
+	let yIni = 140;
+	
+	ObjMove_SetDestAtWeightSpeedUp(objEnemy, xIni, yIni, 15, 4, 0.1, 12);
+	SetAction(objEnemy, ACT_MOVE, 60);
+	BossScene_SetNameVisible(objScene, true);	//ボスネーム表示状態
+
+	wait(120);
+	
+	FuncTalk();
+	
+	//次のシーンへ
+	FinishTalk(true);
+	Boss_Finalize(objEnemy, false, false);
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinBoss1   = CreateTalkObject(BOSS_ID_RINNE, true);
+	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
+	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
+	
+	// 画像ファイル
+	let pathBoss1 = imgCharaRinne;
+	let pathPlayer1 = imgCharaSanae;
+	let pathPlayer2 = imgCharaMinayu;
+	
+	// 最初に前に出てくるキャラ
+	SetImageFoward(cutinPlayer2, true);
+	
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinPlayer2, "待って下さい！");
+		}
+		case(1)
+		{
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinBoss1, "おや、降参ですか？");
+		}
+		case(2)
+		{
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinPlayer2, "白菊さん。貴方、皆豊水意神という地方神話[r]の神の信仰を奪ったことはありませんか？");
+		}
+		case(3)
+		{
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinBoss1, "随分と懐かしい名前ですね。皆豊…[r]まさか、貴方ですか！？");
+		}
+		case(4)
+		{
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+			SetTalkEx(cutinPlayer2, "早苗さん、全てを思い出しました！白菊は[r]私の地方神話の信仰を完全に奪い去ったのです！");
+		}
+		case(5)
+		{
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+			SetTalkEx(cutinPlayer2, "そして完全に人々の記憶からも消えた！");
+		}
+		case(6)
+		{
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+			SetTalkEx(cutinPlayer1, "中央神話による地方神話の淘汰ですか！[r]どおりで出典が見つからない訳です");
+		}
+		case(7)
+		{
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
+			SetTalkEx(cutinBoss1, "それは本当に悪い事をしました。");
+		}
+		case(8)
+		{
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
+			SetTalkEx(cutinBoss1, "当時は若気の至りで、[r]随分と無茶な事をしたもので");
+		}
+		case(9)
+		{
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
+			SetTalkEx(cutinPlayer2, "私には貴方に復讐する権利がある！[r]白菊、全力で来なさい！");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}

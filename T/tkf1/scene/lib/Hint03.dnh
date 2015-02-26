@@ -1,0 +1,105 @@
+//#東方弾幕風[Stage]
+#ScriptVersion[3]
+#Title["ヒントその3"]
+#Text["ヒントその3"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./lib_commontitle.dnh"
+#include"./lib_talkTitle.dnh"
+
+@Initialize {
+	SetAutoDeleteObject(true);
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	//会話処理
+	FuncTalk();
+
+	FinishTalk(true);
+	CloseScript( GetOwnScriptID() );
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinChara1   = CreateTalkObject(BOSS_ID_MARISA_L, false);
+	let cutinChara2   = CreateTalkObject(BOSS_ID_RINNE, true);
+	
+	// 画像ファイル
+	ObjPrim_SetTexture(cutinChara1, imgCharaMarisa[5]);
+	ObjPrim_SetTexture(cutinChara2, imgCharaRinne[2]);
+	
+	SetImageFoward(cutinChara1, true);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetTalkEx(cutinChara1, "参ったな");
+		}
+		case(1)
+		{
+			SetTalkEx(cutinChara1, "時系列はともかく、犯人の方は選択肢が[r]多すぎてどこから手を付けていいかわからないぜ");
+		}
+		case(2)
+		{
+			ObjPrim_SetTexture(cutinChara2, imgCharaRinne[3]);
+			SetTalkEx(cutinChara2, "やはりこういうミステリーでは、必ず推理の[r]鍵になる言葉が各所に現れるものです");
+		}
+		case(3)
+		{
+			SetTalkEx(cutinChara2, "膨大な選択肢を狭めるようなヒントを、会話[r]文から拾っていくのがいいかもしれませんね");
+		}
+		case(4)
+		{
+			SetTalkEx(cutinChara1, "骨の折れそうな作業だな。[r]具体的にはどんな感じだ？");
+		}
+		case(5)
+		{
+			ObjPrim_SetTexture(cutinChara2, imgCharaRinne[2]);
+			SetTalkEx(cutinChara2, "皆故さんは２週目で、異変は必ず自らの[r]意志で起こされるという事を言っていますね？");
+		}
+		case(6)
+		{
+			SetTalkEx(cutinChara2, "まさにこんな感じのがヒントです。");
+		}
+		case(7)
+		{
+			ObjPrim_SetTexture(cutinChara2, imgCharaRinne[3]);
+			SetTalkEx(cutinChara2, "もっとも、私は皆故さんを犯人だと思って[r]いますので、これは嘘だと思ってますがね");
+		}
+		case(8)
+		{
+			ObjPrim_SetTexture(cutinChara1, imgCharaMarisa[3]);
+			SetTalkEx(cutinChara1, "どこまでを信じるかも重要って事か");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}

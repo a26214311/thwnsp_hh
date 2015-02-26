@@ -1,0 +1,120 @@
+//#東方弾幕風[Stage]
+#ScriptVersion[3]
+#Title["ヒントその1"]
+#Text["ヒントその1"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./lib_commontitle.dnh"
+#include"./lib_talkTitle.dnh"
+
+@Initialize {
+	SetAutoDeleteObject(true);
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	//会話処理
+	FuncTalk();
+
+	FinishTalk(true);
+	CloseScript( GetOwnScriptID() );
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinChara1   = CreateTalkObject(BOSS_ID_REIMU_L, false);
+	let cutinChara2   = CreateTalkObject(BOSS_ID_TOKUBI, true);
+	let cutinChara3   = CreateTalkObject(BOSS_ID_MARISA_L, false);
+	let cutinChara4   = CreateTalkObject(BOSS_ID_RINNE, true);
+	let cutinChara5   = CreateTalkObject(BOSS_ID_SANAE_L, false);
+	let cutinChara6   = CreateTalkObject(BOSS_ID_MINAYU, true);
+	
+	// 画像ファイル
+	ObjPrim_SetTexture(cutinChara1, imgCharaReimu[6]);
+	ObjPrim_SetTexture(cutinChara2, imgCharaTokubi[2]);
+	ObjPrim_SetTexture(cutinChara3, imgCharaMarisa[5]);
+	ObjPrim_SetTexture(cutinChara4, imgCharaRinne[3]);
+	ObjPrim_SetTexture(cutinChara5, imgCharaSanae[2]);
+	ObjPrim_SetTexture(cutinChara6, imgCharaMinayu[3]);
+	
+	SetImageFoward(cutinChara1, true);
+	SetImageVisible(cutinChara2, false);
+	SetImageVisible(cutinChara3, false);
+	SetImageVisible(cutinChara4, false);
+	SetImageVisible(cutinChara5, false);
+	SetImageVisible(cutinChara6, false);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetTalkEx(cutinChara1, "ちょっと！いきなり何なの！？[r]こんなの聞いてないんだけど！");
+		}
+		case(1)
+		{
+			SetImageVisible(cutinChara1, false);
+			SetImageVisible(cutinChara2, true);
+			SetTalkEx(cutinChara2, "エンディングで言っておった[r]ような気もするがな");
+		}
+		case(2)
+		{
+			SetImageVisible(cutinChara2, false);
+			SetImageVisible(cutinChara3, true);
+			SetTalkEx(cutinChara3, "でもシューティングが苦手な奴らには、[r]全ステージクリアして会話を確認するのは大変だぜ？");
+		}
+		case(3)
+		{
+			SetImageVisible(cutinChara3, false);
+			SetImageVisible(cutinChara4, true);
+			SetTalkEx(cutinChara4, "ご安心下さい");
+		}
+		case(4)
+		{
+			SetTalkEx(cutinChara4, "ちゃんと、会話文だけを集めたロジカルプ[r]ラクティスというツールをスタート画面に[r]用意してますので");
+		}
+		case(5)
+		{
+			SetImageVisible(cutinChara4, false);
+			SetImageVisible(cutinChara5, true);
+			SetTalkEx(cutinChara5, "１回でもそのステージに入れば、エンディング[r]まで含めて見る事ができるんですよ");
+		}
+		case(6)
+		{
+			SetImageVisible(cutinChara5, false);
+			SetImageVisible(cutinChara6, true);
+			SetTalkEx(cutinChara6, "Easyでもクリアできないって人の為に、[r]公式サイトで全会話文公開されてたりします");
+		}
+		case(7)
+		{
+			SetTalkEx(cutinChara6, "どうしても無理な方はそちらをご覧ください");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}

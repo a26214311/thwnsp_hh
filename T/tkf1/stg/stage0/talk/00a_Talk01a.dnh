@@ -1,0 +1,237 @@
+//#東方弾幕風[Single]
+#ScriptVersion[3]
+#Title["0面　会話"]
+#Text["0面　会話"]
+#Background[""]
+#System["./../../../system/System_Main.dnh"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_boss.dnh"
+#include"./../../../lib/lib_talk.dnh"
+
+@Event {
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+	BossEvent();
+}
+
+@Initialize {
+	Boss_Init();	//初期設定
+	objEnemy = CreateBossTalk(BOSS_ID_TOKUBI);	//ボスセット
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	// 魔法陣リセット
+	BossEffect_ResetMagicCircle();
+	//ボスネーム表示状態
+	BossScene_SetNameVisible(objScene, false);
+
+	// 会話準備
+	StartTalk();
+	wait(60);
+	
+	//会話処理
+	FuncTalk();
+	wait(15);
+	
+	// 画面外へ
+	ObjMove_SetDestAtWeightSpeedUp(objEnemy, CenX+64, -256, 15, 3, 0.1, 12);
+	SetAction(objEnemy, ACT_MOVE, 60);
+
+	//次のシーンへ
+	FinishTalk(true);
+	Boss_Finalize(objEnemy, false, false);
+
+	// やっぱりショットボム禁止
+	SetForbidPlayerShot(true);
+	SetForbidPlayerSpell(true);
+}
+
+// 会話処理
+function FuncTalk()
+{
+	let xIni = CenX;
+	let yIni = 140;
+	
+	// オブジェクト作成
+	let cutinBoss1   = CreateTalkObject(BOSS_ID_TOKUBI, true);
+	let cutinPlayer1 = CreateTalkObject(BOSS_ID_REIMU_L, false);
+	
+	// 画像ファイル
+	let pathBoss1   = imgCharaTokubi;
+	let pathPlayer1 = imgCharaReimu;
+	
+	// 隠す
+	SetImageVisible(cutinBoss1, false);
+
+	SetImageFoward(cutinPlayer1, true);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetImageVisible(cutinBoss1, false);	// ボス画像出現フラグ
+			
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinPlayer1, "はあ、今回は物事が覚えられなくなる異変か[r]さっさと黒幕を倒さないと色々大変よね");
+		}
+		case(1)
+		{
+			EnterBoss(objEnemy, xIni, yIni);
+			SetImageVisible(cutinBoss1, true);	// ボス画像出現フラグ
+
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinBoss1, "失礼[r]博麗の巫女殿とお見受けする");
+		}
+		case(2)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinPlayer1, "参拝ですか？");
+		}
+		case(3)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinPlayer1, "お賽銭が沢山有ると、[r]物覚えも少し良くなるかも（チラッ）");
+		}
+		case(4)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinBoss1, "いや、私は愛宕様に仕える神、[r]正鹿山得敏という");
+			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+		}
+		case(5)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			SetTalkEx(cutinPlayer1, "その名門の神様の使いが私に何か？");
+		}
+		case(6)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			SetTalkEx(cutinBoss1, "実は先日、この異変の犯人と[r]思わしき者から襲撃を受けてな");
+		}
+		case(7)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			SetTalkEx(cutinPlayer1, "犯人！？[r]本当に？");
+			SetFukidashiType(cutinPlayer1, FUKIDASHI_ANGER);
+		}
+		case(8)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			SetTalkEx(cutinBoss1, "彼奴、どうやらこの異変の責任を[r]私になすりつけるつもりらしい");
+		}
+		case(9)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinPlayer1, "自分の力の誇示の為に[r]異変を起こすのなら解るけど、");
+		}
+		case(10)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinPlayer1, "他人に責任をなすりつけるって、[r]どういう状況よ？（永夜異変の事は内緒）");
+		}
+		case(11)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			SetTalkEx(cutinBoss1, "実は、我々愛宕様の勢力と、対立関係にある[r]萱野姫の勢力が抗争を繰り広げている");
+		}
+		case(12)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinPlayer1, "聞いたことあるわ[r]萱野姫は草、すなわち生物を操る勢力");
+		}
+		case(13)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinPlayer1, "一方愛宕様は火。すなわち物理を操る勢力[r]この2つの勢力は仲が悪いのよね");
+		}
+		case(14)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinBoss1, "しかも、少しでも相手に打撃を[r]与えて自分の手柄とする為に");
+		}
+		case(15)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinBoss1, "同勢力同士で邪魔の仕合いまでする有様");
+		}
+		case(16)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			SetTalkEx(cutinBoss1, "ほとほと呆れておる[r]私は物理の研究さえ出来ればそれでいいのに");
+		}
+		case(17)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			SetTalkEx(cutinPlayer1, "じゃあ、今回の犯人は[r]その萱野姫の勢力の一人だというの？");
+		}
+		case(18)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			SetTalkEx(cutinBoss1, "恐らくな[r]本人に聞いてみれば解る");
+		}
+		case(19)
+		{
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+			SetTalkEx(cutinPlayer1, "解ったわ。今回はあんたに私の護衛をして貰う[r]犯人の所まで案内して");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}
+
+task EnterBoss(objEnemy, xIni, yIni)
+{
+	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
+	
+	SetMovePositionHermite(objEnemy, xIni, yIni,
+		600, 90, 100, 210, 60);
+	SetAction(objEnemy, ACT_MOVE_L, 60);
+}

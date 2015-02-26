@@ -1,0 +1,394 @@
+// スペカのデータ
+
+let STAGE_NAME = ["Stage1", "Stage2", "Stage3A", "Stage3B", "Stage3C", "Extra"];
+let STAGE_MAX = 6;
+let FLAG_EXTRA = 5;
+
+
+// スペカのリストを返す
+// 難易度ごとにスペカ数の増減はないけど念のため
+function GetSpellCardList(idStage)
+{
+	let GetDifficulty	= GetAreaCommonData(CAREA_TITLE, "Difficulty", D_EASY );
+	let GetLap		= GetAreaCommonData(CAREA_TITLE, "Lap", 0 );	//周回数
+	return( _GetSpellCardList(idStage, GetDifficulty, GetLap) );
+}
+function _GetSpellCardList(idStage, idDifficult, idLap)
+{
+	if (idDifficult == D_DRIVE)
+	{
+		// OVERDRIVE
+		alternative(idStage)
+		case(0)
+		{
+			// ステージ1
+			return([ 1, 3, 4, 5 ]);
+		}
+		case(1)
+		{
+			// ステージ2
+			return([ 12, 13, 14, 15 ]);
+		}
+		case(2)
+		{
+			// ステージ3A
+			return([ 21 ]);
+		}
+		case(3)
+		{
+			// ステージ3B
+			return([ 21 ]);
+		}
+		case(4)
+		{
+			// ステージ3C
+			return([ 21 ]);
+		}
+		case(5)
+		{
+			// ステージEx
+			return([ ]);
+		}
+	}
+	else
+	{
+		alternative(idStage)
+		case(0)
+		{
+			// ステージ1
+			return([ 1, 2, 3, 4, 5, 6 ]);
+		}
+		case(1)
+		{
+			// ステージ2
+			return([ 11, 12, 13, 14, 15, 16 ]);
+		}
+		case(2)
+		{
+			// ステージ3A
+			return([ 21, 22, 31, 32, 33, 34, 35 ]);
+		}
+		case(3)
+		{
+			// ステージ3B
+			return([ 21, 22, 41, 42, 43, 44 ]);
+		}
+		case(4)
+		{
+			// ステージ3C
+			return([ 21, 22, 51, 52, 53, 54, 55 ]);
+		}
+		case(5)
+		{
+			// ステージEx
+			return([ 101, 102, 103, 111, 112, 113, 114, 115, 116, 117, 131, 132, 133, 134, 135, 136, 137 ]);
+		}
+	}
+
+/*
+	alternative(idLap)
+	case(0)
+	{
+		// 1周目
+		alternative(idStage)
+		case(0)
+		{
+			// ステージ1
+			return([ 1, 3, 4, 5, 6 ]);
+		}
+		case(1)
+		{
+			// ステージ2
+			return([ 11, 12, 13, 14, 15, 16 ]);
+		}
+		case(2)
+		{
+			// ステージ3A
+			return([ 21, 22, 31, 32, 33, 34 ]);
+		}
+		case(3)
+		{
+			// ステージ3B
+			return([ 21, 22, 41, 42, 43, 44 ]);
+		}
+		case(4)
+		{
+			// ステージ3C（ない）
+			return([]);
+		}
+	}
+	others
+	{
+		// 2周目
+		alternative(idStage)
+		case(0)
+		{
+			// ステージ1
+			return([ 2, 3, 4, 5, 6 ]);
+		}
+		case(1)
+		{
+			// ステージ2
+			return([ 11, 12, 13, 14, 15, 16 ]);
+		}
+		case(2)
+		{
+			// ステージ3A
+			return([ 21, 22, 31, 32, 33, 34, 35 ]);
+		}
+		case(3)
+		{
+			// ステージ3B（ない）
+			return([]);
+		}
+		case(4)
+		{
+			// ステージ3C（ない）
+			return([ 21, 22, 51, 52, 53, 54, 55 ]);
+		}
+	}
+*/
+}
+
+// プレイできるスペカがあるかのチェック
+function CheckPlayableSpell(spellList)
+{
+	let flg = 0;
+	ascent(i in 0 .. length(spellList))
+	{
+		let GetDifficulty	= GetAreaCommonData(CAREA_TITLE, "Difficulty", D_EASY );
+		let GetLap		= GetAreaCommonData(CAREA_TITLE, "Lap", 0 );	//周回数
+		let sID = GetSpellCardIDEx( spellList[i], GetLap, GetDifficulty );
+		flg = LoadResult( GetSpellCardIndex(sID) );
+		if (flg) { break; }
+	}
+	return(flg);
+}
+
+// スペカの名前を返す
+function GetSpellCardName(idSpell)
+{
+	let GetDifficulty	= GetAreaCommonData(CAREA_TITLE, "Difficulty", D_EASY );
+	let GetLap		= GetAreaCommonData(CAREA_TITLE, "Lap", 0 );	//周回数
+	return( _GetSpellCardName(idSpell, GetDifficulty, GetLap) );
+}
+function _GetSpellCardName(idSpell, idDifficult, idLap)
+{
+	alternative(idSpell)
+	/* 1面中ボス */
+	case(1)
+	{
+		return("錯舌「三武具馬具六武具馬具」");
+	}
+	case(2)
+	{
+		return("錯師「三野良如来六野良如来」");
+	}
+	/* 1面ボス */
+	case(3)
+	{
+		if (idDifficult <= D_NORM) { return("高符「火の山、水の谷」"); }
+		else { return("高波「十拳炎水波斬」"); }
+	}
+	case(4)
+	{
+		if (idDifficult == D_DRIVE) { return("転符「スピンスピンエンドゼエガアル」"); }
+		else if (idDifficult <= D_NORM) { return("平符「スピンアトップスピンローラー」"); }
+		else { return("転符「スピンスピンエンドゼエガアル」"); }
+	}
+	case(5)
+	{
+		if (idDifficult == D_DRIVE) { return("波影「赤外-紫外超転調波」"); }
+		else if (idDifficult <= D_NORM) { return("波動「可視光-赤外波長調律」"); }
+		else { return("波影「赤外-紫外超転調波」"); }
+	}
+	case(6)
+	{
+		if (idDifficult <= D_NORM) { return("「ハインリッヒの波数皇帝」"); }
+		else { return("「カイザーオブカイザー」"); }
+	}
+	/* 2面中ボス */
+	case(11)
+	{
+		if (idDifficult <= D_NORM) { return("月影「月光照らす禿山の一夜」"); }
+		else { return("月影「ヴァルプルギスの眩い夜」"); }
+	}
+	case(12)
+	{
+		if (idDifficult == D_DRIVE) { return("六軒「見えない影の密室」"); }
+		else if (idDifficult <= D_NORM) { return("六軒「見えない影の密室」"); }
+		else { return("六影「ファンジターシャドウ」"); }
+	}
+	/* 2面ボス */
+	case(13)
+	{
+		if (idDifficult == D_DRIVE) { return("暗理「4次元上の3次元曲面」"); }
+		else if (idDifficult <= D_NORM) { return("暗理「4次元上の3次元曲面」"); }
+		else { return("寄綱「宇宙の形」"); }
+	}
+	case(14)
+	{
+		if (idDifficult == D_DRIVE) { return("素符「直行無限の点ゼータ」"); }
+		else if (idDifficult <= D_NORM) { return("素符「直行無限の点ゼータ」"); }
+		else { return("素符「素数的大金融危機」"); }
+	}
+	case(15)
+	{
+		if (idDifficult == D_DRIVE) { return("統計「99.9％信頼弾幕」"); }
+		else if (idDifficult <= D_EASY) { return("統計「90％信頼弾幕」"); }
+		else if (idDifficult <= D_NORM) { return("統計「95％信頼弾幕」"); }
+		else if (idDifficult <= D_HARD) { return("統計「99％信頼弾幕」"); }
+		else { return("統計「99.9％信頼弾幕」"); }
+	}
+	case(16)
+	{
+		return("「ハーディワインベルグの血」");
+	}
+	/* 3面中ボス */
+	case(21)
+	{
+		if (idDifficult <= D_NORM) { return("回符「盆飛ぶ蜻蛉」"); }
+		else { return("回帰「葉月の盆飛ぶ蜻蛉の傷は」"); }
+	}
+	case(22)
+	{
+		return("「三会談大監査」");
+	}
+	/* 3面ボス1 - 皆故 */
+	case(31)
+	{
+		return("残夏「雲の消えゆく蒼天」");
+	}
+	case(32)
+	{
+		return("晩秋「地は朽葉色に染まり」");
+	}
+	case(33)
+	{
+		return("枯冬「木枯らしの灰白雪」");
+	}
+	case(34)
+	{
+		return("散春「薄紅色の花散り花塵となる」");
+	}
+	case(35)
+	{
+		return("「透き通る皆豊かな神意の雨水」");
+	}
+	/* 3面ボス2 - 得敏 */
+	case(41)
+	{
+		if (idDifficult <= D_NORM) { return("孔符「ド・ブロイの不確定波」"); }
+		else { return("二孔「粒子パイロット干渉」"); }
+	}
+	case(42)
+	{
+		if (idDifficult <= D_NORM) { return("光電「光子銃と電子銃」"); }
+		else { return("猫箱「神はサイコロを振らない」"); }
+	}
+	case(43)
+	{
+		if (idDifficult <= D_NORM) { return("収束「コペンハーゲン解釈」"); }
+		else { return("複線「エヴァレットの世界線」"); }
+	}
+	case(44)
+	{
+		return("「得敏シュレディンガーの波動状弾幕」");
+	}
+	/* 3面ボス3 - 白菊 */
+	case(51)
+	{
+		if (idDifficult <= D_NORM) { return("分類「2つの5つの世界」"); }
+		else { return("五界「ホイッタカーアンドマーグリス」"); }
+	}
+	case(52)
+	{
+		if (idDifficult <= D_NORM) { return("奇名「キラキラネーム命名者」"); }
+		else { return("怒名「煌びやかなＤＱＮネーム」"); }
+	}
+	case(53)
+	{
+		if (idDifficult <= D_NORM) { return("命名「界門網目科-属種-」"); }
+		else { return("二名「ビノーミナルネーム」"); }
+	}
+	case(54)
+	{
+		return("「萱野の名を賜りしリンネ」");
+	}
+	case(55)
+	{
+		if (idDifficult <= D_HARD) { return("「白は失われた過去に名前を付ける」"); }
+		else { return("「ホワイトネイムズスポイルドパスト」"); }
+	}
+	/* Exステージ */
+	case(101)
+	{
+		return("怒符「チューブブレイクアロー」");
+	}
+	case(102)
+	{
+		return("鎮静「グリーンシードフレア」");
+	}
+	case(103)
+	{
+		return("「フェアリーハイロゥ」");
+	}
+	/* Exステージ2 - 雷 */
+	case(111)
+	{
+		return("雨乞「ハバキリの必中落雷」");
+	}
+	case(112)
+	{
+		return("日晴「トツカの即射日光」");
+	}
+	case(113)
+	{
+		return("追風「フジタスケール６」");
+	}
+	case(114)
+	{
+		return("霰符「吹雪の雪隠れ」");
+	}
+	case(115)
+	{
+		return("「砂力砂塵の大相撲」");
+	}
+	case(116)
+	{
+		return("「終地断崖の十拳」");
+	}
+	case(117)
+	{
+		return("「始海根源の蛇切」");
+	}
+	/* Exステージ2 - 姫 */
+	case(131)
+	{
+		return("天花「雲の上のお花畑」");
+	}
+	case(132)
+	{
+		return("極相「クライマックスインジュ」");
+	}
+	case(133)
+	{
+		return("循環「生産者から分解者へ」");
+	}
+	case(134)
+	{
+		return("式神「天雄大将の一軍」");
+	}
+	case(135)
+	{
+		return("「草の神萱野姫 - 針葉の章」");
+	}
+	case(136)
+	{
+		return("「草の神萱野姫 - 照葉の章」");
+	}
+	case(137)
+	{
+		return("「草の神萱野姫 - 広葉の章」");
+	}
+}

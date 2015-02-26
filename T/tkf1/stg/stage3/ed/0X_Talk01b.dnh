@@ -1,0 +1,118 @@
+// 魔理沙エンディング1周目
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_common.dnh"
+#include"./../../../lib/lib_talk_ed.dnh"
+#include"./../../../lib/lib_stage.dnh"
+
+@Initialize {
+	init();
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	TBackground();
+	wait(180);
+	TEndingImage(imgEDEnding[1]);
+	//  BGM
+	PlayMusic( 8, true, 60 );
+	
+	// 会話準備
+	StartTalk();
+	wait(120);
+
+	FuncTalk();
+	wait(15);
+
+	//次のシーンへ
+	FinishTalk(true);
+	SetForbidPlayerShot(true);
+	SetForbidPlayerSpell(true);
+	
+	if (GetPlayMode() == GAME_MAIN || GetPlayMode() == GAME_DEBUG)
+	{
+		wait(180);
+		My_CloseStageScene();
+	} else {
+		CloseMine(60);
+	}
+}
+
+// 会話処理
+function FuncTalk()
+{
+	let COL0 = [160, 160, 160];
+	let COL1 = [160, 255, 255];
+	let COL2 = [255, 192, 255];
+	let COL3 = [160, 160, 255];
+	
+	// オブジェクト作成
+	let cutinDescri = CreateDescriptiveObject();
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetTalkEx(cutinDescri, "[r]霧雨亭", COL0);
+		}
+		case(1)
+		{
+			SetTalkEx(cutinDescri, "[r]得敏を倒しても、[r]異変は解決しなかった。", COL0);
+		}
+		case(2)
+		{
+			SetTalkEx(cutinDescri, "得敏[r]だから言ったであろう！私は犯人ではないと！", COL3);
+		}
+		case(3)
+		{
+			SetTalkEx(cutinDescri, "魔理沙[r]確かに、倒しても解決してないな。", COL1);
+		}
+		case(4)
+		{
+			SetTalkEx(cutinDescri, "白菊[r]まだ完全には信用してませんよ。他に実行犯が居るのかも。", COL2);
+		}
+		case(5)
+		{
+			SetTalkEx(cutinDescri, "魔理沙[r]もう何が何やら。", COL1);
+		}
+		case(6)
+		{
+			SetTalkEx(cutinDescri, "[r]ＥＤ　Ｎｏ．２[r]くろまく〜　が先に出るのはお約束？", COL0);
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}
+
+
+
+
+
+
+
+
+

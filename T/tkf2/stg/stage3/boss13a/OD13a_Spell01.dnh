@@ -1,0 +1,147 @@
+#東方弾幕風[Single]
+#ScriptVersion[3]
+#Title["OD_3面道中　スペカ1"]
+#Text["OD_3面道中　スペカ1"]
+#Background[""]
+#System["./../../../system/System_Main.dnh"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_boss.dnh"
+
+@Event {
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE)		{ SetScriptResult(700);	}
+	case(EV_REQUEST_TIMER)		{ SetScriptResult(99);		}
+	BossEvent();
+}
+
+@Initialize {
+	dIni_Shot = 20;	//ダメージ率
+	
+	Boss_Init();	//初期設定
+	objEnemy = CreateBoss(BOSS_ID_RAKU);	//ボスセット
+	//スペカデータ・セット
+	SetSpellCardData(GetSpellCardID(21), 1, 
+			GetCurrentScriptDirectory()~"03a_Background.dnh",
+			imgCharaRaku[2], 1, CUTMOTION_NORMAL);
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+}
+
+// メインタスク
+task Task_Main
+{
+	standBy(objEnemy, CenX, 140, 90);
+	CallSpellCard(true);	//スペカ起動
+	wait(90);
+
+	Shot01();
+
+	wait(180);
+	while(eAlive)
+	{
+		EnemyRandomMove(objEnemy, 140, 64);
+		wait(180);
+	}
+}
+
+task Shot01()
+{
+	let muki = 1;
+	
+	while(eAlive)
+	{
+		_Shot01(muki);
+		wait(120);
+		if (!eAlive) { return; }
+		_Shot01(-muki);
+		wait(240);
+		muki = -muki;
+	}
+}
+
+task _Shot01(muki)
+{
+	let way = 24;
+	let speed = 1.5;
+	let wt = 5;
+	let graphic = DS_FLY_RED;
+	
+	let offset_y = rand(0, 1);
+	CallSound(sndBoon);
+	ascent(i in 0 .. way)
+	{
+		if (!eAlive) { return; }
+		let sy = (i+offset_y)/way*GetStgFrameHeight;
+		let ss = speed * (rand(1, 1.25) + (i%2.5) * 0.2);
+		if (muki > 0)
+		{
+			DragonflyShot(MaxX+16, sy, ss, 0, graphic, 0, rand(CenX-192, CenX), 60, 0);
+		}
+		else
+		{
+			DragonflyShot(MinX-16, sy, ss, 180, graphic, 0, rand(CenX, CenX+192), 60, 0);
+		}
+//		CallSound(sndShot3);
+		wait(wt);
+	}
+}
+
+// とんぼショット
+// 左右一直線にしか飛ばせない（それ以外は非対応）
+task DragonflyShot(x, y, speed, angle, graphic, delay, to_x, stay_timer, shot_type)
+{
+	let dummy_len = absolute(GetStgFrameHeight-y);
+	let dummy_timer = trunc(delay + absolute(x-to_x)/speed + stay_timer);
+	// 予告線
+	let objDummy = CreateStraightLaserA1(to_x, GetStgFrameHeight, -90, 0, 2, dummy_timer, DS_BEAM_YELLOW, 0);
+	ObjStLaser_SetSource(objDummy, false);
+	ObjShot_SetAutoDelete(objDummy, false);
+	ObjShot_SetItemChange(objDummy, false);
+	ObjShot_SetIntersectionEnable(objDummy, false);
+	ObjRender_SetAlpha(objDummy, 64);
+	Obj_SetRenderPriorityI(objDummy, 30);
+	
+	let obj = CreateShotA1(x, y, angle, 0, graphic, delay);
+	ObjMove_SetDestAtWeight(obj, to_x, y, 20, speed);
+	
+	let t = 0;
+	while(!Obj_IsDeleted(obj))
+	{
+		if (t < 30)
+		{
+			ObjLaser_SetLength(objDummy, dummy_len * (t+1)/30);
+		}
+		if (t > dummy_timer)
+		{
+			if (shot_type < 1)
+			{
+				if (ObjMove_GetX(obj) < CenX)
+				{
+					DragonflyShot(ObjMove_GetX(obj), ObjMove_GetY(obj),
+						speed, 180-angle, DS_FLY_ORANGE, delay, rand(CenX+32, CenX+192), stay_timer, 1);
+				}
+				else
+				{
+					DragonflyShot(ObjMove_GetX(obj), ObjMove_GetY(obj),
+						speed, 180-angle, DS_FLY_ORANGE, delay, rand(CenX-192, CenX-32), stay_timer, 1);
+				}
+			}
+			else
+			{
+				CreateShotA1(ObjMove_GetX(obj), ObjMove_GetY(obj), speed, angle, DS_FLY_GREEN, 0);
+			}
+			CallSound(sndShot5);
+			Obj_Delete(obj);
+			break;
+		}
+		t++;
+		yield;
+	}
+	ObjShot_FadeDelete(objDummy);
+}

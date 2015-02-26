@@ -1,0 +1,83 @@
+//#東方弾幕風[Stage]
+#ScriptVersion[3]
+#Title["あんさーその2"]
+#Text["あんさーその2"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./lib_commontitle.dnh"
+#include"./lib_talkTitle.dnh"
+
+@Initialize {
+	SetAutoDeleteObject(true);
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	//会話処理
+	FuncTalk();
+
+	FinishTalk(true);
+	CloseScript( GetOwnScriptID() );
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinChara1   = CreateTalkObject(BOSS_ID_RINNE, true);
+	
+	// 画像ファイル
+	ObjPrim_SetTexture(cutinChara1, imgCharaRinne[2]);
+	
+	SetImageFoward(cutinChara1, true);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetTalkEx(cutinChara1, "よく私一人が犯人だと解りましたね");
+		}
+		case(1)
+		{
+			SetTalkEx(cutinChara1, "恐らくそれが解っても、この異変の全体像の[r]１割も見えてない人がほとんどだと思います");
+		}
+		case(2)
+		{
+			SetTalkEx(cutinChara1, "Extraが実装されるまでの間、[r]私がこの異変の間、何を考えて行動して[r]いたのか、推理してみませんか？");
+		}
+		case(3)
+		{
+			SetTalkEx(cutinChara1, "難易度はLunatic。果たして皆さん[r]に、この異変の全貌が見えますかね？");
+		}
+		case(4)
+		{
+			SetTalkEx(cutinChara1, "公式サイトの掲示板にて、[r]推理を募集しています");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}

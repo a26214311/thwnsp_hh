@@ -1,0 +1,100 @@
+//#東方弾幕風[Stage]
+#ScriptVersion[3]
+#Title["ヒントその4"]
+#Text["ヒントその4"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./lib_commontitle.dnh"
+#include"./lib_talkTitle.dnh"
+
+@Initialize {
+	SetAutoDeleteObject(true);
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	//会話処理
+	FuncTalk();
+
+	FinishTalk(true);
+	CloseScript( GetOwnScriptID() );
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinChara1   = CreateTalkObject(BOSS_ID_SETUJO, false);
+	let cutinChara2   = CreateTalkObject(BOSS_ID_SASHA, true);
+	let cutinChara3   = CreateTalkObject(BOSS_ID_RAKU, false);
+	
+	// 画像ファイル
+	ObjPrim_SetTexture(cutinChara2, imgCharaSasha[2]);
+	
+	SetImageFoward(cutinChara1, true);
+	SetImageVisible(cutinChara2, false);
+	SetImageVisible(cutinChara3, false);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetTalkEx(cutinChara1, "さて、重要そうな言葉は拾いました。[r]ここからどうしましょう？");
+		}
+		case(1)
+		{
+			SetImageVisible(cutinChara1, false);
+			SetImageVisible(cutinChara2, true);
+			SetTalkEx(cutinChara2, "やはり選択肢が有るという事は、[r]消去法が良いと思うんじゃがのう");
+		}
+		case(2)
+		{
+			SetImageVisible(cutinChara3, true);
+			SetTalkEx(cutinChara3, "なるほど");
+		}
+		case(3)
+		{
+			SetTalkEx(cutinChara3, "いくつかのキーワードを使うと、有り得ない組み合わせ[r]というのが何種類か出てくるようでございますな");
+		}
+		case(4)
+		{
+			SetTalkEx(cutinChara3, "これでだいぶ選択肢も絞れるかも[r]しれません。ラクククク");
+		}
+		case(5)
+		{
+			ObjPrim_SetTexture(cutinChara2, imgCharaSasha[5]);
+			SetImageVisible(cutinChara3, false);
+			SetTalkEx(cutinChara2, "しかし、それでもまだ消せない[r]選択肢が有るのも確かじゃ");
+		}
+		case(6)
+		{
+			SetTalkEx(cutinChara2, "単純に出来るか否かの消去法、すなわちアリバイ[r]だけでは犯人は絞れないという事になるのう");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}

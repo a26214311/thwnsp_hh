@@ -1,0 +1,740 @@
+//----------------------------------------------------------------------------------------------------
+// 問いかけフェーズ
+//----------------------------------------------------------------------------------------------------
+
+function Question1()
+{
+	let objParent = ObjText_Create();	//適当なオブジェクトを生成（データのやり取り用）
+	Obj_SetValue(objParent, "VALUE", 0);
+	Obj_SetValue(objParent, "VALUE2", -1);	// 選択中
+	Obj_SetValue(objParent, "VALUE3", 0);	// 問題表示フラグ
+	
+	MenuItemImage(objParent, GetScreenWidth/2, 110, 0,  0, 352,  32);
+	MenuItemImage(objParent, GetScreenWidth/2, 170, 0, 96, 352, 160);
+	
+	let QuestionItems = [];
+	ascent(iObj in 0 .. 6)
+	{
+		let base_x = 110 + iObj*80;
+		let base_y = 220;
+		let tmp_obj = MenuItemQuestion(objParent, iObj, base_x, base_y);
+		QuestionItems = QuestionItems ~ [tmp_obj];
+	}
+	local
+	{
+		// 決定ボタン
+		let tmp_obj = MenuItemButton(objParent, 6, GetScreenWidth/2, 270, 80, 288, 144, 320);
+		QuestionItems = QuestionItems ~ [tmp_obj];
+	}
+	MenuItemCursor(objParent, QuestionItems);
+	let selectMax = 6;
+	let selectMaxItem = selectMax+1;
+	
+	
+	let Answer01 = [];
+	let Answer02 = [];
+	let exitType = -1;	// -1 キャンセル、 0 不正解、 1 正解
+	
+	
+	//キー状態がリセットされるまで待機
+	wait(5);
+	WaitForResetKey();
+	
+	loop
+	{
+		//キー入力待ち
+		let downKey = CheckKey_Menu(8, [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT, VK_CANCEL, VK_OK]);
+		
+		alternative (downKey)
+		case (VK_UP)
+		{
+			CallSoundPackage(sndTtSelect);
+			Obj_SetValue(objParent, "VALUE", 0);
+		}
+		case (VK_DOWN)
+		{
+			CallSoundPackage(sndTtSelect);
+			Obj_SetValue(objParent, "VALUE", selectMaxItem-1);
+		}
+		case (VK_LEFT)
+		{
+			let val = Obj_GetValueD(objParent, "VALUE", -1);
+			if (val >= 0 && val < selectMax)
+			{
+				Menu_AddValue(objParent, "VALUE", -1, selectMax);
+			}
+			CallSoundPackage(sndTtSelect);
+		}
+		case (VK_RIGHT)
+		{
+			let val = Obj_GetValueD(objParent, "VALUE", -1);
+			if (val >= 0 && val < selectMax)
+			{
+				Menu_AddValue(objParent, "VALUE", 1, selectMax);
+			}
+			CallSoundPackage(sndTtSelect);
+		}
+		case (VK_CANCEL)
+		{
+			let selected = Obj_GetValueD(objParent, "VALUE2", -1);
+			if (selected >= 0 && selected < selectMax)
+			{
+				// リセット
+				Obj_SetValue(objParent, "VALUE2", -1);
+				CallSoundPackage(sndTtCancel);
+			}
+			else
+			{
+				CallSoundPackage(sndTtCancel);
+				break;
+			}
+		}
+		case (VK_OK)
+		{
+			let selected = Obj_GetValueD(objParent, "VALUE2", -1);
+			let val = Obj_GetValueD(objParent, "VALUE", -1);
+			if (selected >= 0 && selected < selectMax)
+			{
+				// 値を交換
+				if (val >= 0 && val < selectMax)
+				{
+					let sel1 = Obj_GetValueD(QuestionItems[selected], "VALUE", -1);
+					let sel2 = Obj_GetValueD(QuestionItems[val], "VALUE", -1);
+					Obj_SetValue(QuestionItems[val], "VALUE", sel1);
+					Obj_SetValue(QuestionItems[selected], "VALUE", sel2);
+					CallSoundPackage(sndTtDecide);
+				}
+				else
+				{
+					CallSoundPackage(sndTtCancel);
+				}
+				// リセット
+				Obj_SetValue(objParent, "VALUE2", -1);
+			}
+			else
+			{
+				if (val >= 0 && val < selectMax)
+				{
+					Obj_SetValue(objParent, "VALUE2", val);
+					MenuItemCursorStay(objParent, ObjRender_GetX(QuestionItems[val]), ObjRender_GetY(QuestionItems[val]));
+					CallSoundPackage(sndTtDecide);
+				}
+				else
+				{
+					// 決定ボタン
+					CallSoundPackage(sndTtDecide);
+					Obj_SetValue(objParent, "VALUE3", 1);
+					// 2番目の問題です！
+					Answer02 = Question2();
+					if (length(Answer02) >= 6)
+					{
+						// 返り値をまとめる
+						Answer01 = [];
+						ascent(iObj in 0 .. 6)
+						{
+							Answer01 = Answer01 ~ [Obj_GetValueD(QuestionItems[iObj], "VALUE", 0)];
+						}
+						// 回答チェック
+						let isRight = true;
+						if (Answer01[0] != 2) { isRight = false; }
+						if (Answer01[1] != 0) { isRight = false; }
+						if (Answer01[2] != 1) { isRight = false; }
+						if (Answer01[3] != 4) { isRight = false; }
+						if (Answer01[4] != 3) { isRight = false; }
+						if (Answer01[5] != 5) { isRight = false; }
+
+						if (Answer02[0] != 1) { isRight = false; }
+						if (Answer02[1] != 1) { isRight = false; }
+						if (Answer02[2] != 1) { isRight = false; }
+						if (Answer02[3] != 1) { isRight = false; }
+						if (Answer02[4] != 1 && Answer02[4] != 3) { isRight = false; }
+						if (Answer02[5] != 3) { isRight = false; }
+						
+						Obj_Delete(objParent);
+						wait(30);
+						
+						if (isRight) { exitType = 1; CallSoundPackage(sndTtRight); }
+						else { exitType = 0; CallSoundPackage(sndTtBeep); }
+						break;
+					}
+					else
+					{
+						// キャンセル
+						Obj_SetValue(objParent, "VALUE3", 0);
+					}
+				}
+			}
+		}
+		wait(3);	//適当に固定ディレイ
+	}
+	Obj_Delete(objParent);
+	
+	return(exitType);
+}
+
+function Question2()
+{
+	let objParent = ObjText_Create();	//適当なオブジェクトを生成（データのやり取り用）
+	Obj_SetValue(objParent, "VALUE", 0);
+	Obj_SetValue(objParent, "VALUE2", -1);	// 選択中
+	
+	MenuItemImage(objParent, GetScreenWidth/2, 110, 0, 32, 352,  96);
+	
+	let QuestionItems = [];
+	ascent(iObj in 0 .. 6)
+	{
+		let base_x = 110 + iObj*80;
+		let base_y = 280;
+		let tmp_obj = MenuItemQuestion2(objParent, iObj, base_x, base_y);
+		QuestionItems = QuestionItems ~ [tmp_obj];
+	}
+	local
+	{
+		// 決定ボタン
+		let tmp_obj = MenuItemButton(objParent, 6, GetScreenWidth/2, 330, 80, 288, 144, 320);
+		QuestionItems = QuestionItems ~ [tmp_obj];
+	}
+	MenuItemCursor(objParent, QuestionItems);
+	let selectMax = 6;
+	let selectMaxItem = selectMax+1;
+	let charaMax = 4;
+	
+	
+	//キー状態がリセットされるまで待機
+	wait(5);
+	WaitForResetKey();
+	
+	loop
+	{
+		//キー入力待ち
+		let downKey = CheckKey_Menu(8, [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT, VK_CANCEL, VK_OK]);
+		
+		alternative (downKey)
+		case (VK_UP)
+		{
+			let selected = Obj_GetValueD(objParent, "VALUE2", -1);
+			if (selected >= 0 && selected < selectMax)
+			{
+				Menu_AddValue(QuestionItems[selected], "VALUE", -1, charaMax);
+			}
+			else
+			{
+				Obj_SetValue(objParent, "VALUE", 0);
+			}
+			CallSoundPackage(sndTtSelect);
+		}
+		case (VK_DOWN)
+		{
+			let selected = Obj_GetValueD(objParent, "VALUE2", -1);
+			if (selected >= 0 && selected < selectMax)
+			{
+				Menu_AddValue(QuestionItems[selected], "VALUE", -1, charaMax);
+			}
+			else
+			{
+				Obj_SetValue(objParent, "VALUE", selectMaxItem-1);
+			}
+			CallSoundPackage(sndTtSelect);
+		}
+		case (VK_LEFT)
+		{
+			let selected = Obj_GetValueD(objParent, "VALUE2", -1);
+			if (selected >= 0 && selected < selectMax)
+			{
+				Menu_AddValue(QuestionItems[selected], "VALUE", -1, charaMax);
+			}
+			else
+			{
+				let val = Obj_GetValueD(objParent, "VALUE", -1);
+				if (val >= 0 && val < selectMax)
+				{
+					Menu_AddValue(objParent, "VALUE", -1, selectMax);
+				}
+			}
+			CallSoundPackage(sndTtSelect);
+		}
+		case (VK_RIGHT)
+		{
+			let selected = Obj_GetValueD(objParent, "VALUE2", -1);
+			if (selected >= 0 && selected < selectMax)
+			{
+				Menu_AddValue(QuestionItems[selected], "VALUE", 1, charaMax);
+			}
+			else
+			{
+				let val = Obj_GetValueD(objParent, "VALUE", -1);
+				if (val >= 0 && val < selectMax)
+				{
+					Menu_AddValue(objParent, "VALUE", 1, selectMax);
+				}
+			}
+			CallSoundPackage(sndTtSelect);
+		}
+		case (VK_CANCEL)
+		{
+			let selected = Obj_GetValueD(objParent, "VALUE2", -1);
+			if (selected >= 0 && selected < selectMax)
+			{
+				// リセット
+				Obj_SetValue(objParent, "VALUE2", -1);
+				CallSoundPackage(sndTtCancel);
+			}
+			else
+			{
+				CallSoundPackage(sndTtCancel);
+				break;
+			}
+		}
+		case (VK_OK)
+		{
+			let selected = Obj_GetValueD(objParent, "VALUE2", -1);
+			let val = Obj_GetValueD(objParent, "VALUE", -1);
+			if (selected >= 0 && selected < selectMax)
+			{
+				// リセット
+				Obj_SetValue(objParent, "VALUE2", -1);
+				CallSoundPackage(sndTtDecide);
+			}
+			else
+			{
+				if (val >= 0 && val < selectMax)
+				{
+					Obj_SetValue(objParent, "VALUE2", val);
+					MenuItemCursorStay(objParent, ObjRender_GetX(QuestionItems[val]), ObjRender_GetY(QuestionItems[val]));
+					CallSoundPackage(sndTtDecide);
+				}
+				else
+				{
+					// 決定ボタン
+					CallSoundPackage(sndTtDecide);
+					// 返り値をまとめる
+					let return_val = [];
+					ascent(iObj in 0 .. 6)
+					{
+						return_val = return_val ~ [Obj_GetValueD(QuestionItems[iObj], "VALUE", 0)];
+					}
+					Obj_Delete(objParent);
+					return(return_val);
+				}
+			}
+		}
+		wait(3);	//適当に固定ディレイ
+	}
+	
+	Obj_Delete(objParent);
+	
+	return([]);
+}
+
+task MenuItemImage(parent, base_x, base_y, x1, y1, x2, y2)
+{
+	let objText = ObjPrim_Create(OBJ_SPRITE_2D);
+	Obj_SetRenderPriorityI(objText, 80);
+	ObjPrim_SetTexture(objText, imgTtQuestion);
+	ObjRender_SetPosition(objText, base_x, base_y, 0);
+	ObjSprite2D_SetSourceRect(objText, x1, y1, x2, y2);
+	ObjSprite2D_SetDestCenter(objText);
+	
+	let alpha = 0;
+	while(!Obj_IsDeleted(parent))
+	{
+		let now_index = Obj_GetValueD(parent, "VALUE3", 0);
+		if (now_index)
+		{
+			alpha = max(0, -0.1+alpha);
+		}
+		else if (alpha < 1)
+		{
+			alpha = min(1, 0.1+alpha);
+		}
+		ObjRender_SetAlpha(objText, 255*alpha);
+		yield;
+	}
+	descent(t in 0 .. 10)
+	{
+		ObjRender_SetAlpha(objText, 255*((t+1)/10)*alpha);
+		yield;
+	}
+	Obj_Delete(objText);
+}
+task MenuItemCursor(parent, select_objs)
+{
+	let sizeX = 92;
+	let sizeY = 64;
+	let objText = ObjPrim_Create(OBJ_SPRITE_2D);
+	Obj_SetRenderPriorityI(objText, 81);
+	ObjPrim_SetTexture(objText, imgTtQuestion);
+//	ObjRender_SetPosition(objText, base_x, base_y, 0);
+	ObjSprite2D_SetSourceRect(objText, 192, 160, 320, 224);
+	ObjSprite2D_SetDestRect(objText, -sizeX/2, -sizeY/2, sizeX/2, sizeY/2);
+	ObjRender_SetBlendType(objText, BLEND_ADD_ARGB);
+	
+	let t = 0;
+	let alpha = 0;
+	let before_index = -99999;
+	while(!Obj_IsDeleted(parent))
+	{
+		let now_index = Obj_GetValueD(parent, "VALUE", -1);
+		if (now_index != before_index)
+		{
+			ObjRender_SetPosition(objText, ObjRender_GetX(select_objs[now_index]), ObjRender_GetY(select_objs[now_index]), 0);
+			before_index = now_index;
+		}
+		if (Obj_GetValueD(parent, "VALUE3", 0))
+		{
+			alpha = max(0, -0.1+alpha);
+		}
+		else if (alpha < 1)
+		{
+			alpha = min(1, 0.1+alpha);
+		}
+		ObjRender_SetAlpha(objText, 192*alpha);
+		local
+		{
+			let tmp = 1 - sin((t%24)*4)/10;
+			ObjRender_SetScaleXYZ(objText, tmp, tmp, 1);
+		}
+		t++;
+		yield;
+	}
+	Obj_Delete(objText);
+}
+task MenuItemCursorStay(parent, baseX, baseY)
+{
+	let sizeX = 92;
+	let sizeY = 64;
+	let objText = ObjPrim_Create(OBJ_SPRITE_2D);
+	Obj_SetRenderPriorityI(objText, 81);
+	ObjPrim_SetTexture(objText, imgTtQuestion);
+	ObjRender_SetPosition(objText, baseX, baseY, 0);
+	ObjSprite2D_SetSourceRect(objText, 192, 160, 320, 224);
+	ObjSprite2D_SetDestRect(objText, -sizeX/2, -sizeY/2, sizeX/2, sizeY/2);
+	ObjRender_SetBlendType(objText, BLEND_ADD_ARGB);
+	ObjRender_SetColor(objText, 255, 255, 0);
+	
+	let t = 0;
+	let alpha = 0;
+	let before_index = Obj_GetValueD(parent, "VALUE2", -1);
+	while(!Obj_IsDeleted(parent))
+	{
+		let now_index = Obj_GetValueD(parent, "VALUE2", -1);
+		if (now_index != before_index)
+		{
+			break;
+		}
+		if (alpha < 1)
+		{
+			alpha = min(1, 0.1+alpha);
+			ObjRender_SetAlpha(objText, 192*alpha);
+		}
+		if (t < 15)
+		{
+			let tmp = 1 - sin((t+1)/15*90)/5;
+			ObjRender_SetScaleXYZ(objText, tmp, tmp, 1);
+		}
+		t++;
+		yield;
+	}
+	Obj_Delete(objText);
+}
+
+function MenuItemQuestion(parent, index, base_x, base_y)
+{
+	let objText = ObjPrim_Create(OBJ_SPRITE_2D);
+	Obj_SetRenderPriorityI(objText, 80);
+	ObjPrim_SetTexture(objText, imgTtQuestion);
+	ObjRender_SetPosition(objText, base_x, base_y, 0);
+	Obj_SetValue(objText, "VALUE", index);
+	MenuItemQuestion_motion();
+	return(objText);
+	
+	task MenuItemQuestion_motion()
+	{
+		let alpha = 0;
+		let before_value = -99999;
+		while(!Obj_IsDeleted(parent))
+		{
+			let new_value = Obj_GetValueD(objText, "VALUE", -1);
+			if (before_value != new_value)
+			{
+				ObjSprite2D_SetSourceRect(objText, 0, 160+new_value*48, 80, 160+(new_value+1)*48);
+				ObjSprite2D_SetDestCenter(objText);
+				before_value = new_value;
+			}
+			if (alpha < 1)
+			{
+				alpha = min(1, 0.1+alpha);
+				ObjRender_SetAlpha(objText, 255*alpha);
+			}
+			yield;
+		}
+		descent(t in 0 .. 10)
+		{
+			let alpha = 255*((t+1)/10);
+			ObjRender_SetAlpha(objText, alpha);
+			yield;
+		}
+		Obj_Delete(objText);
+	}
+}
+function MenuItemQuestion2(parent, index, base_x, base_y)
+{
+	let objText = ObjPrim_Create(OBJ_SPRITE_2D);
+	Obj_SetRenderPriorityI(objText, 80);
+	ObjPrim_SetTexture(objText, imgTtQuestion);
+	ObjRender_SetPosition(objText, base_x, base_y, 0);
+	Obj_SetValue(objText, "VALUE", 3);
+	MenuItemQuestion_motion();
+	return(objText);
+	
+	task MenuItemQuestion_motion()
+	{
+		let alpha = 0;
+		let before_value = -99999;
+		while(!Obj_IsDeleted(parent))
+		{
+			let new_value = Obj_GetValueD(objText, "VALUE", -1);
+			if (before_value != new_value)
+			{
+				ObjSprite2D_SetSourceRect(objText, 80, 160+new_value*32, 144, 160+(new_value+1)*32);
+				ObjSprite2D_SetDestCenter(objText);
+				before_value = new_value;
+			}
+			if (alpha < 1)
+			{
+				alpha = min(1, 0.1+alpha);
+				ObjRender_SetAlpha(objText, 255*alpha);
+			}
+			yield;
+		}
+		descent(t in 0 .. 10)
+		{
+			let alpha = 255*((t+1)/10);
+			ObjRender_SetAlpha(objText, alpha);
+			yield;
+		}
+		Obj_Delete(objText);
+	}
+}
+
+function MenuItemButton(parent, index, base_x, base_y, ix1, iy1, ix2, iy2)
+{
+	let objText = ObjPrim_Create(OBJ_SPRITE_2D);
+	Obj_SetRenderPriorityI(objText, 80);
+	ObjPrim_SetTexture(objText, imgTtQuestion);
+	ObjRender_SetPosition(objText, base_x, base_y, 0);
+	ObjSprite2D_SetSourceRect(objText, ix1, iy1, ix2, iy2);
+	ObjSprite2D_SetDestCenter(objText);
+	MenuItemQuestion_motion();
+	return(objText);
+	
+	task MenuItemQuestion_motion()
+	{
+		let alpha = 0;
+		while(!Obj_IsDeleted(parent))
+		{
+			if (Obj_GetValueD(parent, "VALUE3", 0))
+			{
+				alpha = max(0, -0.1+alpha);
+			}
+			else if (alpha < 1)
+			{
+				alpha = min(1, 0.1+alpha);
+			}
+			ObjRender_SetAlpha(objText, 255*alpha);
+			yield;
+		}
+		descent(t in 0 .. 10)
+		{
+			ObjRender_SetAlpha(objText, 255*((t+1)/10)*alpha);
+			yield;
+		}
+		Obj_Delete(objText);
+	}
+}
+
+//----------------------------------------------------------------------------------------------------
+// ヒント用
+//----------------------------------------------------------------------------------------------------
+
+function Hint1()
+{
+	let objParent = ObjText_Create();	//適当なオブジェクトを生成（データのやり取り用）
+	Obj_SetValue(objParent, "VALUE", 0);
+	Obj_SetValue(objParent, "VALUE_X", 0);	// 問題表示フラグ
+	
+	let menuText = [
+		"１　Ｅｘステージ開始だと思った？残念でした！",
+		"２　まずは時系列の推理です",
+		"３　多すぎる選択肢",
+		"４　選択肢を絞るには",
+		"５　ミステリーのルール"];
+	let menuHint = [ 0, 1, 2, 3, 4 ];
+	if (GetAreaCommonData(CAREA_SAVE, "HINT_EXTRA_SP1", 0 ))
+	{
+		menuText = menuText ~ ["６　１周全クリアおめでとう。結構な大ヒントです"];
+		menuHint = menuHint ~ [ 5 ];
+	}
+	if (GetAreaCommonData(CAREA_SAVE, "HINT_EXTRA_SP2", 0 ))
+	{
+		menuText = menuText ~ ["７　２周全クリアおめでとう。難易度が大幅に下がる反則級ヒント！"];
+		menuHint = menuHint ~ [ 6 ];
+	}
+	if (!GetAreaCommonData(CAREA_SAVE, "EXTRA_STANDBY_QUESTION", 0 ))
+	{
+		menuText = menuText ~ ["ギブアップ！"];
+		menuHint = menuHint ~ [ -777 ];
+	}
+	menuText = menuText ~ ["タイトルへ戻る"];
+	menuHint = menuHint ~ [ -1 ];
+	
+
+	let selectMax = length(menuText);
+	ascent(iObj in 0 .. selectMax)
+	{
+		let tmp = iObj - selectMax;
+		let base_x = 96 + tmp*8;
+		let base_y = 460 + tmp*24;
+		TMenuItemText(objParent, iObj, base_x, base_y, menuText[iObj]);
+	}
+	
+	//キー状態がリセットされるまで待機
+	wait(5);
+	WaitForResetKey();
+	
+	loop
+	{
+		//キー入力待ち
+		let downKey = CheckKey_Menu(8, [VK_UP, VK_DOWN, VK_CANCEL, VK_OK]);
+		
+		alternative (downKey)
+		case (VK_UP)
+		{
+			CallSoundPackage(sndTtSelect);
+			Menu_AddValue(objParent, "VALUE", -1, selectMax);
+		}
+		case (VK_DOWN)
+		{
+			CallSoundPackage(sndTtSelect);
+			Menu_AddValue(objParent, "VALUE", 1, selectMax);
+		}
+		case (VK_CANCEL)
+		{
+			CallSoundPackage(sndTtCancel);
+			break;
+		}
+		case (VK_OK)
+		{
+			let val = menuHint[ Obj_GetValueD(objParent, "VALUE", -1) ];
+			if (val == -1)
+			{
+				CallSoundPackage(sndTtCancel);
+				break;
+			}
+			else if (val >= 0)
+			{
+				CallSoundPackage(sndTtDecide);
+				Obj_SetValue(objParent, "VALUE_X", 1);
+				ExtraHint(val);
+				Obj_SetValue(objParent, "VALUE_X", 0);
+			}
+			else if (val == -777)
+			{
+				// ギブアップ
+				let tmp = randEffectTitle(0,100);
+				if (tmp < 80) { CallSoundPackage(sndTtBeep); }
+				else if (tmp < 85) { CallSoundPackage(sndTtCancel); }
+				else if (tmp < 90) { CallSoundPackage(sndTtDecide); }
+				else if (tmp < 95) { CallSoundPackage(sndTtExtend2); }
+				else { CallSoundPackage(sndTtRight); }
+			}
+		}
+		wait(3);	//適当に固定ディレイ
+	}
+	Obj_Delete(objParent);
+}
+
+task TMenuItemText(parent, index, base_x, base_y, text)
+{
+	let objText = SetSystemText(base_x, base_y, text);
+	ObjRender_SetColor(objText, 120, 120, 160);
+	ObjText_SetFontSize(objText, 26);
+	let objTextS = SetSystemText(base_x, base_y, text);
+	ObjRender_SetBlendType(objTextS, BLEND_ADD_ARGB);
+	Obj_SetVisible(objTextS, false);
+	ObjText_SetFontSize(objTextS, 26);
+	ObjRender_SetColor(objTextS, 255, 255, 128);
+	
+	let alpha = 0;
+	let before_index = -99999;
+	let t = 0;
+	while(!Obj_IsDeleted(parent))
+	{
+		let selected_index = Obj_GetValueD(parent, "VALUE", -1);
+		if (selected_index != before_index)
+		{
+			Obj_SetVisible(objTextS, (selected_index==index));
+			before_index = selected_index;
+		}
+		if (selected_index==index && Obj_GetValueD(parent, "FLASH", 0))
+		{
+			Obj_SetVisible(objTextS, (t%6>3));
+			t++;
+		}
+		if (alpha < 1)
+		{
+			alpha = min(1, 0.1+alpha);
+		}
+		if (Obj_GetValueD(parent, "VALUE_X", 0))
+		{
+			ObjRender_SetAlpha(objText, 64*alpha);
+			ObjRender_SetAlpha(objTextS, 64*alpha);
+		}
+		else
+		{
+			ObjRender_SetAlpha(objText, 255*alpha);
+			ObjRender_SetAlpha(objTextS, 255*alpha);
+		}
+		yield;
+	}
+	descent(t in 0 .. 10)
+	{
+		let alpha = 255*((t+1)/10);
+		ObjRender_SetAlpha(objText, alpha);
+		ObjRender_SetAlpha(objTextS, alpha);
+		yield;
+	}
+	Obj_Delete(objText);
+	Obj_Delete(objTextS);
+}
+
+function ExtraHintFailed()
+{
+	let hintIndex = GetAreaCommonData(CAREA_SAVE, "HINT_EXTRA", 0 );
+	SetAreaCommonData(CAREA_SAVE, "HINT_EXTRA", (hintIndex+1)%5 );
+	ExtraHint(hintIndex);
+}
+
+function ExtraHint(hintIndex)
+{
+	let hDir = GetCurrentScriptDirectory();
+	let hintScript = [
+		hDir ~ "Hint01.dnh",
+		hDir ~ "Hint02.dnh",
+		hDir ~ "Hint03.dnh",
+		hDir ~ "Hint04.dnh",
+		hDir ~ "Hint05.dnh",
+		hDir ~ "Hint06.dnh",
+		hDir ~ "Hint07.dnh",
+		hDir ~ "Ans01.dnh",
+		hDir ~ "Ans02.dnh"];
+	
+	let path = hintScript[ hintIndex%length(hintScript) ];
+	let idScript = LoadScript(path);
+	StartScript(idScript);
+	
+	while(!IsCloseScript(idScript))
+	{
+		yield;
+	}
+}

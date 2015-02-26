@@ -1,0 +1,113 @@
+//#東方弾幕風[Stage]
+#ScriptVersion[3]
+#Title["ヒントその6"]
+#Text["ヒントその6"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./lib_commontitle.dnh"
+#include"./lib_talkTitle.dnh"
+
+@Initialize {
+	SetAutoDeleteObject(true);
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	//会話処理
+	FuncTalk();
+
+	FinishTalk(true);
+	CloseScript( GetOwnScriptID() );
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinChara1   = CreateTalkObject(BOSS_ID_KOUKAI, false);
+	let cutinChara2   = CreateTalkObject(BOSS_ID_ANZA, true);
+	
+	// 画像ファイル
+	ObjPrim_SetTexture(cutinChara1, imgCharaKoukai[5]);
+	ObjPrim_SetTexture(cutinChara2, imgCharaAnza[2]);
+	
+	SetImageFoward(cutinChara1, true);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetTalkEx(cutinChara1, "こうやって私達が推理してるのって[r]なんか違和感有るよな");
+		}
+		case(1)
+		{
+			SetTalkEx(cutinChara2, "まあ、別にこのヒント集の会話は本編[r]とは全く別個で取り扱われてるんで");
+		}
+		case(2)
+		{
+			SetTalkEx(cutinChara2, "誰が何のヒントを言っても[r]それで犯人って訳じゃないですよ。");
+		}
+		case(3)
+		{
+			ObjPrim_SetTexture(cutinChara1, imgCharaKoukai[2]);
+			SetTalkEx(cutinChara1, "じゃあ本編のヒントだが、");
+		}
+		case(4)
+		{
+			SetTalkEx(cutinChara1, "ミステリーの原則で、提示されていない[r]情報を推理に組み込まないってのが有るんだ");
+		}
+		case(5)
+		{
+			SetTalkEx(cutinChara2, "例えば私達が実は本編で犯人を知って[r]いるなんて事は有り得ません。[r]提示されてませんからね");
+		}
+		case(6)
+		{
+			ObjPrim_SetTexture(cutinChara1, imgCharaKoukai[4]);
+			SetTalkEx(cutinChara1, "おっと、勘違いするなよ？[r]ここまでは、ルナティックレべルの[r]推理をする人間に向けたヒントだ");
+		}
+		case(7)
+		{
+			SetTalkEx(cutinChara1, "そう、動機を推理する人間に向けたな");
+		}
+		case(8)
+		{
+			ObjPrim_SetTexture(cutinChara2, imgCharaAnza[6]);
+			SetTalkEx(cutinChara2, "この物語、確かに動機が謎解きの中核[r]になるのは確かなんですが");
+		}
+		case(9)
+		{
+			SetTalkEx(cutinChara2, "もしそれで犯人を当てようとすると、[r]かなり難しい推理をする事になります");
+		}
+		case(10)
+		{
+			ObjPrim_SetTexture(cutinChara1, imgCharaKoukai[2]);
+			SetTalkEx(cutinChara1, "ただエクストラを解放したいだけなら、[r]動機は一旦無視して考えるのも有りかも[r]しれないって事だ");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}

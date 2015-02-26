@@ -1,0 +1,145 @@
+// 霊夢エンディング1周目
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_common.dnh"
+#include"./../../../lib/lib_talk_ed.dnh"
+#include"./../../../lib/lib_stage.dnh"
+
+@Initialize {
+	init();
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	TBackground();
+	wait(180);
+	TEndingImage(imgEDEnding[3]);
+	//  BGM
+	PlayMusic( 8, true, 60 );
+	
+	// 会話準備
+	StartTalk();
+	wait(120);
+
+	FuncTalk();
+	wait(15);
+
+	//次のシーンへ
+	FinishTalk(true);
+	SetForbidPlayerShot(true);
+	SetForbidPlayerSpell(true);
+	
+	if (GetPlayMode() == GAME_MAIN || GetPlayMode() == GAME_DEBUG)
+	{
+		wait(240);
+		My_CloseStageScene();
+	} else {
+		CloseMine(60);
+	}
+}
+
+// 会話処理
+function FuncTalk()
+{
+	let COL0 = [160, 160, 160];
+	let COL1 = [255, 160, 160];
+	let COL2 = [160, 160, 255];
+	
+	// オブジェクト作成
+	let cutinDescri = CreateDescriptiveObject();
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetTalkEx(cutinDescri, "[r]博麗神社", COL0);
+		}
+		case(1)
+		{
+			SetTalkEx(cutinDescri, "霊夢[r]これで無事異変も収まったわね。", COL1);
+		}
+		case(2)
+		{
+			SetTalkEx(cutinDescri, "得敏[r]今回は霊夢殿の手柄ではなかったが、良いのか？", COL2);
+		}
+		case(3)
+		{
+			SetTalkEx(cutinDescri, "霊夢[r]うーん、人々の信仰を得られなかったのは残念だけど。", COL1);
+		}
+		case(4)
+		{
+			SetTalkEx(cutinDescri, "得敏[r]まあ、普段から解決してもあまり信仰を得られていなさそうだしな。", COL2);
+		}
+		case(5)
+		{
+			SetTalkEx(cutinDescri, "霊夢[r]余計な事言わないの！", COL1);
+		}
+		case(6)
+		{
+			SetTalkEx(cutinDescri, "得敏[r]しかし、どうも今回の異変、全てが有耶無耶に終わった気がしてならんな。", COL2);
+		}
+		case(7)
+		{
+			SetTalkEx(cutinDescri, "霊夢[r]どうでもいいんじゃない？収まったんだし。", COL1);
+		}
+		case(8)
+		{
+			SetTalkEx(cutinDescri, "得敏[r]こちらとしてはそうもいかん。顛末を愛宕様に報告せねば。これまでの情報をもとに推理してみよう。", COL2);
+		}
+		case(9)
+		{
+			SetTalkEx(cutinDescri, "霊夢[r]もう私には関係ないわね。", COL1);
+		}
+		case(10)
+		{
+			SetTalkEx(cutinDescri, "得敏[r]推理に協力してくれたら、相応の報酬は約束するが。", COL2);
+		}
+		case(11)
+		{
+			SetTalkEx(cutinDescri, "霊夢[r]ほら、何やってんの？さっさと会話文全部持ってきなさい！", COL1);
+		}
+		case(12)
+		{
+			SetTalkEx(cutinDescri, "[r]結局、白菊を倒しても異変の真相は明らかにならなかった。霊夢と得敏は、クリアしたステージのテキストを読むことで、隠された真相を暴く事にしたのだった。", COL0);
+		}
+		case(13)
+		{
+			SetTalkEx(cutinDescri, "[r]ＥＤ．　ＮＯ４[r]やはり金か！", COL0);
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}
+
+
+
+
+
+
+
+
+
