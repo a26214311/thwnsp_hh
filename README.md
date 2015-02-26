@@ -9,9 +9,9 @@ http://en.touhouwiki.net/wiki/White_Names_Spoiled_Past/Story
 
 <br><br>
 
-
+<img src="https://github.com/a26214311/thwnsp_hh/blob/master/mh.png?raw=true"></img>
 <br>
 
 
-a
+
 
