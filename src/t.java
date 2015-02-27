@@ -114,6 +114,7 @@ public class t {
 				String[] a = s.split("\"");
 				if(a.length==3){
 					String chat = a[1];
+					
 					chat = chat + "						////	"+ chat;
 					jc=jc+chat+rn;
 					content=content+s+rn;
@@ -174,9 +175,11 @@ public class t {
 					String[] a = s.split("\"");
 					if(a.length==3){
 						String translatedchat = br2.readLine();
-						String[] e = translatedchat.split("						////	");
+						String[] e = translatedchat.split("////");
 						if(e.length==2){
-							content=content+a[0]+"\""+e[0]+"\""+a[2]+rn;
+							String tc = e[0];
+							String tcr=tc.trim();
+							content=content+a[0]+"\""+tcr+"\""+a[2]+rn;
 						}else{
 							System.out.println("error e length:"+translatedchat);
 							content=content+a[0]+"\""+translatedchat+"\""+a[2]+rn;
