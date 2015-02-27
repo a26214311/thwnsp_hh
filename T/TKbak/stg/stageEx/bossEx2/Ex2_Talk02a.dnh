@@ -1,0 +1,159 @@
+#東方弾幕風[Single]
+#ScriptVersion[3]
+#Title["Exボス2　会話A-2"]
+#Text["Exボス2　会話A-2"]
+#Background[""]
+#System["./../../../system/System_Main.dnh"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_boss.dnh"
+#include"./../../../lib/lib_talk.dnh"
+
+// 各ボスのオブジェクトID
+
+@Event {
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+	BossEvent();
+}
+
+@Initialize {
+	Boss_Init();	//初期設定
+	objEnemy = CreateBossTalk(BOSS_ID_KAYANO);	//ボスセット
+	Obj_SetVisible(GetBossImageID(objEnemy), false);	//画像非表示
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	// 魔法陣リセット
+	BossEffect_ResetMagicCircle();
+
+	// 会話準備
+	StartTalk();
+
+	wait(30);
+	
+	//会話処理
+	FuncTalk();
+	
+	//次のシーンへ
+	FinishTalk(true);
+	Boss_Finalize(objEnemy, false, false);
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinBoss2   = CreateTalkObject(BOSS_ID_TENYU, true);
+	let cutinBoss1   = CreateTalkObject(BOSS_ID_KAYANO, true);
+	let cutinPlayer1 = CreateTalkObject(BOSS_ID_REIMU, false);
+	let cutinPlayer2 = CreateTalkObject(BOSS_ID_TOKUBI, false);
+	
+	// 画像ファイル
+	let pathBoss1 = imgCharaKayano;
+	let pathBoss2 = imgCharaTenyu;
+	let pathPlayer1 = imgCharaReimu;
+	let pathPlayer2 = imgCharaTokubi;
+	
+	// 最初に前に出てくるキャラ
+	SetImageFoward(pathBoss1, true);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let xIni = CenX;
+		let yIni = 140;
+		
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[5]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+			SetTalkEx(cutinBoss1, "うーん、流石に手負いだときついわね");
+		}
+		case(1)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[5]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+			SetTalkEx(cutinPlayer1, "何なの！あのデタラメな数の使い魔！[r]壊滅状態であれなの！？");
+		}
+		case(2)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[5]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+			SetTalkEx(cutinPlayer2, "萱野姫、もう良いであろう？[r]私も愛宕様への報告があるのだ");
+		}
+		case(3)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+			SetTalkEx(cutinBoss1, "今日の所はこれで勘弁してあげるわ");
+		}
+		case(4)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+			SetTalkEx(cutinBoss2, "まったく、姫様は無茶をし過ぎですよ");
+		}
+		case(5)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+			SetTalkEx(cutinBoss2, "連中に勝ったのですから、[r]後はゆっくり休みましょう");
+		}
+		case(6)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+			SetTalkEx(cutinPlayer1, "あんなのがトップの軍勢が幻想郷で[r]抗争してたなんて。物騒な世の中だわ");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}
+
+task EnterBoss(objEnemy, xIni, yIni)
+{
+	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
+	
+	ObjMove_SetPosition(objEnemy, CenX+64, -128);
+	SetMovePositionHermite(objEnemy, xIni-32, yIni+64,
+		600, 180, 300, 90, 65);
+	SetAction(objEnemy, ACT_MOVE_L, 65);
+	wait(70);
+	SetMovePositionHermite(objEnemy, xIni, yIni,
+		100, -90, 50, 90, 30);
+	SetAction(objEnemy, ACT_MOVE_R, 30);
+}
