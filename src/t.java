@@ -15,7 +15,7 @@ public class t {
 		String folder = "T/TK/";
 		c=0;
 		sn=0;
-		exttalk(folder);
+		exptalk(folder);
 		System.out.println("alllines:"+c);
 		System.out.println("allwords:"+sn);
 		System.out.println("finish");
@@ -114,6 +114,8 @@ public class t {
 				String[] a = s.split("\"");
 				if(a.length==3){
 					String chat = a[1];
+					
+					chat = chat + "						////	"+ chat;
 					jc=jc+chat+rn;
 					content=content+s+rn;
 					c++;
@@ -125,6 +127,7 @@ public class t {
 				String[] a = s.split("\"");
 				if(a.length==3){
 					String spellname = a[1];
+					spellname = spellname + "						////	" + spellname;
 					jc=jc+spellname+rn;
 					content=content+s+rn;
 					c++;
@@ -172,7 +175,16 @@ public class t {
 					String[] a = s.split("\"");
 					if(a.length==3){
 						String translatedchat = br2.readLine();
-						content=content+a[0]+"\""+translatedchat+"\""+a[2]+rn;
+						String[] e = translatedchat.split("////");
+						if(e.length==2){
+							String tc = e[0];
+							String tcr=tc.trim();
+							content=content+a[0]+"\""+tcr+"\""+a[2]+rn;
+						}else{
+							System.out.println("error e length:"+translatedchat);
+							content=content+a[0]+"\""+translatedchat+"\""+a[2]+rn;
+						}
+						
 					}else{
 						System.out.println(s);
 					}

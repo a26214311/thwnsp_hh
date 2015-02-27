@@ -1,0 +1,238 @@
+#東方弾幕風[Single]
+#ScriptVersion[3]
+#Title["Ex道中　会話B"]
+#Text["Ex道中　会話B"]
+#Background[""]
+#System["./../../../system/System_Main.dnh"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_boss.dnh"
+#include"./../../../lib/lib_talk.dnh"
+#include"./lib_Vinka.dnh"
+
+// 各ボスのオブジェクトID
+let objEnemy2;
+
+@Event {
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+	BossEvent();
+}
+
+@Initialize {
+	Boss_Init();	//初期設定
+	objEnemy2 = CreateBossTalkEx(BOSS_ID_MINT);	// ザコ扱い
+	objEnemy = CreateBossTalk(BOSS_ID_VINKA);	//ボスセット
+	SetZanclaw(objEnemy2, 0);				//ザンクローセット
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	// 魔法陣リセット
+	BossEffect_ResetMagicCircle();
+
+	// 会話準備
+	StartTalk();
+
+	//ボスネーム表示状態
+	BossScene_SetNameVisible(objScene, false);
+
+	wait(30);
+	
+	//会話処理
+	FuncTalk();
+	
+	//次のシーンへ
+	FinishTalk(true);
+	Boss_Finalize(objEnemy2, false, false);
+	Boss_Finalize(objEnemy, false, false);
+	eAlive = false;
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinBoss1   = CreateTalkObject(BOSS_ID_VINKA, true);
+	let cutinBoss2   = CreateTalkObject(BOSS_ID_MINT, true);
+	let cutinPlayer1 = CreateTalkObject(BOSS_ID_MARISA, false);
+	let cutinPlayer2 = CreateTalkObject(BOSS_ID_RINNE, false);
+	
+	// 画像ファイル
+	let pathBoss1 = imgCharaVinka;
+	let pathBoss2 = imgCharaMint;
+	let pathPlayer1 = imgCharaMarisa;
+	let pathPlayer2 = imgCharaRinne;
+	
+	// 隠す
+	SetImageVisible(cutinBoss1, false);
+	SetImageVisible(cutinBoss2, false);
+	//ボスネーム表示状態
+	BossScene_SetNameVisible(objScene, false);
+	// 最初に前に出てくるキャラ
+	SetImageFoward(cutinPlayer2, true);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let xIni = CenX;
+		let yIni = 140;
+		
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinPlayer2, "いいですか？魔理沙さん、[r]打ち合わせ通りに証言するんですよ？");
+		}
+		case(1)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinPlayer1, "何で私まで！お前の責任だろ？");
+		}
+		case(2)
+		{
+			BossScene_SetNameVisible(objScene, false);	//ボスネーム表示状態
+			SetImageVisible(cutinBoss1, false);	// ボス画像出現フラグ
+			SetImageVisible(cutinBoss2, false);
+
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[2]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+			SetTalkEx(cutinPlayer2, "貴方だって異変の片棒を担いだ[r]ようなものでしょう？");
+		}
+		case(3)
+		{
+			EnterBoss2(objEnemy2, xIni-80, yIni);
+
+			SetImageVisible(cutinBoss1, false);	// ボス画像出現フラグ
+			SetImageVisible(cutinBoss2, true);
+
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[8]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
+			SetTalkEx(cutinBoss2, "何だか凄い事を聞いてしまった[r]気がするわ");
+		}
+		case(4)
+		{
+			EnterBoss(objEnemy, xIni+80, yIni);
+			SetBossNameEx(cutinBoss2, 520, 180, objEnemy2);	// ボスネーム表示
+			SetBossNameEx(cutinBoss1, 300, 120, objEnemy);	// ボスネーム表示
+
+			BossScene_SetNameVisible(objScene, true);	//ボスネーム表示状態
+			SetImageVisible(cutinBoss1, true);	// ボス画像出現フラグ
+			SetImageVisible(cutinBoss2, true);
+
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[8]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
+			SetTalkEx(cutinBoss1, "犯人さん同士仲良く言い逃れたぁ、[r]随分とご立派なこって");
+		}
+		case(5)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[8]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
+			SetTalkEx(cutinPlayer1, "おい！聞かれてたぞ！");
+		}
+		case(6)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[8]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
+			SetTalkEx(cutinPlayer2, "まったく、これだから愛宕の連中の船は！");
+		}
+		case(7)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[8]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
+			SetTalkEx(cutinPlayer2, "セキュリティくらいしっかり[r]できないものですかね！？");
+		}
+		case(8)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[5]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
+			SetTalkEx(cutinBoss2, "そしたら貴方も乗れなくなるのでは？");
+		}
+		case(9)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[5]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+			SetTalkEx(cutinPlayer1, "そこに気付いてしまったか。[r]残念だがお前らには消えてもらう");
+		}
+		case(10)
+		{
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[8]);
+			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[5]);
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+			SetTalkEx(cutinBoss1, "喧嘩売ってんのか！しかし、[r]売られた喧嘩は買うのが礼儀ってもんよ！");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}
+
+task EnterBoss(objEnemy, xIni, yIni)
+{
+	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
+	
+	ObjMove_SetPosition(objEnemy, CenX+64, -128);
+	SetMovePositionHermite(objEnemy, xIni-32, yIni+64,
+		600, 180, 300, 90, 65);
+	SetAction(objEnemy, ACT_MOVE_L, 65);
+	wait(70);
+	SetMovePositionHermite(objEnemy, xIni, yIni,
+		100, -90, 50, 90, 30);
+	SetAction(objEnemy, ACT_MOVE_R, 30);
+}
+task EnterBoss2(objEnemy2, xIni, yIni)
+{
+	if (Obj_GetValueD(objEnemy2, "BOSS_MOVED", false)) { return; }
+	Obj_SetValue(objEnemy2, "BOSS_MOVED", true);
+	
+	ObjMove_SetPosition(objEnemy2, CenX-96, -128);
+	SetMovePositionHermite(objEnemy2, xIni, yIni,
+		200, 180, 0, 0, 90);
+	SetAction(objEnemy2, ACT_MOVE_L, 90);
+}

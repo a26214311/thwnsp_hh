@@ -1,0 +1,122 @@
+//#東方弾幕風[Single]
+#ScriptVersion[3]
+#Title["1面道中　会話"]
+#Text["1面道中　会話"]
+#Background[""]
+#System["./../../../system/System_Main.dnh"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_boss.dnh"
+#include"./../../../lib/lib_talk.dnh"
+
+@Event {
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+	BossEvent();
+}
+
+@Initialize {
+	Boss_Init();	//初期設定
+	objEnemy = CreateBossTalk(BOSS_ID_SETUJO);	//ボスセット
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	// 魔法陣リセット
+	BossEffect_ResetMagicCircle();
+
+	// 会話準備
+	StartTalk();
+
+	// 登場モーション
+	let xIni = CenX;
+	let yIni = 140;
+	SetAction(objEnemy, ACT_MOVE, 60);
+	ObjMove_SetDestAtWeightSpeedUp(objEnemy, xIni, yIni, 15, 4, 0.1, 12);
+	wait(60);
+	
+	//会話処理
+	FuncTalk();
+	
+	//次のシーンへ
+	FinishTalk(true);
+	Boss_Finalize(objEnemy, false, false);
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinBoss1   = CreateTalkObject(BOSS_ID_SETUJO, true);
+	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
+	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
+	
+	// 画像ファイル
+	let pathBoss = imgCharaSetujo;
+	let pathPlayer1 = imgCharaSanae;
+	let pathPlayer2 = imgCharaMinayu;
+	
+	SetImageFoward(cutinBoss1, true);
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinBoss1, "あら、早苗さんじゃないですか。[r]一緒に居るのは？");
+			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+		}
+		case(1)
+		{
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinPlayer1, "おや、貴方は初登場の動画が大コケして[r]全然知名度は無いけど、一応作者の設定[r]としては私と面識のある雪嬢さん。");
+		}
+		case(2)
+		{
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+			SetTalkEx(cutinPlayer1, "この人は新人の神様ですよ");
+		}
+		case(3)
+		{
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
+			SetTalkEx(cutinPlayer2, "忘れを司る者として、愛宕様の[r]軍勢の方々の暴挙は見過ごせません");
+		}
+		case(4)
+		{
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
+			SetTalkEx(cutinBoss1, "あらら、私は用心棒なので[r]通す訳にはいきませんね");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}

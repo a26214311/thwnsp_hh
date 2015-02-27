@@ -1,0 +1,126 @@
+// 魔理沙エンディング1周目
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_common.dnh"
+#include"./../../../lib/lib_talk_ed.dnh"
+#include"./../../../lib/lib_stage.dnh"
+
+@Initialize {
+	init();
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	TBackground();
+	wait(180);
+	TEndingImage(imgEDEnding[5]);
+	//  BGM
+	PlayMusic( 8, true, 60 );
+	
+	// 会話準備
+	StartTalk();
+	wait(120);
+
+	FuncTalk();
+	wait(15);
+
+	//次のシーンへ
+	FinishTalk(true);
+	SetForbidPlayerShot(true);
+	SetForbidPlayerSpell(true);
+	
+	if (GetPlayMode() == GAME_MAIN || GetPlayMode() == GAME_DEBUG)
+	{
+		wait(240);
+		My_CloseStageScene();
+	} else {
+		CloseMine(60);
+	}
+}
+
+// 会話処理
+function FuncTalk()
+{
+	let COL0 = [160, 160, 160];
+	let COL1 = [160, 255, 160];
+	let COL2 = [255, 255, 160];
+	let COL3 = [255, 192, 255];
+	
+	// オブジェクト作成
+	let cutinDescri = CreateDescriptiveObject();
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetTalkEx(cutinDescri, "[r]守矢神社", COL0);
+		}
+		case(1)
+		{
+			SetTalkEx(cutinDescri, "早苗[r]何という偶然でしょうね。まさか皆故さんと白菊さんにそんな因縁があったなんて。", COL1);
+		}
+		case(2)
+		{
+			SetTalkEx(cutinDescri, "皆故[r]まさか、私の正体を知ってて忘れの神になれなんてアドバイスしたんじゃないでしょうね？", COL2);
+		}
+		case(3)
+		{
+			SetTalkEx(cutinDescri, "白菊[r]すみません、本当に気がつかなくて。忘れの神として命名した事と過去に信仰を奪ってしまった事とは、全く無関係なんです。", COL3);
+		}
+		case(4)
+		{
+			SetTalkEx(cutinDescri, "早苗[r]しかしまあ、皆故さんの正体も無事判明して良かった良かった。", COL1);
+		}
+		case(5)
+		{
+			SetTalkEx(cutinDescri, "皆故[r]でも、それだと本当に異変の真相って何なんでしょう？", COL2);
+		}
+		case(6)
+		{
+			SetTalkEx(cutinDescri, "[r]皆故は、元々皆豊水意神（みなゆみのこころのかみ）という名前を持つ、地方神話オリジナルの神様であった。しかしその神話は、萱野姫を中心とする中央神話により淘汰されてしまっていたのだ。", COL0);
+		}
+		case(7)
+		{
+			SetTalkEx(cutinDescri, "[r]皆故と白菊の因縁は、長い年月を経て、幻想郷の地で解消された。明らかにならぬ真実は無い。無論、この異変の真相もである。", COL0);
+		}
+		case(8)
+		{
+			SetTalkEx(cutinDescri, "[r]ＥＤ　ＮＯ．６[r]終わり良ければ全て良し", COL0);
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}
+
+
+
+
+
+
+
+
+

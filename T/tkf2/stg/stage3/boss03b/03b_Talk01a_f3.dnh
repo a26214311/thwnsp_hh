@@ -1,0 +1,71 @@
+//#東方弾幕風[Single]
+#ScriptVersion[3]
+#Title["3面1周目　戦闘中会話"]
+#Text["3面1周目　戦闘中会話"]
+#Background[""]
+#System["./../../../system/System_Main.dnh"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_boss.dnh"
+#include"./../../../lib/lib_talk.dnh"
+#include"./../../../lib/lib_world.dnh"
+
+
+
+@Event {
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+	BossEvent();
+}
+
+@Initialize {
+	Boss_Init();	//初期設定
+	objEnemy  = CreateBossTalk(BOSS_ID_MINAYU);
+//	Obj_SetVisible(GetBossImageID(objEnemy), false);	//画像非表示
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	let xIni = CenX;
+	let yIni = 140;
+	
+	// 魔法陣リセット
+	BossEffect_ResetMagicCircle();
+	// 初期位置へ移動
+	ObjMove_SetDestAtWeightSpeedUp(objEnemy, xIni, yIni, 15, 4, 0.1, 12);
+	SetAction(objEnemy, ACT_MOVE, 60);
+	wait(75);
+	// 吹き出しセット
+	SetBossFukidashi(objEnemy, 2, 90);
+	wait(90+15);
+	SetBossFukidashi(objEnemy, 3, 120);
+	wait(120+30);
+	
+	//次のシーンへ
+	Boss_Finalize(objEnemy, false, false);
+}
+
+
+// 吹き出し
+task SetBossFukidashi(objEnemy, strID, timer)
+{
+	let objFuki = SetMiniFukidashi(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy)-50,
+		LoadingImageFile_StgTitle(3)[1], 0, 64*strID, 256, 64, timer);
+	
+	while(!Obj_IsDeleted(objFuki) && CanShotBullet(objEnemy))
+	{
+		ObjRender_SetPosition(objFuki, round(ObjMove_GetX(objEnemy)), round(ObjMove_GetY(objEnemy)-52), 0);
+		yield;
+	}
+	Obj_Delete(objFuki);
+}

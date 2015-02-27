@@ -1,0 +1,141 @@
+//#東方弾幕風[Single]
+#ScriptVersion[3]
+#Title["3面1周目　会話A"]
+#Text["3面1周目　会話A"]
+#Background[""]
+#System["./../../../system/System_Main.dnh"]
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_boss.dnh"
+#include"./../../../lib/lib_talk.dnh"
+
+
+@Event {
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+	BossEvent();
+}
+
+@Initialize {
+	Boss_Init();	//初期設定
+	objEnemy  = CreateBossTalk(BOSS_ID_RAKU);
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	// 魔法陣リセット
+	BossEffect_ResetMagicCircle();
+
+	// 会話準備
+	StartTalk();
+
+	// 登場モーション
+	let xIni = CenX;
+	let yIni = 140;
+	EnterBoss(objEnemy, xIni, yIni);
+	wait(60);
+	
+	FuncTalk();
+	
+	//次のシーンへ
+	FinishTalk(true);
+	Boss_Finalize(objEnemy, false, false);
+}
+
+// 会話処理
+function FuncTalk()
+{
+	// オブジェクト作成
+	let cutinBoss1   = CreateTalkObject(BOSS_ID_RAKU, true);
+	let cutinPlayer1 = CreateTalkObject(BOSS_ID_MARISA, false);
+	let cutinPlayer2 = CreateTalkObject(BOSS_ID_RINNE, false);
+	
+	// 画像ファイル
+	let pathBoss1 = imgCharaRaku;
+	let pathPlayer1 = imgCharaMarisa;
+	let pathPlayer2 = imgCharaRinne;
+	
+	// 最初に前に出てくるキャラ
+	SetImageFoward(pathBoss1, true);
+	
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID++;
+		WaitNext();
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let xIni = CenX;
+		let yIni = 140;
+		
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+			SetTalkEx(cutinBoss1, "ラクククク、これはこれは、[r]魔理沙さんではございませんか");
+			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+		}
+		case(1)
+		{
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+			SetTalkEx(cutinPlayer1, "また出たな？大天狗。[r]お前に構ってる暇は無いんでな");
+		}
+		case(2)
+		{
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+			SetTalkEx(cutinPlayer2, "まあそれとも、異変を解決した私達を[r]取材するのなら話は別ですがね");
+		}
+		case(3)
+		{
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+			SetTalkEx(cutinBoss1, "これはこれは、頼もしい。");
+		}
+		case(4)
+		{
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+			SetTalkEx(cutinBoss1, "では、異変解決の英雄への事前インタ[r]ビューと参りましょう。ラクククク");
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}
+task EnterBoss(objEnemy, xIni, yIni)
+{
+	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
+
+	SetMovePositionHermite(objEnemy, xIni+64, yIni-32,
+		600, 45, 0, 0, 50);
+	SetAction(objEnemy, ACT_MOVE_R, 50);
+	wait(60);
+	SetMovePositionHermite(objEnemy, xIni, yIni,
+		0, 0, 0, 0, 30);
+	SetAction(objEnemy, ACT_MOVE_L, 30);
+	wait(30);
+}

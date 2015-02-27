@@ -1,0 +1,129 @@
+// 霊夢エンディング1周目
+
+//---------------------------------------------------------------------
+
+// 関数取り込み
+#include"./../../../lib/lib_common.dnh"
+#include"./../../../lib/lib_talk_ed.dnh"
+#include"./../../../lib/lib_stage.dnh"
+
+@Initialize {
+	init();
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	TBackground();
+	wait(180);
+	TEndingImage(imgEDEnding[0]);
+	//  BGM
+	PlayMusic( 8, true, 60 );
+	
+	// 会話準備
+	StartTalk();
+	wait(120);
+
+	FuncTalk();
+	wait(15);
+
+	//次のシーンへ
+	FinishTalk(true);
+	SetForbidPlayerShot(true);
+	SetForbidPlayerSpell(true);
+	
+	if (GetPlayMode() == GAME_MAIN || GetPlayMode() == GAME_DEBUG)
+	{
+		wait(180);
+		My_CloseStageScene();
+	} else {
+		CloseMine(60);
+	}
+}
+
+// 会話処理
+function FuncTalk()
+{
+	let COL0 = [160, 160, 160];
+	let COL1 = [255, 160, 160];
+	let COL2 = [160, 160, 255];
+	
+	// オブジェクト作成
+	let cutinDescri = CreateDescriptiveObject();
+	wait(15);
+	
+	let talkID = 0;
+	loop
+	{
+		let talkType = FuncTalkSingle(talkID);
+		if (talkType == 0) { break; }
+		talkID = max(0, talkID+WaitNext());
+	}
+
+	// 会話処理単発（巻き戻しも出来るように）
+	function FuncTalkSingle(talkID)
+	{
+		let talk_type = 1;
+		alternative(talkID)
+		case(0)
+		{
+			SetTalkEx(cutinDescri, "[r]博麗神社", COL0);
+		}
+		case(1)
+		{
+			SetTalkEx(cutinDescri, "[r]皆故を倒したが、異変は解決しなかった。", COL0);
+		}
+		case(2)
+		{
+			SetTalkEx(cutinDescri, "霊夢[r]おかしいわ。記憶を司る奴を倒して解決しないんなら、いったい誰が犯人だというの？", COL1);
+		}
+		case(3)
+		{
+			SetTalkEx(cutinDescri, "得敏[r]記憶が混乱しているのか、よく判らないうちに勝ってしまったな。", COL2);
+		}
+		case(4)
+		{
+			SetTalkEx(cutinDescri, "霊夢[r]それでも勝ちは勝ちよ。奴が犯人なら、異変は解決してないとおかしい。", COL1);
+		}
+		case(5)
+		{
+			SetTalkEx(cutinDescri, "得敏[r]うーん、皆故殿が犯人に仕立て上げられていたのか？", COL2);
+		}
+		case(6)
+		{
+			SetTalkEx(cutinDescri, "霊夢[r]そもそも他人に罪を擦り付けるより、自分で起こしてそれを手柄にした方が早い気がするんだけど。", COL1);
+		}
+		case(7)
+		{
+			SetTalkEx(cutinDescri, "得敏[r]愛宕様も萱野姫も、一般人に迷惑をかける行為は好まんのでな。", COL2);
+		}
+		case(8)
+		{
+			SetTalkEx(cutinDescri, "得敏[r]抗争に巻き込んだとあっては自軍の恥というものであろう。", COL2);
+		}
+		case(9)
+		{
+			SetTalkEx(cutinDescri, "[r]ＥＤ　Ｎｏ．１[r]カタギに迷惑はかけられませんぜ", COL0);
+		}
+		others
+		{
+			return(0);
+		}
+		return(talk_type);
+	}
+}
+
+
+
+
+
+
+
+
+

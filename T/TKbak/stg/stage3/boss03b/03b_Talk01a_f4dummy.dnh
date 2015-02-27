@@ -1,0 +1,23 @@
+// だみー皆故ちゃん
+
+// 関数取り込み
+#include"./../../../lib/lib_boss.dnh"
+#include"./../../../lib/lib_talk.dnh"
+
+
+
+@Initialize {
+	Boss_Init();	//初期設定
+	Task_Main();
+}
+
+@MainLoop {
+	yield;
+
+}
+
+// メインタスク
+task Task_Main()
+{
+	objEnemy  = CreateBossTalkEx(BOSS_ID_MINAYU);
+}
