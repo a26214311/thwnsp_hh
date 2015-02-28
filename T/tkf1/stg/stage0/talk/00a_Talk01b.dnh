@@ -95,7 +95,7 @@ function FuncTalk()
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "今回は物事が覚えられなくなる異変か");
+			SetTalkEx(cutinPlayer1, "这次是记心变差的异变啊");
 		}
 		case(1)
 		{
@@ -103,7 +103,7 @@ function FuncTalk()
 			
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "是非とも黒幕をとっちめて[r]記憶操作術を貰いたい所だな");
+			SetTalkEx(cutinPlayer1, "这种时候怎么都想把黑幕打倒，[r]入手记忆操作术那");
 		}
 		case(2)
 		{
@@ -112,93 +112,93 @@ function FuncTalk()
 
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinBoss1, "すみません、[r]貴方は霧雨魔理沙さんですか？");
+			SetTalkEx(cutinBoss1, "不好意思，[r]请问你是雾雨魔理沙吗？");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "ああ、寸分の狂いもなく私が魔理沙だぜ");
+			SetTalkEx(cutinPlayer1, "嗯嗯，我就是货真价实如假包换的的魔理沙哟");
 		}
 		case(4)
 		{
 			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "私、ツチノコの[r]白菊・萱野・Ｌと申します");
+			SetTalkEx(cutinBoss1, "我是槌之子（ツチノコ）[r]白菊・萱野・Ｌ，");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "魔理沙さんを異変解決の専門家と[r]見込んで、一つ依頼をしたいのですが");
+			SetTalkEx(cutinBoss1, "听说魔理沙是解决异变的专家，[r]想拜托你一件事情。");
 		}
 		case(6)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinPlayer1, "偉く仰々しい名前だな。[r]で、その依頼ってのは？");
+			SetTalkEx(cutinPlayer1, "还真是响当当的名号那。[r]那么，你要拜托我的是什么事情呢？");
 		}
 		case(7)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinBoss1, "異変解決に私を同行させて欲しいのです。[r]多少の力になれると思います");
+			SetTalkEx(cutinBoss1, "希望你能为解决异变和我同行，[r]为解决异变尽一份力");
 		}
 		case(8)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinPlayer1, "うーん、ツチノコだろ？[r]あんま宛てにならないような…");
+			SetTalkEx(cutinPlayer1, "唔……槌之子是吧？[r]好像没法抱太多的期待啊…");
 		}
 		case(9)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinBoss1, "私がこの異変の犯人に見当が[r]ついているとしても？");
+			SetTalkEx(cutinBoss1, "即便我对于这次异变的犯人……[r]有了眉目也是如此？");
 		}
 		case(10)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinPlayer1, "何！？本当か？");
+			SetTalkEx(cutinPlayer1, "啊！？真的吗？");
 			SetFukidashiType(cutinPlayer1, FUKIDASHI_ANGER);
 		}
 		case(11)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinBoss1, "私は萱野姫様の使い魔ですが、[r]萱野姫様と敵対関係にある愛宕の軍勢と[r]日夜抗争を繰り広げています");
+			SetTalkEx(cutinBoss1, "我是萱野姫大人的使魔，[r]和萱野姫大人的敌人爱宕军团，[r]日日夜夜激烈地战斗着。");
 		}
 		case(12)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinBoss1, "お互い仕える神に認められようと必死で、[r]時に見境無く相手に力を誇示しようとする[r]輩も居るのです");
+			SetTalkEx(cutinBoss1, "为了得到各自侍奉的神明的认同，[r]不分青红皂白地拼命向对方展示着力量，[r]有这种家伙存在");
 		}
 		case(13)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "なんだ？つまり今回はその抗争が大きくなって、[r]暴走した奴が犯人ってことか？");
+			SetTalkEx(cutinPlayer1, "什么啊？也就是说这次是随着抗争的扩大，[r]而暴走起来的家伙是犯人了？");
 		}
 		case(14)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "丁度、愛宕の軍勢の一人に、[r]こんな事ができそうなのを知ってます");
+			SetTalkEx(cutinBoss1, "真不巧，我知道爱宕军团里有一个人，[r]似乎能够做到这种事情。");
 		}
 		case(15)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "そいつを討伐できれば、私にも魔理沙さん[r]にもメリットになるでしょう？");
+			SetTalkEx(cutinBoss1, "如果能把那个家伙打倒的话，无论是对我还是对魔理沙你，[r]都是有好处的吧？");
 		}
 		case(16)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "なるほど、確かにそうかもな。よし、[r]今回の異変、一緒に黒幕を倒そうぜ！");
+			SetTalkEx(cutinPlayer1, "原来如此，说不定是这回事那。[r]好的，一起把引起这次异变的黑幕打倒吧！");
 		}
 		others
 		{

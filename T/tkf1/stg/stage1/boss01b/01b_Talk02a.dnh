@@ -95,7 +95,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "くそっ、得敏一人なら2人がかりで[r]何とかなると思ったのに");
+			SetTalkEx(cutinBoss1, "靠！我以为只是得敏的话[r]我们两人就可以了。");
 		}
 		case(1)
 		{
@@ -103,7 +103,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "巫女が意外と厄介だ！");
+			SetTalkEx(cutinBoss1, "但这个巫女比我想象的要麻烦多了！");
 		}
 		case(2)
 		{
@@ -111,7 +111,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "厄介ごと持ち込んでるのはあんたらでしょ？");
+			SetTalkEx(cutinPlayer1, "麻烦的不是呆在这里的你们两人么？");
 		}
 		case(3)
 		{
@@ -119,7 +119,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "悪く思うな。犯人は私が責任を持って[r]倒して異変を解決してくる");
+			SetTalkEx(cutinPlayer2, "希望你们不要记仇。[r]我会击败犯人并解决异变的。");
 		}
 		case(4)
 		{
@@ -127,7 +127,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss2, "異変なんてどうでもいいです！");
+			SetTalkEx(cutinBoss2, "谁在乎异变啊！");
 		}
 		case(5)
 		{
@@ -135,7 +135,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss2, "ああ、まさか得敏さんに手柄を[r]横取りされるとは");
+			SetTalkEx(cutinBoss2, "哦，我不敢相信得敏从我们的鼻子底下[r]抢走了我们的荣耀。");
 		}
 		case(6)
 		{
@@ -143,7 +143,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "神様も面倒臭い世界に生きてんのね");
+			SetTalkEx(cutinPlayer1, "看起来神也生活在蛮烦人的世界里呢。");
 		}
 		others
 		{

@@ -103,7 +103,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "さて、先ほどの鬼はどなたかな？");
+			SetTalkEx(cutinPlayer2, "对了，我们刚刚遇到的鬼是谁？");
 		}
 		case(1)
 		{
@@ -111,7 +111,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "ああ、あれは山の四天王の一人らしいわよ");
+			SetTalkEx(cutinPlayer1, "哦，我记得她是四天王之一来着");
 		}
 		case(2)
 		{
@@ -119,7 +119,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "初登場の動画が大コケで全然知名度ないけど");
+			SetTalkEx(cutinPlayer1, "但她的初登场动画的知名度很低呢，[r]所以几乎没人认识她。");
 		}
 		case(3)
 		{
@@ -131,7 +131,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "で、そんな四天王殿に何を吹き込んだか知らぬが[r]用心棒に付けてしまった不貞の輩は誰だ？");
+			SetTalkEx(cutinPlayer2, "那么，我不理解她们为什么要把四天王殿下给拉上，[r]但让她当保镖的这帮不净之辈是谁呢？");
 		}
 		case(4)
 		{
@@ -144,7 +144,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss1, "私らだよ。得敏");
+			SetTalkEx(cutinBoss1, "那就是我们。得敏");
 		}
 		case(5)
 		{
@@ -156,7 +156,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss2, "異変は萱野の連中が起こしてるんでしょう？");
+			SetTalkEx(cutinBoss2, "异变是由萱野的人引起的对吧？");
 			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
 		}
 		case(6)
@@ -165,7 +165,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss2, "なら、貴方達に抜け駆けされる[r]訳にはいきませんね");
+			SetTalkEx(cutinBoss2, "我们可不能让你们把这个成就[r]从我们手上抢走。");
 		}
 		case(7)
 		{
@@ -173,7 +173,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "これがさっき言ってたあんたの同胞？");
+			SetTalkEx(cutinPlayer1, "这就是你之前所说的同伙？");
 		}
 		case(8)
 		{
@@ -181,7 +181,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "済まんな、霊夢殿");
+			SetTalkEx(cutinPlayer2, "我很抱歉，灵梦殿下");
 		}
 		case(9)
 		{
@@ -189,7 +189,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "おい、雨品龍姉妹。どうせ異変解決が[r]目的なら、私達と組まないか？");
+			SetTalkEx(cutinPlayer2, "喂，雨品龙姐妹。如果你们也想解决异变，[r]为什么不加入我们？");
 		}
 		case(10)
 		{
@@ -197,7 +197,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "嫌だね！[r]私達だけで異変を解決して名を上げる");
+			SetTalkEx(cutinBoss1, "才不要！[r]我们要解决这个异变然后收获名誉。");
 		}
 		case(11)
 		{
@@ -205,7 +205,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "あんたらの付け入る隙は無いよ！");
+			SetTalkEx(cutinBoss1, "我们才不会给你可乘之机呢！");
 		}
 		case(12)
 		{
@@ -213,7 +213,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss2, "そもそも得敏さんは権力には[r]興味が無いと思っていましたが");
+			SetTalkEx(cutinBoss2, "我以为得敏你对权利[r]興毫无兴趣呢。");
 		}
 		case(13)
 		{
@@ -221,7 +221,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "私は先日異変の犯人から襲撃を受けたんだ。");
+			SetTalkEx(cutinPlayer2, "我前日被异变犯人袭击了。");
 		}
 		case(14)
 		{
@@ -229,7 +229,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "犯人を知る者として、[r]幻想郷の巫女に協力しているだけのこと");
+			SetTalkEx(cutinPlayer2, "作为知道犯人的人，[r]我只是在协助博丽的巫女。");
 		}
 		case(15)
 		{
@@ -237,7 +237,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss2, "まあ、どっちらにしろ萱野の連中を貴方に[r]倒されては、我々の手柄の邪魔です");
+			SetTalkEx(cutinBoss2, "无论如何，如果萱野的人被你击败了，[r]我们的升职就又受到阻碍了。");
 		}
 		case(16)
 		{
@@ -245,7 +245,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "ねえ、こいつらぶっ飛ばしていいの？");
+			SetTalkEx(cutinPlayer1, "嘿，我们能直接把这两打飞了么？");
 		}
 		case(17)
 		{
@@ -253,7 +253,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "致し方ない。協力して解決も無理なら、[r]邪魔立てする輩は同胞とて許せぬ");
+			SetTalkEx(cutinPlayer2, "别无他法了。如果没法协力解决，[r]那么阻碍的你们就不是我的同胞了。");
 		}
 		case(18)
 		{
@@ -261,7 +261,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "という訳で覚悟してね（ニッコリ）");
+			SetTalkEx(cutinPlayer1, "最好做好觉悟（笑）");
 		}
 		case(19)
 		{
@@ -272,7 +272,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "愛宕様より賜りし火の力、[r]それすなはち物理学の粋");
+			SetTalkEx(cutinBoss1, "爱宕大人赐予我们的火之力[r]是物理学的顶端");
 		}
 		case(20)
 		{
@@ -280,7 +280,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss2, "波の王たる我らの前で藻屑と散るがいい！");
+			SetTalkEx(cutinBoss2, "在我们波之王的面前如同藻屑一样消散吧！");
 		}
 		others
 		{
