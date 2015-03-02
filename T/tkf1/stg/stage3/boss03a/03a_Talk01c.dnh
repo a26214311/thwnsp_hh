@@ -90,38 +90,38 @@ function FuncTalk()
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "ラクククク、ここで待っていれば[r]いらっしゃると思いましたよ。早苗さん");
+			SetTalkEx(cutinBoss1, "拉库库库库，我觉得只要在这里等着，[r]您就会大驾光临呢。早苗小姐。");
 			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(1)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "あら、大天狗の楽さん。[r]今日は取材お断りですよ");
+			SetTalkEx(cutinPlayer1, "啊拉，大天狗乐小姐。[r]今天我可不接受采访哟。");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "これは手厳しい。しかし、[r]断られたくらいで引き下がるとでも？");
+			SetTalkEx(cutinBoss1, "这可真是难办。可是，[r]只不过被区区拒绝一下，我怎么能退缩呢？");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "私達の信仰の素晴らしさを[r]広める記事なら大歓迎ですがね");
+			SetTalkEx(cutinPlayer2, "如果是宣扬我们信仰的美妙之处的新闻的话，[r]可是大欢迎的哟。");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "記事に”嘘”は書けませぬ故。");
+			SetTalkEx(cutinBoss1, "新闻是不能书写”谎言”的。");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "この様々な意思の交錯した異変。インタ[r]ビューの開始でございます。ラククク");
+			SetTalkEx(cutinBoss1, "关于这各种各样的想法交错在一起的异变。[r]采访开始了！拉库库库。");
 		}
 		others
 		{

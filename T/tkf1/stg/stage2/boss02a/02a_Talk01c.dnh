@@ -98,7 +98,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "おお、守矢の、久しぶりじゃの");
+			SetTalkEx(cutinBoss1, "噢，是守矢的，好久不见。");
 			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(1)
@@ -106,35 +106,35 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "貴方は！って誰でしたっけ？");
+			SetTalkEx(cutinPlayer1, "你是！咦是谁来着？");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "この力は…、忘れられた存在！？");
+			SetTalkEx(cutinPlayer2, "这种力量是……可以被遗忘的存在！？");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "うるさいわい！これでも忘れられ[r]とらん方じゃと自負しとるぞ！");
+			SetTalkEx(cutinBoss1, "真罗嗦！これでも忘れられ[r]とらん方じゃと自負しとるぞ！");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "この界隈も厳しいのですね");
+			SetTalkEx(cutinPlayer2, "要通过这一带也不容易呢。");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "もう怒ったぞ！[r]妾の影で叩き潰してくれる！");
+			SetTalkEx(cutinBoss1, "我可生气了！[r]让本小姐的影子把你们击溃吧！");
 			SetFukidashiType(cutinBoss1, FUKIDASHI_ANGER);
 		}
 		others

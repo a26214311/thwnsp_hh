@@ -95,7 +95,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "想像以上だ！[r]そこの巫女、現人神だったか！");
+			SetTalkEx(cutinBoss1, "出乎意料！[r]那边的巫女，难道你是现人神吗！");
 		}
 		case(1)
 		{
@@ -103,7 +103,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss2, "意外にそこの新米さんが厄介…というか、[r]貴方出典は何ですか？ぱっと見判らないんですが");
+			SetTalkEx(cutinBoss2, "更意外的是那边的新人小姐也很麻烦……说起来，[r]你的由来是？光从表面看来实在无法判断。");
 		}
 		case(2)
 		{
@@ -111,7 +111,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "……有りません");
+			SetTalkEx(cutinPlayer2, "……我没有由来。");
 		}
 		case(3)
 		{
@@ -119,7 +119,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "神に出典が無いだと！？[r]そんな事が有り得るのか！？");
+			SetTalkEx(cutinBoss1, "身为神明居然没有由来！？[r]这种事情怎么会有！？");
 		}
 		case(4)
 		{
@@ -127,7 +127,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer1, "それはさておき、これで新しい神様を[r]守矢教の配下に置くことができました");
+			SetTalkEx(cutinPlayer1, "那件事以后再说，从这一刻起，[r]守矢教有了新的神明成员了。");
 		}
 		case(5)
 		{
@@ -135,7 +135,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "冗談じゃない！");
+			SetTalkEx(cutinBoss1, "别开玩笑了！");
 			SetFukidashiType(cutinBoss1, FUKIDASHI_ANGER);
 		}
 		case(6)
@@ -147,7 +147,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss2, "お姉様、ここは逃げましょう");
+			SetTalkEx(cutinBoss2, "姐姐大人，现在开溜吧。");
 			SetFukidashiType(cutinBoss2, FUKIDASHI_ANGER);
 		}
 		case(7)
@@ -159,7 +159,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer1, "待て！");
+			SetTalkEx(cutinPlayer1, "等等！");
 			SetFukidashiType(cutinPlayer1, FUKIDASHI_ANGER);
 		}
 		case(8)
@@ -168,7 +168,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "早苗さん、こんな事してる場合じゃ[r]ないです。先に行きましょう");
+			SetTalkEx(cutinPlayer2, "早苗小姐，现在不是做这种事情的时候。[r]走吧。");
 		}
 		case(9)
 		{
@@ -176,7 +176,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "はい…");
+			SetTalkEx(cutinPlayer1, "好的……");
 		}
 		others
 		{

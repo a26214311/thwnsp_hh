@@ -94,21 +94,21 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "これは…");
+			SetTalkEx(cutinBoss1, "这究竟是……");
 		}
 		case(1)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss1, "すみません、[r]この勝負私の負けでいいです。");
+			SetTalkEx(cutinBoss1, "抱歉，[r]这场战斗就这样算我输了就好。");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss1, "戦いを終わらせて下さい");
+			SetTalkEx(cutinBoss1, "请结束战斗吧。");
 		}
 		others
 		{

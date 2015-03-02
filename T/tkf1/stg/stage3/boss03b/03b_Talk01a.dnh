@@ -92,7 +92,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "さあ、ついにここまで来たぞ！[r]姿を現せ！");
+			SetTalkEx(cutinPlayer2, "那么，终于走到这一步了呢！[r]现身吧！");
 		}
 		case(1)
 		{
@@ -103,7 +103,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "おや、誰かと思えば。");
+			SetTalkEx(cutinBoss1, "噢呀，我还以为是谁呢。");
 			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(2)
@@ -111,77 +111,77 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "先日貴方を異変の犯人として成敗[r]したのに性懲りもなく");
+			SetTalkEx(cutinBoss1, "明明之前把你当成异变的犯人教训了一顿，[r]丝毫不见悔改呢。");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer1, "なるほど、あんたが襲撃犯って訳ね");
+			SetTalkEx(cutinPlayer1, "原来如此，你就是袭击犯啊。");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "だいたいお前は記憶を司る神だろう？");
+			SetTalkEx(cutinPlayer2, "简而言之，你不是掌管记忆的神吗？");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "自らの 信仰を上げる為に自分で[r]起こしたのではないか？");
+			SetTalkEx(cutinPlayer2, "为了增加自己的信仰，[r]自己引发了这场异变，不是吗？");
 		}
 		case(6)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "私だって、忘れるという事をこんな[r]安易に使われて迷惑している所です！");
+			SetTalkEx(cutinBoss1, "什么啊，忘却这种事情变得这么容易做到了，[r]我自己正苦恼着！");
 		}
 		case(7)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "まったく、私は自分探しの旅[r]で忙しいというのに！");
+			SetTalkEx(cutinBoss1, "真是的，我明明光在寻找自我的旅途上，[r]都忙得不可开交了！");
 		}
 		case(8)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "よくわかんないけど、こいつ倒して[r]解決すればこいつが犯人って事ね？");
+			SetTalkEx(cutinPlayer1, "虽然不太明白，只要把这家伙打倒后[r]异变消失了的话，这家伙就是犯人，是这样吧？");
 		}
 		case(9)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "そうだ、霊夢殿。身の潔白は力で[r]証明するしかない！");
+			SetTalkEx(cutinPlayer2, "是的，灵梦殿下。是否清白，[r]只能用力量来证明！");
 		}
 		case(10)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "そして再び実験に没頭できる平和な[r]日々を取り戻そうではないか");
+			SetTalkEx(cutinPlayer2, "之后就能回到之前那种，可以沉浸在实验中的和平的日子了，[r]不是吗？");
 		}
 		case(11)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "私の記憶は遥か昔に[r]どこかに置いてきてしまった…");
+			SetTalkEx(cutinBoss1, "我的记忆，[r]在很久很久以前，不知被搁在何处……");
 		}
 		case(12)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "今私は貴方達を倒して、[r]新たなる記憶のページを上書きするわ！");
+			SetTalkEx(cutinBoss1, "现在我要把你们打倒，[r]新たなる記憶のページを上書きするわ！");
 		}
 		case(13)
 		{
@@ -198,21 +198,21 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "記憶は瓦礫となりて塵となりて、[r]皆々全てが故となる。");
+			SetTalkEx(cutinBoss1, "记忆化为瓦砾化为尘土，[r]众人皆化为故人。");
 		}
 		case(15)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "全てを忘れ楽になるがいい！");
+			SetTalkEx(cutinBoss1, "享受这忘却一切的快乐吧！");
 		}
 		case(16)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer1, "それどう聞いても犯人の台詞でしょ");
+			SetTalkEx(cutinPlayer1, "这怎么听都是犯人的台词才对吧！");
 		}
 		others
 		{

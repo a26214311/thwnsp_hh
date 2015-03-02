@@ -105,7 +105,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "さあ、姿を見せなさい！守矢の名にかけて、[r]異変解決の邪魔は絶対許しませんよ！");
+			SetTalkEx(cutinPlayer1, "好了，快现身吧！赌上守矢之名，[r]绝不允许你妨碍我们消除异变！");
 			SetFukidashiType(cutinPlayer1, FUKIDASHI_ANGER);
 		}
 		case(1)
@@ -120,7 +120,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "何だ？そりゃこっちの台詞だ。私らだって[r]異変を解決して手柄にするんだよ");
+			SetTalkEx(cutinBoss1, "啥啊？那是我这边的台词才对。我们正要[r]消除异变，来积累功勋呢。");
 			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(2)
@@ -129,7 +129,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "2人とも神様ですね。なら守矢の信仰の妨げ[r]になるので、ここで排除しましょう");
+			SetTalkEx(cutinPlayer1, "两个都是神明是吧。那么由于她们妨碍了守矢的信仰，[r]把她们就地解决掉吧。");
 		}
 		case(3)
 		{
@@ -137,7 +137,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "そうです！私達が先に異変を解決するんです！");
+			SetTalkEx(cutinPlayer2, "好的！我们要更早地消除异变！");
 		}
 		case(4)
 		{
@@ -145,7 +145,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss2, "なんか色々噛みあってないような");
+			SetTalkEx(cutinBoss2, "看起来是各种话不投机呢。");
 		}
 		case(5)
 		{
@@ -153,7 +153,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "守矢といえば、八坂の小娘の所か。[r]もう一度私達に負かされたいらしいな");
+			SetTalkEx(cutinBoss1, "说起守矢，是八坂那个小姑娘那边的呢。[r]看来是想要再败给我们一次呢。");
 		}
 		case(6)
 		{
@@ -161,7 +161,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss2, "あと一人土着の神が付いてますかね。[r]まあ所詮は田舎者");
+			SetTalkEx(cutinBoss2, "还跟着一个土着神呢。[r]嘛反正是从哪里的乡下来的。");
 		}
 		case(7)
 		{
@@ -169,7 +169,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss2, "エリートの神の実力を思い[r]知らせて差し上げます");
+			SetTalkEx(cutinBoss2, "就让你们好好见识一下，[r]我们神明中的精英的实力吧！");
 		}
 		case(8)
 		{
@@ -177,7 +177,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "宗教戦争の開幕ですっ！");
+			SetTalkEx(cutinPlayer1, "宗教戦争，开始！");
 			SetFukidashiType(cutinPlayer1, FUKIDASHI_ANGER);
 		}
 		case(9)
@@ -186,7 +186,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "こんな筈じゃなかったんだけど…[r]まあいいか");
+			SetTalkEx(cutinPlayer2, "虽然好像不是这个样子…[r]总之先这样吧。");
 		}
 		case(10)
 		{
@@ -197,7 +197,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "愛宕様より賜りし火の力、[r]それすなはち物理学の粋");
+			SetTalkEx(cutinBoss1, "爱宕大人赐予我们的火之力，[r]正是物理学的精髓。");
 		}
 		case(11)
 		{
@@ -205,7 +205,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss2, "波の王たる我らの前で藻屑と散るがいい！");
+			SetTalkEx(cutinBoss2, "在波之王的我等面前如藻屑般飞散吧！");
 		}
 		others
 		{

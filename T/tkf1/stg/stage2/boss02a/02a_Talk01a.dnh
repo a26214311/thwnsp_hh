@@ -98,7 +98,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "おお、博麗の、久しぶりじゃの");
+			SetTalkEx(cutinBoss1, "噢，这不是博丽吗，好久不见了。");
 			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(1)
@@ -106,42 +106,42 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "知り合いか？");
+			SetTalkEx(cutinPlayer2, "熟人吗？");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "会ったような会ってないような");
+			SetTalkEx(cutinPlayer1, "好像见过，又好像没见过。");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "丁度得敏とやらがここを通らぬよう[r]守れと言われておる");
+			SetTalkEx(cutinBoss1, "“守住这里，不能让得敏等人通过。”[r]我是被这样指示的。");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "なに、余興 じゃ。一戦交えよ");
+			SetTalkEx(cutinBoss1, "什么啊，小菜一碟。打一架吧。");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "影と地面…　萱野の連中の差し金か");
+			SetTalkEx(cutinPlayer2, "影子和地面系……萱野那边的人的指示吗");
 		}
 		case(6)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "要はぶっ飛ばせばいいのね");
+			SetTalkEx(cutinPlayer1, "总之，把她打飞就行了哟。");
 			SetFukidashiType(cutinPlayer1, FUKIDASHI_ANGER);
 		}
 		others

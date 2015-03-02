@@ -94,55 +94,55 @@ function FuncTalk()
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "皆故さん、異変が解決したの[r]はご存知でしたか？");
+			SetTalkEx(cutinPlayer1, "皆故小姐，异变已经消除了的事，[r]你听或了吗？");
 		}
 		case(1)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "早苗さん、一つご報告が有ります。[r]私、物を忘れさせる神を辞めました");
+			SetTalkEx(cutinBoss1, "早苗小姐，有件事情想告诉你。[r]我辞掉了“忘记事物之神”的职务。");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinPlayer1, "え？このタイミングでって、[r]まさか貴方が犯人だったのですか！？");
+			SetTalkEx(cutinPlayer1, "啊？在这个时候辞职，[r]难道说你是犯人吗！？");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinBoss1, "いえ、先日私に記憶に関する神に[r]なるようアドバイスをくれた方が、");
+			SetTalkEx(cutinBoss1, "不是的，之前建议我成为“关于记忆的神”[r]的那位，");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinBoss1, "私を異変の犯人だと断定して襲撃して[r]きたんですが、その時思い出したんです");
+			SetTalkEx(cutinBoss1, "一口咬定我是异变的犯人并因此袭击了我，[r]那个时候我想起来了。");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "思い出したって、もしかして[r]自分が何の神だったかをですか？");
+			SetTalkEx(cutinPlayer1, "说是想起来了，[r]莫非是想起来了你是什么神明吗？");
 		}
 		case(6)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "はい。恐らく、季節の移ろいを[r]司る神だったのではないかと");
+			SetTalkEx(cutinBoss1, "是的。恐怕是，[r]掌管季节更换的神吧。");
 		}
 		case(7)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "人々は四季を尊びます。だから私は[r]出典が無くても消えなかったんです");
+			SetTalkEx(cutinBoss1, "人们都供奉四季。所以我即便没有由来，[r]也不会消失。");
 		}
 		case(8)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "でも、何故出典が無いんでしょう？[r]そもそもどこの神様なのですか？");
+			SetTalkEx(cutinPlayer1, "但是，为什么没有由来呢？[r]本该是哪个地方的神明吧？");
 		}
 		case(9)
 		{

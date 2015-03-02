@@ -91,7 +91,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "くぅ〜、やはり私は出世できない[r]運命なのでありますかぁ〜？");
+			SetTalkEx(cutinBoss1, "可恶，果然我命中注定，[r]是无法升职的吗？");
 			SetFukidashiType(cutinBoss1, FUKIDASHI_AFRAID);
 		}
 		case(1)
@@ -99,42 +99,42 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "そうよ、世の中駄目な奴は[r]何やったって駄目なの");
+			SetTalkEx(cutinPlayer1, "对的哟，在这个世界上，失败的家伙，[r]不管怎么挣扎还是失败啊。");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "これだからオリ…なんとかは");
+			SetTalkEx(cutinPlayer2, "正因为如此这才叫做原创……什么的。");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss1, "それは貴様もオリ…なんとか[r]なのではないでありますか！？");
+			SetTalkEx(cutinBoss1, "那么你自己不也是原创……什么的，[r]难道不是这样吗！？");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "え？そうなの？");
+			SetTalkEx(cutinPlayer2, "嗯？是这样吗？");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "この業界も油断してるとすぐ[r]忘れ去られるらしいわよ");
+			SetTalkEx(cutinPlayer1, "在这个业界，要是不留心的话，[r]似乎很快就会被遗忘的哟。");
 		}
 		case(6)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "くわばらくわばら");
+			SetTalkEx(cutinPlayer2, "kuwabarakuwabara（防止落雷的咒语）。");
 			SetFukidashiType(cutinPlayer2, FUKIDASHI_AFRAID);
 		}
 		others

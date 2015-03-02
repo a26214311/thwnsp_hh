@@ -90,38 +90,38 @@ function FuncTalk()
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "ラクククク、ここで待っていれば[r]いらっしゃると思いましたよ。霊夢さん");
+			SetTalkEx(cutinBoss1, "拉库库库库，我觉得只要在这里等着，[r]您就会大驾光临呢。灵梦小姐。");
 			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(1)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "あんた、大天狗ね？文達の上司かしら？");
+			SetTalkEx(cutinPlayer1, "你是，大天狗对吧？似乎是文文他们的上司？");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "鞍馬楽。編集長でございます。[r]以後お見知りおきを");
+			SetTalkEx(cutinBoss1, "鞍馬乐。职位是主编。[r]以后请记住。");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "記者か、取材に応じている暇は無い！");
+			SetTalkEx(cutinPlayer2, "是记者啊，我们现在可没空接受采访！");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "まあ、そう仰らず。[r]この様々な意思の交錯した異変。");
+			SetTalkEx(cutinBoss1, "嘛，请别那样说。[r]关于这各种各样的想法交错在一起的异变。");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "さあ、インタビューの開始で[r]ございます。ラククク");
+			SetTalkEx(cutinBoss1, "那么，采访开始了！[r]拉库库库。");
 		}
 		others
 		{

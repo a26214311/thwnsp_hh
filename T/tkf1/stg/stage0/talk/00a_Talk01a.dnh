@@ -97,7 +97,7 @@ function FuncTalk()
 			
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinPlayer1, "啥，这次是记心变差的异变啊。[r]不快点把黑幕打倒的话会变得很麻烦呢");
+			SetTalkEx(cutinPlayer1, "啥，这次是记心变差的异变啊。[r]不快点把黑幕打倒的话会变得很麻烦呢。");
 		}
 		case(1)
 		{
@@ -106,7 +106,7 @@ function FuncTalk()
 
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinBoss1, "打搅了，[r]见过博丽的巫女殿下");
+			SetTalkEx(cutinBoss1, "打搅了，[r]见过博丽的巫女殿下。");
 		}
 		case(2)
 		{
@@ -118,13 +118,13 @@ function FuncTalk()
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "要是赛钱大大的有的话，[r]记心也许会稍微变好些哟（大心）");
+			SetTalkEx(cutinPlayer1, "要是赛钱大大的有的话，[r]记心也许会稍微变好些哟（大心）。");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "不是的，我是侍奉爱宕大人的神明，[r]名叫正鹿山得敏");
+			SetTalkEx(cutinBoss1, "不是的，我是侍奉爱宕大人的神明，[r]名叫正鹿山得敏。");
 			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(5)
@@ -137,7 +137,7 @@ function FuncTalk()
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinBoss1, "实际上在之前我遭到了袭击，[r]凶手似乎是这次异变的犯人");
+			SetTalkEx(cutinBoss1, "实际上在之前我遭到了袭击，[r]凶手似乎是这次异变的犯人。");
 		}
 		case(7)
 		{
@@ -150,61 +150,61 @@ function FuncTalk()
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinBoss1, "这个家伙，看来是想要把引发异变的责任，[r]全都嫁祸给我");
+			SetTalkEx(cutinBoss1, "这个家伙，看来是想要把引发异变的责任，[r]通通嫁祸给我。");
 		}
 		case(9)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinPlayer1, "如果是为了炫耀自己的能力而引起异变的话，[r]还好理解，");
+			SetTalkEx(cutinPlayer1, "如果是为了炫耀自己的力量而引起异变的话，[r]还好理解，");
 		}
 		case(10)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinPlayer1, "“为了家伙给别人”什么的，[r]是什么情况？（永夜异变的事情先保密不说）");
+			SetTalkEx(cutinPlayer1, "“为了嫁祸给别人”，[r]这是什么情况？（永夜异变事件是秘密）");
 		}
 		case(11)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinBoss1, "实际上，和我们爱宕大人势力对立的、[r]萱野姫的势力正在扩大纷争。");
+			SetTalkEx(cutinBoss1, "其实我们爱宕军和敌对的萱野姫军，[r]正在激烈地战斗着。");
 		}
 		case(12)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "听说过呢。[r]萱野姫是操纵草类，也就是操纵生物的势力");
+			SetTalkEx(cutinPlayer1, "听说过呢。[r]萱野姫是植物之神，也就是掌管生物的势力。");
 		}
 		case(13)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "一方面爱宕大人是火，也就是操纵物理的势力。[r]这两个势力的关系很差呢。");
+			SetTalkEx(cutinPlayer1, "而爱宕是火之神，也就是掌管物理的势力。[r]这两个势力的关系很差呢。");
 		}
 		case(14)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "而且为了尽可能地打击对手，[r]来为自己博取功名，");
+			SetTalkEx(cutinBoss1, "而且为了通过尽量打击到敌对阵营，[r]来增加自己的功勋，");
 		}
 		case(15)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "于是同一势力的成员之间展开捣乱比赛的事情也是有的。");
+			SetTalkEx(cutinBoss1, "甚至同一势力的成员之间都有过互相陷害。");
 		}
 		case(16)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "我震惊了。[r]要是我做得了物理的研究就好了");
+			SetTalkEx(cutinBoss1, "太令人惊讶了。[r]要换成我的话，只要做得了物理的研究就满足了。");
 		}
 		case(17)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinPlayer1, "那么，这次的犯人，[r]是那个萱野姫勢力里的某一个人所为的了？");
+			SetTalkEx(cutinPlayer1, "那么，这次的犯人，[r]是那个萱野姫勢力里的某一个人了？");
 		}
 		case(18)
 		{

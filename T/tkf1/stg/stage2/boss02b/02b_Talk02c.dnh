@@ -91,7 +91,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "何でありますかこいつらは！[r]また出世の機会がぁ〜");
+			SetTalkEx(cutinBoss1, "这些家伙是什么人啊！[r]这下子升职的机会又……");
 			SetFukidashiType(cutinBoss1, FUKIDASHI_AFRAID);
 		}
 		case(1)
@@ -99,35 +99,35 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "利権争いは本当に醜いですね");
+			SetTalkEx(cutinPlayer2, "权利斗争这种事情，还真是丑陋啊。");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "さっさと解決して関わり合いに[r]ならないようにしなければ");
+			SetTalkEx(cutinPlayer2, "尽快解决掉，[r]不要再扯上关系为好。");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer1, "もし出世の事で悩んだら、[r]すぐに守矢神社に来て下さいね！");
+			SetTalkEx(cutinPlayer1, "如果为升职的事情苦恼的话，[r]请立即到守矢神社来哟！");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer1, "神奈子様がいつでも貴方を最高の[r]待遇で迎えて下さるでしょう");
+			SetTalkEx(cutinPlayer1, "无论何时，神奈子大人都会用最丰厚的待遇，[r]来迎接您的吧。");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "それで萱野姫様に認められるのなら…");
+			SetTalkEx(cutinBoss1, "如果萱野姫大人能允许的话……");
 			SetFukidashiType(cutinBoss1, FUKIDASHI_AFRAID);
 		}
 		case(6)
@@ -135,7 +135,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "怪しい宗教に騙されてはいけません！");
+			SetTalkEx(cutinPlayer2, "不能被奇怪的宗教给骗了！");
 			SetFukidashiType(cutinPlayer2, FUKIDASHI_ANGER);
 		}
 		case(7)
@@ -143,7 +143,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer1, "要領の悪い人ほど勧誘しやすいっと、[r]メモメモ");
+			SetTalkEx(cutinPlayer1, "“越是自己办事不靠谱的人，越容易被别人说服”，是这么回事啊，[r]笔记笔记。");
 		}
 		others
 		{

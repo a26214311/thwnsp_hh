@@ -86,38 +86,38 @@ function FuncTalk()
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "哦，与灵梦一起的这[r]不是得敏小姐么？");
+			SetTalkEx(cutinBoss1, "哦，和灵梦小姐在一起的，[r]是得敏小姐么？");
 			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(1)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "确实。你是谁？");
+			SetTalkEx(cutinPlayer2, "确实如此。你是？");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "你可以问灵梦小姐。");
+			SetTalkEx(cutinBoss1, "关于这件事，请问过灵梦小姐。");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "你们要是在这里的话会很麻烦，[r]所以我不会让你们通过的。");
+			SetTalkEx(cutinBoss1, "钥匙你们在的话似乎会变得很麻烦，[r]所以我不会让你们通过这里的。");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "对不起，灵梦殿下。[r]看起来她是被我的同胞安排的");
+			SetTalkEx(cutinPlayer2, "不好意思，灵梦殿下。[r]看来她是接受了我的同胞的指示。");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "我不是太理解，[r]但只要把她们全部打飞就行了对吧？");
+			SetTalkEx(cutinPlayer1, "虽然不太明白，[r]总之只要把她们全都打飞就行了吧？");
 		}
 		others
 		{

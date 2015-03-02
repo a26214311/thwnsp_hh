@@ -94,43 +94,43 @@ function FuncTalk()
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinPlayer1, "あの皆故って奴を倒しても、[r]結局異変は解決しなかったのよね？");
+			SetTalkEx(cutinPlayer1, "虽然把那个叫皆故的家伙打倒了，[r]到头来异变还是没有消除呢？");
 		}
 		case(1)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinPlayer1, "他に 心当たりは無いの？");
+			SetTalkEx(cutinPlayer1, "还有其它的线索吗？");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinBoss1, "うーむ、[r]実は皆故殿を倒した後しばらくして、");
+			SetTalkEx(cutinBoss1, "嗯，[r]实际上在打倒皆故殿下后不久，");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinBoss1, "今度は萱野の軍勢の白菊という奴が[r]私を異変の犯人だと言って襲撃して[r]きたのだがな");
+			SetTalkEx(cutinBoss1, "萱野军团的一个叫做白菊的家伙，[r]硬把我说成是异变的犯人，[r]并因此袭击了我");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinPlayer1, "相変わらず酷い抗争なのね");
+			SetTalkEx(cutinPlayer1, "还真是一成不变的残酷的斗争啊");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinBoss1, "どうも彼奴らは彼奴らで、私を倒したら[r]異変が解決するなどと考えていたようだがな");
+			SetTalkEx(cutinBoss1, "他们似乎认为只要他们把我打倒了，[r]异变就能消除解决掉");
 		}
 		case(6)
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinPlayer1, "仕方ないわね。今度はそいつらを[r]とっちめに行きましょう");
+			SetTalkEx(cutinPlayer1, "没办法了呢。现在就去[r]把她们打倒吧");
 		}
 		case(7)
 		{
@@ -154,7 +154,7 @@ function FuncTalk()
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinBoss1, "そ、そんな事は無いぞ");
+			SetTalkEx(cutinBoss1, "没，没有那回事");
 			SetFukidashiType(cutinBoss1, FUKIDASHI_AFRAID);
 		}
 		case(11)
@@ -167,7 +167,7 @@ function FuncTalk()
 		{
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinPlayer1, "まあいいわ。さっさとその襲撃犯を[r]ぶっ飛ばしに行くわよ！");
+			SetTalkEx(cutinPlayer1, "哎算了。赶紧去把那个袭击你的犯人[r]打飞吧！");
 		}
 		others
 		{

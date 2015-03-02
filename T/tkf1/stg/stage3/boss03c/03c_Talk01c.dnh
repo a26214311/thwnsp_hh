@@ -90,21 +90,21 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "いよいよここまで来ましたよ！");
+			SetTalkEx(cutinPlayer1, "终于来到这里了呢！");
 		}
 		case(1)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "貴方を異変の犯人の容疑で成敗します！");
+			SetTalkEx(cutinPlayer2, "异变犯人的嫌疑，对你进行审判！");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "何だ？異変の犯人？そうか、[r]貴様ら萱野の手の者だな？");
+			SetTalkEx(cutinBoss1, "什么啊？异变的犯人？原来如此，[r]你们是萱野的手下？");
 			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(3)
@@ -112,105 +112,105 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "いえ、私は守矢の巫女、[r]そしてこちらは新人の神様です");
+			SetTalkEx(cutinPlayer1, "不，我是守矢的巫女，[r]这边的这位是新人神明。");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "守矢…ああ、八坂殿の所か。なるほど");
+			SetTalkEx(cutinBoss1, "守矢……啊，是八坂殿下的地方啊。原来如此。");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "私達との因縁から犯人だと疑いたくなる[r]のも解るが、残念ながら見当違いだ");
+			SetTalkEx(cutinBoss1, "由于我们之间的因缘，而怀疑我是犯人，[r]虽然这一点我也理解，但很遗憾你们弄错了。");
 		}
 		case(6)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "いえ、貴方は萱野姫様の軍勢を貶める為に");
+			SetTalkEx(cutinPlayer2, "不对，你是为了要削弱萱野军，");
 		}
 		case(7)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "このような異変を起こし責任を[r]なすり付けようとしているのです！");
+			SetTalkEx(cutinPlayer2, "想把引起异变的责任，[r]栽赃给萱野军！");
 		}
 		case(8)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "敵対勢力に圧力をかければ、[r]愛宕様からの評価も上がるでしょう！");
+			SetTalkEx(cutinPlayer2, "如果能给敌对势力施加压力的话，[r]爱宕大人对你的评价就会提高的吧！");
 		}
 		case(9)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "残念ながら、私は権力に興味が無いのでな。[r]それにしても貴様、神という割には出典が…");
+			SetTalkEx(cutinBoss1, "很遗憾，我对权利没有兴趣。[r]而且说起来你这家伙，说是神明，可是由来……");
 		}
 		case(10)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "今日はこれ聞かれるの３度目ですね。[r]ええ、私には出典が有りません");
+			SetTalkEx(cutinPlayer2, "今天已经是第三次被问起这件事了。[r]嗯，我没有由来。");
 		}
 		case(11)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "出典が無い！？なるほど、[r]それで“奴”に神にして貰った訳か！");
+			SetTalkEx(cutinBoss1, "没有由来！？原来如此，[r]所以才被“那个家伙”弄成神明了啊！");
 		}
 		case(12)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "ふむ、私の研究の実験台としては悪くない");
+			SetTalkEx(cutinBoss1, "嗯，作为我研究的实验对象也不错了。");
 		}
 		case(13)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "実験台！？早苗さん！この人危ないですよ！");
+			SetTalkEx(cutinPlayer2, "実験台！？早苗小姐！这个人很危险啊！");
 		}
 		case(14)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer1, "丁度いい、貴方を倒して、[r]守矢の配下に置きましょう！");
+			SetTalkEx(cutinPlayer1, "正好，先把你打倒，[r]然后把你纳为守矢的部下吧！");
 		}
 		case(15)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "何だというのだ！？[r]神を宗教勧誘などきいたことないぞ？");
+			SetTalkEx(cutinBoss1, "你说什么！？[r]劝说神明加入宗教这种事情，可是闻所未闻啊。");
 		}
 		case(16)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "しまった〜、こっちも危ない人だった！");
+			SetTalkEx(cutinPlayer2, "糟糕！这边的也是个危险的人！");
 		}
 		case(17)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer1, "まあ失礼な。それはさておき、[r]宗教戦争再び開幕です！");
+			SetTalkEx(cutinPlayer1, "失礼了。那种事情先搁到一边，[r]现在，宗教战争再次开始了！");
 		}
 		case(18)
 		{
@@ -220,14 +220,14 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "幻想郷という外から観測する[r]事のできない密室の箱。");
+			SetTalkEx(cutinBoss1, "这里是名为幻想乡的，[r]外界无法观测到密室之箱。");
 		}
 		case(19)
 		{
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "私は、貴様らの敗北する未来に[r]可能性を収束させる観測者となる！");
+			SetTalkEx(cutinBoss1, "在我的观测之下，你们接下来战败的概率，[r]将被确定下来！");
 		}
 		others
 		{

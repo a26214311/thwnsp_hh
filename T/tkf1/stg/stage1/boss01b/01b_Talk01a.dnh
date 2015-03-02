@@ -103,7 +103,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "对了，我们刚刚遇到的鬼是谁？");
+			SetTalkEx(cutinPlayer2, "对了，我们刚才遇到的鬼是哪位呢？");
 		}
 		case(1)
 		{
@@ -111,7 +111,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "哦，我记得她是四天王之一来着");
+			SetTalkEx(cutinPlayer1, "啊，她似乎是山之四天王里的一个来着。");
 		}
 		case(2)
 		{
@@ -119,7 +119,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "但她的初登场动画的知名度很低呢，[r]所以几乎没人认识她。");
+			SetTalkEx(cutinPlayer1, "虽然初登场动画的人气很低，[r]毫无知名度。");
 		}
 		case(3)
 		{
@@ -131,7 +131,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "那么，我不理解她们为什么要把四天王殿下给拉上，[r]但让她当保镖的这帮不净之辈是谁呢？");
+			SetTalkEx(cutinPlayer2, "那么，虽然不知道这位四天王殿下是被怎样教唆的，[r]雇佣她当保镖的居心叵测的家伙到底是谁呢？");
 		}
 		case(4)
 		{
@@ -144,7 +144,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss1, "那就是我们。得敏");
+			SetTalkEx(cutinBoss1, "是我们啊。得敏。");
 		}
 		case(5)
 		{
@@ -165,7 +165,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss2, "我们可不能让你们把这个成就[r]从我们手上抢走。");
+			SetTalkEx(cutinBoss2, "既然如此，我们可不能让你们[r]抢走了功劳。");
 		}
 		case(7)
 		{
@@ -173,7 +173,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "这就是你之前所说的同伙？");
+			SetTalkEx(cutinPlayer1, "这就是刚才提到的，你的同伙？");
 		}
 		case(8)
 		{
@@ -181,7 +181,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "我很抱歉，灵梦殿下");
+			SetTalkEx(cutinPlayer2, "抱歉啊，灵梦殿下。");
 		}
 		case(9)
 		{
@@ -189,7 +189,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "喂，雨品龙姐妹。如果你们也想解决异变，[r]为什么不加入我们？");
+			SetTalkEx(cutinPlayer2, "喂，雨品龙姐妹。既然目的都是解决异变，[r]我们一起组队如何？");
 		}
 		case(10)
 		{
@@ -197,7 +197,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "才不要！[r]我们要解决这个异变然后收获名誉。");
+			SetTalkEx(cutinBoss1, "才不要！[r]我们要独立解决这个异变，提高名声。");
 		}
 		case(11)
 		{
@@ -205,7 +205,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "我们才不会给你可乘之机呢！");
+			SetTalkEx(cutinBoss1, "你们可没有插手的余地呢！");
 		}
 		case(12)
 		{
@@ -213,7 +213,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss2, "我以为得敏你对权利[r]興毫无兴趣呢。");
+			SetTalkEx(cutinBoss2, "我本以为，得敏小姐对权利[r]毫无兴趣。");
 		}
 		case(13)
 		{
@@ -221,7 +221,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "我前日被异变犯人袭击了。");
+			SetTalkEx(cutinPlayer2, "我之前被异变犯人袭击了。");
 		}
 		case(14)
 		{
@@ -229,7 +229,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "作为知道犯人的人，[r]我只是在协助博丽的巫女。");
+			SetTalkEx(cutinPlayer2, "作为知道犯人是谁的人，[r]我只是在协助幻想乡的巫女而已。");
 		}
 		case(15)
 		{
@@ -237,7 +237,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss2, "无论如何，如果萱野的人被你击败了，[r]我们的升职就又受到阻碍了。");
+			SetTalkEx(cutinBoss2, "嘛，不管怎样，如果萱野的人被你们打倒了，[r]我们的功劳就没了。");
 		}
 		case(16)
 		{
@@ -245,7 +245,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "嘿，我们能直接把这两打飞了么？");
+			SetTalkEx(cutinPlayer1, "喂，可以把这两家伙直接打飞吗？");
 		}
 		case(17)
 		{
@@ -253,7 +253,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "别无他法了。如果没法协力解决，[r]那么阻碍的你们就不是我的同胞了。");
+			SetTalkEx(cutinPlayer2, "不得已了。既然无法协力解决异变，[r]那么阻碍的你们就不是我的同胞了。");
 		}
 		case(18)
 		{
@@ -261,7 +261,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "最好做好觉悟（笑）");
+			SetTalkEx(cutinPlayer1, "所以做好觉悟吧（笑）。");
 		}
 		case(19)
 		{
@@ -272,7 +272,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "爱宕大人赐予我们的火之力[r]是物理学的顶端");
+			SetTalkEx(cutinBoss1, "爱宕大人赐予我们的火之力，[r]正是物理学的精髓。");
 		}
 		case(20)
 		{
@@ -280,7 +280,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[6]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss2, "在我们波之王的面前如同藻屑一样消散吧！");
+			SetTalkEx(cutinBoss2, "在波之王的我等面前如藻屑般飞散吧！");
 		}
 		others
 		{
