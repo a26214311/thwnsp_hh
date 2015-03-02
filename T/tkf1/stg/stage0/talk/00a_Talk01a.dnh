@@ -1,13 +1,13 @@
-//#東方弾幕風[Single]
+//#����e����[Single]
 #ScriptVersion[3]
-#Title["0面　会話"]
-#Text["0面　会話"]
+#Title["0�ʁ@��b"]
+#Text["0�ʁ@��b"]
 #Background[""]
 #System["./../../../system/System_Main.dnh"]
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./../../../lib/lib_boss.dnh"
 #include"./../../../lib/lib_talk.dnh"
 
@@ -19,8 +19,8 @@
 }
 
 @Initialize {
-	Boss_Init();	//初期設定
-	objEnemy = CreateBossTalk(BOSS_ID_TOKUBI);	//ボスセット
+	Boss_Init();	//����ݒ�
+	objEnemy = CreateBossTalk(BOSS_ID_TOKUBI);	//�{�X�Z�b�g
 	Task_Main();
 }
 
@@ -29,50 +29,50 @@
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
-	// 魔法陣リセット
+	// ���@�w���Z�b�g
 	BossEffect_ResetMagicCircle();
-	//ボスネーム表示状態
+	//�{�X�l�[���\�����
 	BossScene_SetNameVisible(objScene, false);
 
-	// 会話準備
+	// ��b����
 	StartTalk();
 	wait(60);
 	
-	//会話処理
+	//��b����
 	FuncTalk();
 	wait(15);
 	
-	// 画面外へ
+	// ��ʊO��
 	ObjMove_SetDestAtWeightSpeedUp(objEnemy, CenX+64, -256, 15, 3, 0.1, 12);
 	SetAction(objEnemy, ACT_MOVE, 60);
 
-	//次のシーンへ
+	//���̃V�[����
 	FinishTalk(true);
 	Boss_Finalize(objEnemy, false, false);
 
-	// やっぱりショットボム禁止
+	// ����ς�V���b�g�{���֎~
 	SetForbidPlayerShot(true);
 	SetForbidPlayerSpell(true);
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
 	let xIni = CenX;
 	let yIni = 140;
 	
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_TOKUBI, true);
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_REIMU_L, false);
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	let pathBoss1   = imgCharaTokubi;
 	let pathPlayer1 = imgCharaReimu;
 	
-	// 隠す
+	// �B��
 	SetImageVisible(cutinBoss1, false);
 
 	SetImageFoward(cutinPlayer1, true);
@@ -86,14 +86,14 @@ function FuncTalk()
 		talkID = max(0, talkID+WaitNext());
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let talk_type = 1;
 		alternative(talkID)
 		case(0)
 		{
-			SetImageVisible(cutinBoss1, false);	// ボス画像出現フラグ
+			SetImageVisible(cutinBoss1, false);	// �{�X�摜�o���t���O
 			
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
@@ -102,7 +102,7 @@ function FuncTalk()
 		case(1)
 		{
 			EnterBoss(objEnemy, xIni, yIni);
-			SetImageVisible(cutinBoss1, true);	// ボス画像出現フラグ
+			SetImageVisible(cutinBoss1, true);	// �{�X�摜�o���t���O
 
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
@@ -125,7 +125,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			SetTalkEx(cutinBoss1, "不是的，我是侍奉爱宕大人的神明，[r]名叫正鹿山得敏");
-			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(5)
 		{

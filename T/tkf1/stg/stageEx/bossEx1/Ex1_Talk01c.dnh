@@ -1,17 +1,17 @@
-#東方弾幕風[Single]
+#����e����[Single]
 #ScriptVersion[3]
-#Title["Exボス1　会話C"]
-#Text["Exボス1　会話C"]
+#Title["Ex�{�X1�@��bC"]
+#Text["Ex�{�X1�@��bC"]
 #Background[""]
 #System["./../../../system/System_Main.dnh"]
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./../../../lib/lib_boss.dnh"
 #include"./../../../lib/lib_talk.dnh"
 
-// 各ボスのオブジェクトID
+// �e�{�X�̃I�u�W�F�N�gID
 
 @Event {
 	alternative(GetEventType())
@@ -21,8 +21,8 @@
 }
 
 @Initialize {
-	Boss_Init();	//初期設定
-	objEnemy = CreateBossTalk(BOSS_ID_AZUMA);	//ボスセット
+	Boss_Init();	//����ݒ�
+	objEnemy = CreateBossTalk(BOSS_ID_AZUMA);	//�{�X�Z�b�g
 	Task_Main();
 }
 
@@ -31,45 +31,45 @@
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
-	// 魔法陣リセット
+	// ���@�w���Z�b�g
 	BossEffect_ResetMagicCircle();
 
-	// 会話準備
+	// ��b����
 	StartTalk();
-	//ボスネーム表示状態
+	//�{�X�l�[���\�����
 	BossScene_SetNameVisible(objScene, false);
 
 	wait(30);
 	
-	//会話処理
+	//��b����
 	FuncTalk();
 	
-	//次のシーンへ
+	//���̃V�[����
 	FinishTalk(true);
 	Boss_Finalize(objEnemy, false, false);
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_AZUMA, true);
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	let pathBoss1 = imgCharaAzuma;
 	let pathPlayer1 = imgCharaSanae;
 	let pathPlayer2 = imgCharaMinayu;
 	
-	// 隠す
+	// �B��
 	SetImageVisible(cutinBoss1, false);
-	//ボスネーム表示状態
+	//�{�X�l�[���\�����
 	BossScene_SetNameVisible(objScene, false);
-	// 最初に前に出てくるキャラ
+	// �ŏ��ɑO�ɏo�Ă���L����
 	SetImageFoward(cutinPlayer1, true);
 	wait(15);
 	
@@ -81,7 +81,7 @@ function FuncTalk()
 		talkID = max(0, talkID+WaitNext());
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let xIni = CenX;
@@ -91,15 +91,15 @@ function FuncTalk()
 		alternative(talkID)
 		case(0)
 		{
-			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);		// 表情付け（現在ボスは画像がないのでそのまま）
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);		// �\��t���i���݃{�X�͉摜���Ȃ��̂ł��̂܂܁j
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
 			SetTalkEx(cutinPlayer1, "ごめん下さい。愛宕様はいらっしゃいますか？");
 		}
 		case(1)
 		{
-			BossScene_SetNameVisible(objScene, false);	//ボスネーム表示状態
-			SetImageVisible(cutinBoss1, false);	// ボス画像出現フラグOFF
+			BossScene_SetNameVisible(objScene, false);	//�{�X�l�[���\�����
+			SetImageVisible(cutinBoss1, false);	// �{�X�摜�o���t���OOFF
 
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
@@ -110,8 +110,8 @@ function FuncTalk()
 		{
 
 			EnterBoss(objEnemy, xIni, yIni);
-			SetBossNameEx(cutinBoss1, 280, 180, objEnemy);	// ボスネーム表示
-			SetImageVisible(cutinBoss1, true);	// ボス画像出現フラグON
+			SetBossNameEx(cutinBoss1, 280, 180, objEnemy);	// �{�X�l�[���\��
+			SetImageVisible(cutinBoss1, true);	// �{�X�摜�o���t���OON
 
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);

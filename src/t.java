@@ -162,7 +162,7 @@ public class t {
 		String translatedfilepath = filename.getPath().replace("/TK/", "/tkf2/");
 		File translatedfile = new File(translatedfilepath);
 		try{
-			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename),"Shift-JIS"));
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename),"utf-8"));
 			BufferedReader br2 = null;
 			try {
 				br2 = new BufferedReader(new InputStreamReader(new FileInputStream(translatedfile),"utf-8"));

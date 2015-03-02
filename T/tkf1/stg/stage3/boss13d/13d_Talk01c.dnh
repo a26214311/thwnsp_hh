@@ -1,13 +1,13 @@
-//#東方弾幕風[Single]
+//#����e����[Single]
 #ScriptVersion[3]
-#Title["3面1周目　会話A"]
-#Text["3面1周目　会話A"]
+#Title["3��1��ځ@��bA"]
+#Text["3��1��ځ@��bA"]
 #Background[""]
 #System["./../../../system/System_Main.dnh"]
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./../../../lib/lib_boss.dnh"
 #include"./../../../lib/lib_talk.dnh"
 
@@ -20,7 +20,7 @@
 }
 
 @Initialize {
-	Boss_Init();	//初期設定
+	Boss_Init();	//����ݒ�
 	objEnemy  = CreateBossTalk(BOSS_ID_RINNE);
 	Task_Main();
 }
@@ -30,45 +30,45 @@
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
-	// 魔法陣リセット
+	// ���@�w���Z�b�g
 	BossEffect_ResetMagicCircle();
 
-	// 会話準備
+	// ��b����
 	StartTalk();
 
-	// 登場モーション（最初は非表示）
+	// �o�ꃂ�[�V�����i�ŏ��͔�\���j
 	let xIni = CenX;
 	let yIni = 140;
 	
 	EnterBoss(objEnemy, xIni, yIni);
-	BossScene_SetNameVisible(objScene, true);	//ボスネーム表示状態
+	BossScene_SetNameVisible(objScene, true);	//�{�X�l�[���\�����
 
 	wait(60);
 	
 	FuncTalk();
 	
-	//次のシーンへ
+	//���̃V�[����
 	FinishTalk(true);
 	Boss_Finalize(objEnemy, false, false);
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_RINNE, true);
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	let pathBoss1 = imgCharaRinne;
 	let pathPlayer1 = imgCharaSanae;
 	let pathPlayer2 = imgCharaMinayu;
 	
-	// 最初に前に出てくるキャラ
+	// �ŏ��ɑO�ɏo�Ă���L����
 	SetImageFoward(cutinPlayer2, true);
 	
 	wait(15);
@@ -81,7 +81,7 @@ function FuncTalk()
 		talkID = max(0, talkID+WaitNext());
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let talk_type = 1;
@@ -106,7 +106,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
 			SetTalkEx(cutinBoss1, "何を言い出すかと思えば、[r]今更犯人探しですか？");
-			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(3)
 		{

@@ -1,18 +1,18 @@
-#東方弾幕風[Single]
+#����e����[Single]
 #ScriptVersion[3]
-#Title["Ex道中　会話C"]
-#Text["Ex道中　会話C"]
+#Title["Ex�����@��bC"]
+#Text["Ex�����@��bC"]
 #Background[""]
 #System["./../../../system/System_Main.dnh"]
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./../../../lib/lib_boss.dnh"
 #include"./../../../lib/lib_talk.dnh"
 #include"./lib_Vinka.dnh"
 
-// 各ボスのオブジェクトID
+// �e�{�X�̃I�u�W�F�N�gID
 let objEnemy2;
 
 @Event {
@@ -23,10 +23,10 @@ let objEnemy2;
 }
 
 @Initialize {
-	Boss_Init();	//初期設定
-	objEnemy2 = CreateBossTalkEx(BOSS_ID_MINT);	// ザコ扱い
-	objEnemy = CreateBossTalk(BOSS_ID_VINKA);	//ボスセット
-	SetZanclaw(objEnemy2, 0);				//ザンクローセット
+	Boss_Init();	//����ݒ�
+	objEnemy2 = CreateBossTalkEx(BOSS_ID_MINT);	// �U�R����
+	objEnemy = CreateBossTalk(BOSS_ID_VINKA);	//�{�X�Z�b�g
+	SetZanclaw(objEnemy2, 0);				//�U���N���[�Z�b�g
 	Task_Main();
 }
 
@@ -35,51 +35,51 @@ let objEnemy2;
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
-	// 魔法陣リセット
+	// ���@�w���Z�b�g
 	BossEffect_ResetMagicCircle();
 
-	// 会話準備
+	// ��b����
 	StartTalk();
 
-	//ボスネーム表示状態
+	//�{�X�l�[���\�����
 	BossScene_SetNameVisible(objScene, false);
 
 	wait(30);
 	
-	//会話処理
+	//��b����
 	FuncTalk();
 	
-	//次のシーンへ
+	//���̃V�[����
 	FinishTalk(true);
 	Boss_Finalize(objEnemy2, false, false);
 	Boss_Finalize(objEnemy, false, false);
 	eAlive = false;
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_VINKA, true);
 	let cutinBoss2   = CreateTalkObject(BOSS_ID_MINT, true);
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	let pathBoss1 = imgCharaVinka;
 	let pathBoss2 = imgCharaMint;
 	let pathPlayer1 = imgCharaSanae;
 	let pathPlayer2 = imgCharaMinayu;
 	
-	// 隠す
+	// �B��
 	SetImageVisible(cutinBoss1, false);
 	SetImageVisible(cutinBoss2, false);
-	//ボスネーム表示状態
+	//�{�X�l�[���\�����
 	BossScene_SetNameVisible(objScene, false);
-	// 最初に前に出てくるキャラ
+	// �ŏ��ɑO�ɏo�Ă���L����
 	SetImageFoward(cutinPlayer1, true);
 	wait(15);
 	
@@ -91,7 +91,7 @@ function FuncTalk()
 		talkID = max(0, talkID+WaitNext());
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let xIni = CenX;
@@ -117,8 +117,8 @@ function FuncTalk()
 		}
 		case(2)
 		{
-			BossScene_SetNameVisible(objScene, false);	//ボスネーム表示状態
-			SetImageVisible(cutinBoss1, false);	// ボス画像出現フラグ
+			BossScene_SetNameVisible(objScene, false);	//�{�X�l�[���\�����
+			SetImageVisible(cutinBoss1, false);	// �{�X�摜�o���t���O
 			SetImageVisible(cutinBoss2, false);
 
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
@@ -131,7 +131,7 @@ function FuncTalk()
 		{
 			EnterBoss(objEnemy, xIni+80, yIni);
 
-			SetImageVisible(cutinBoss1, true);	// ボス画像出現フラグ
+			SetImageVisible(cutinBoss1, true);	// �{�X�摜�o���t���O
 			SetImageVisible(cutinBoss2, false);
 
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
@@ -143,11 +143,11 @@ function FuncTalk()
 		case(4)
 		{
 			EnterBoss2(objEnemy2, xIni-80, yIni);
-			SetBossNameEx(cutinBoss2, 400, 120, objEnemy2);	// ボスネーム表示
-			SetBossNameEx(cutinBoss1, 260, 200, objEnemy);	// ボスネーム表示
+			SetBossNameEx(cutinBoss2, 400, 120, objEnemy2);	// �{�X�l�[���\��
+			SetBossNameEx(cutinBoss1, 260, 200, objEnemy);	// �{�X�l�[���\��
 
-			BossScene_SetNameVisible(objScene, true);	//ボスネーム表示状態
-			SetImageVisible(cutinBoss1, true);	// ボス画像出現フラグ
+			BossScene_SetNameVisible(objScene, true);	//�{�X�l�[���\�����
+			SetImageVisible(cutinBoss1, true);	// �{�X�摜�o���t���O
 			SetImageVisible(cutinBoss2, true);
 
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
@@ -202,7 +202,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinBoss2,   pathBoss2[5]);
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx2(cutinBoss2, "やっちまえ、やっちまえ！", -140, -32);
+			SetTalkEx2(cutinBoss2, "������܂��A������܂��I", -140, -32);
 		}
 		case(11)
 		{

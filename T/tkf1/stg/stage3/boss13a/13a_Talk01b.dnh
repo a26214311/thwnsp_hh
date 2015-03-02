@@ -1,13 +1,13 @@
-//#東方弾幕風[Single]
+//#����e����[Single]
 #ScriptVersion[3]
-#Title["3面1周目　会話A"]
-#Text["3面1周目　会話A"]
+#Title["3��1��ځ@��bA"]
+#Text["3��1��ځ@��bA"]
 #Background[""]
 #System["./../../../system/System_Main.dnh"]
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./../../../lib/lib_boss.dnh"
 #include"./../../../lib/lib_talk.dnh"
 
@@ -20,7 +20,7 @@
 }
 
 @Initialize {
-	Boss_Init();	//初期設定
+	Boss_Init();	//����ݒ�
 	objEnemy  = CreateBossTalk(BOSS_ID_RAKU);
 	Task_Main();
 }
@@ -30,16 +30,16 @@
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
-	// 魔法陣リセット
+	// ���@�w���Z�b�g
 	BossEffect_ResetMagicCircle();
 
-	// 会話準備
+	// ��b����
 	StartTalk();
 
-	// 登場モーション
+	// �o�ꃂ�[�V����
 	let xIni = CenX;
 	let yIni = 140;
 	EnterBoss(objEnemy, xIni, yIni);
@@ -47,25 +47,25 @@ task Task_Main()
 	
 	FuncTalk();
 	
-	//次のシーンへ
+	//���̃V�[����
 	FinishTalk(true);
 	Boss_Finalize(objEnemy, false, false);
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_RAKU, true);
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_MARISA, false);
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_RINNE, false);
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	let pathBoss1 = imgCharaRaku;
 	let pathPlayer1 = imgCharaMarisa;
 	let pathPlayer2 = imgCharaRinne;
 	
-	// 最初に前に出てくるキャラ
+	// �ŏ��ɑO�ɏo�Ă���L����
 	SetImageFoward(pathBoss1, true);
 	
 	wait(15);
@@ -79,7 +79,7 @@ function FuncTalk()
 		WaitNext();
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let xIni = CenX;
@@ -92,7 +92,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
 			SetTalkEx(cutinBoss1, "ラクククク、これはこれは、[r]魔理沙さんではございませんか");
-			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(1)
 		{

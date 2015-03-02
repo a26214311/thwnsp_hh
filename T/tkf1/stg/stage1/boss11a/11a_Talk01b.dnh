@@ -1,13 +1,13 @@
-//#東方弾幕風[Single]
+//#����e����[Single]
 #ScriptVersion[3]
-#Title["1面道中　会話"]
-#Text["1面道中　会話"]
+#Title["1�ʓ����@��b"]
+#Text["1�ʓ����@��b"]
 #Background[""]
 #System["./../../../system/System_Main.dnh"]
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./../../../lib/lib_boss.dnh"
 #include"./../../../lib/lib_talk.dnh"
 
@@ -19,8 +19,8 @@
 }
 
 @Initialize {
-	Boss_Init();	//初期設定
-	objEnemy = CreateBossTalk(BOSS_ID_SETUJO);	//ボスセット
+	Boss_Init();	//����ݒ�
+	objEnemy = CreateBossTalk(BOSS_ID_SETUJO);	//�{�X�Z�b�g
 	Task_Main();
 }
 
@@ -29,39 +29,39 @@
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
-	// 魔法陣リセット
+	// ���@�w���Z�b�g
 	BossEffect_ResetMagicCircle();
 
-	// 会話準備
+	// ��b����
 	StartTalk();
 
-	// 登場モーション
+	// �o�ꃂ�[�V����
 	let xIni = CenX;
 	let yIni = 140;
 	SetAction(objEnemy, ACT_MOVE, 60);
 	ObjMove_SetDestAtWeightSpeedUp(objEnemy, xIni, yIni, 15, 4, 0.1, 12);
 	wait(60);
 	
-	//会話処理
+	//��b����
 	FuncTalk();
 	
-	//次のシーンへ
+	//���̃V�[����
 	FinishTalk(true);
 	Boss_Finalize(objEnemy, false, false);
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_SETUJO, true);
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_MARISA, false);
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_RINNE, false);
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	let pathBoss = imgCharaSetujo;
 	let pathPlayer1 = imgCharaMarisa;
 	let pathPlayer2 = imgCharaRinne;
@@ -77,7 +77,7 @@ function FuncTalk()
 		talkID = max(0, talkID+WaitNext());
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let talk_type = 1;
@@ -87,7 +87,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
 			SetTalkEx(cutinBoss1, "おや、魔理沙さんと白菊さん、[r]また会いましたね");
-			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(1)
 		{

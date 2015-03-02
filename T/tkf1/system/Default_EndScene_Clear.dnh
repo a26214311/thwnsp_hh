@@ -6,14 +6,14 @@
 #include "./lib/Ed.dnh"
 
 
-//　ｴﾝﾃﾞｨﾝｸﾞ系ﾌｧｲﾙ読み込み
+//�@���ިݸތņ�ٓǂݍ���
 //#include"../../lib/Lib_ED.dnh"
 
 
 @Initialize{
 	SetAutoDeleteObject(true);
 	
-	// クリア済みフラグON
+	// �N���A�ς݃t���OON
 	SetAreaCommonData(CAREA_STAGE, "GAME_CLEAR", 1 );
 	SetHightScore();
 	TBackgroundD();
@@ -47,7 +47,7 @@ task TMenu{
 	
 	//----------------------------------------------------------------
 	//----------------------------------------------------------------
-	//　メニュー作成関数
+	//�@���j���[�쐬�֐�
 	task TMenuItem(let index, let mx, let my, let text){
 		let alpha1	= 0;
 		let alphaA	= 0;
@@ -78,7 +78,7 @@ task TMenu{
 			alpha1 = 255 * sin( alphaA );
 			move3 = 1 * sin( moveC );
 			
-			//　選択中は横に移動
+			//�@�I�𒆂͉��Ɉړ�
 			if( index == selectIndex ){
 				move2 = 0;
 				moveB = 0;
@@ -119,23 +119,23 @@ task TMenu{
 	//----------------------------------------------------------------
 	
 	
-	//メニュー配置
+	//���j���[�z�u
 	let ID			= ObjPrim_Create(OBJ_SPRITE_2D);
 	let mode		= GetPlayMode();
 	let clear		= GetAreaCommonData(CAREA_SYSTEM, "ClearSpellPractice", false ) ;
 	let continue		= GetContinueCount();
-	let selectIndex		= 0;		//選択位置
+	let selectIndex		= 0;		//�I���ʒu
 	let cc			= 0;
 	let mx			= GetScreenWidth/2;
 	let my			= 240;
-	let texts		= ["リプレイを保存する", "タイトルに戻る"];
+	let texts		= ["���v���C��ۑ�����", "�^�C�g���ɖ߂�"];
 	let listResult		= [RESULT_SAVE_REPLAY, RESULT_END];
 	let rgb			= [64,160,160];
 
-	//　こんてぬー時
+	//�@����Ăʁ[��
 	if( continue > 0 )
 	{
-		texts		= ["タイトルに戻る"];
+		texts		= ["�^�C�g���ɖ߂�"];
 		listResult	= [RESULT_END];
 	}
 	
@@ -147,32 +147,32 @@ task TMenu{
 	}
 	ObjRender_SetColor(ID, rgb[0], rgb[1], rgb[2] );
 	
-	//　8フレーム待機
+	//�@8�t���[���ҋ@
 	loop( 8 ){ yield; }
 	
-	//キー状態がリセットされるまで待機
+	//�L�[��Ԃ����Z�b�g�����܂őҋ@
 	while( GetVirtualKeyState(VK_OK) != KEY_FREE ){ yield; }
 	
-	//メニュー選択処理
-	let frameKeyHold = 0;//キー押しっぱなしフレーム数
+	//���j���[�I������
+	let frameKeyHold = 0;//�L�[�������ςȂ��t���[����
 	loop
 	{
-		//決定
+		//����
 		if( GetVirtualKeyState(VK_OK) == KEY_PULL )
 		{
-			//　リザルトセット
+			//�@���U���g�Z�b�g
 			SetScriptResult( listResult[selectIndex] );
 			
-			if( texts[ selectIndex ] == "リプレイを保存する" )
+			if( texts[ selectIndex ] == "���v���C��ۑ�����" )
 			{
 				CallSoundPackage(sndTtDecide);
 				CallReplaySaveScene();
 			}
 			else
 			{
-				//　得点リセット
+				//�@���_���Z�b�g
 				AddScore( -GetScore() );
-				//　スペプラクリアフラグリセット　かけら系リセット　点符リセット
+				//�@�X�y�v���N���A�t���O���Z�b�g�@������n���Z�b�g�@�_�����Z�b�g
 				menu_on = false;
 				CallSoundPackage(sndTtDecide);
 				loop( 12 ){ yield; }
@@ -181,7 +181,7 @@ task TMenu{
 			}
 		}
 		
-		//カーソル移動
+		//�J�[�\���ړ�
 		if(GetVirtualKeyState(VK_UP) == KEY_PUSH)
 		{
 			selectIndex--;
@@ -239,12 +239,12 @@ function CallReplaySaveScene()
 	let cc			= 0;
 	
 	IsReplaySave = true;
-//	SetScriptArgument(idScript, 0, 1);	//クリア時はキーボードを真ん中に
+//	SetScriptArgument(idScript, 0, 1);	//�N���A���̓L�[�{�[�h��^�񒆂�
 	StartScript(idScript);
 	
 	while( !IsCloseScript(idScript) )
 	{
-		// はっぱっぱ
+		// �͂��ς���
 		if( cc%10 == 0 ){
 			CreatePauseEffect([randEffect(32,32+384),randEffect(-64,256)], 90+randEffect(-32,32), 1, 0, 10,
 								[255,255,255], randEffect(32,64), 128 );
@@ -256,12 +256,12 @@ function CallReplaySaveScene()
 	IsReplaySave = false;
 }
 
-// 解放フラグ
+// ���t���O
 function SetFlag()
 {
-	// クリアフラグ
+	// �N���A�t���O
 	CDM_SetAllClearFlag( GetPlayerTypeEx(), Difficult() , GetLap() );
-	// プラクティスフラグON（ロジプラ用）
+	// �v���N�e�B�X�t���OON�i���W�v���p�j
 	CDM_SetPracticeStageFlag( GetPlayerType(), STAGE_ENDING, Difficult(), GetLap());
 	
 	if (GetLap() <= 0)
@@ -271,15 +271,15 @@ function SetFlag()
 			SetAreaCommonData(CAREA_SAVE, "MESSAGE_CLEAR_01", 1 );
 
 			CallSoundPackage(sndTtPause);
-			MakeInfomation("1周目クリアおめでとう！[r]同じキャラでもう1度プレイしてみよう！");
-			MakeInfomation("ＳＴＧは2周目が難しい…[r]しかしこれは推理ＳＴＧ、2周目で難しくなるのは推理内容だ！");
+			MakeInfomation("1��ڃN���A���߂łƂ��I[r]�����L�����ł���1�x�v���C���Ă݂悤�I");
+			MakeInfomation("�r�s�f��2��ڂ�����c[r]����������͐����r�s�f�A2��ڂœ���Ȃ�̂͐������e���I");
 			loop(30) { yield; }
 		}
 	}
 	
 	if (GetLap() >= 1)
 	{
-		// Ex解放
+		// Ex���
 		CDM_SetExtraStageFlag( GetPlayerType() );
 		
 		if (!GetAreaCommonData(CAREA_SAVE, "MESSAGE_CLEAR_02", 0 ))
@@ -287,12 +287,12 @@ function SetFlag()
 			SetAreaCommonData(CAREA_SAVE, "MESSAGE_CLEAR_02", 1 );
 
 			CallSoundPackage(sndTtPause);
-			MakeInfomation("2周目クリアおめでとう！[r]Extraステージ開放条件は、事件の真相を解く事だ！");
+			MakeInfomation("2��ڃN���A���߂łƂ��I[r]Extra�X�e�[�W�J������́A�����̐^�������������I");
 			loop(30) { yield; }
 		}
 	}
 
-	// 全キャラクリアチェック
+	// �S�L�����N���A�`�F�b�N
 	if (!GetAreaCommonData(CAREA_SAVE, "HINT_EXTRA_SP1", 0 ))
 	{
 		let flg = 0;
@@ -319,11 +319,11 @@ function SetFlag()
 			SetAreaCommonData(CAREA_SAVE, "HINT_EXTRA_SP1", 1 );
 
 			CallSoundPackage(sndTtPause);
-			MakeInfomation("1周目全キャラクリアおめでとう！[r]新しいヒントを見られるようになったぞ！[r]見るかどうかは貴方次第…");
+			MakeInfomation("1��ڑS�L�����N���A���߂łƂ��I[r]�V�����q���g��������悤�ɂȂ������I[r]���邩�ǂ����͋M���c");
 			loop(30) { yield; }
 		}
 	}
-	// ２周目全キャラクリアチェック
+	// �Q��ڑS�L�����N���A�`�F�b�N
 	if (!GetAreaCommonData(CAREA_SAVE, "HINT_EXTRA_SP2", 0 ))
 	{
 		let flg = 0;
@@ -350,17 +350,17 @@ function SetFlag()
 			SetAreaCommonData(CAREA_SAVE, "HINT_EXTRA_SP2", 1 );
 
 			CallSoundPackage(sndTtPause);
-			MakeInfomation("2周目全キャラクリアおめでとう！[r]最後の特大ヒントを見られるようになったぞ！[r]難しいステージをクリアしたご褒美だ！");
+			MakeInfomation("2��ڑS�L�����N���A���߂łƂ��I[r]�Ō�̓���q���g��������悤�ɂȂ������I[r]����X�e�[�W���N���A�������J��I");
 			loop(30) { yield; }
 		}
 	}
 }
 
-// 暗転
+// �Ó]
 task TBackgroundEd
 {
-	// ベースの背景
-	let objBaseBg = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
+	// �x�[�X�̔w�i
+	let objBaseBg = ObjPrim_Create(OBJ_SPRITE_2D); //2D�X�v���C�g�I�u�W�F�N�g����
 	ObjPrim_SetTexture(objBaseBg, imgEdBack);
 	ObjSprite2D_SetSourceRect(objBaseBg, 0, 0, GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestRect(objBaseBg, 0, 0, GetScreenWidth, GetScreenHeight);
@@ -368,7 +368,7 @@ task TBackgroundEd
 }
 
 
-// ハイスコア保存
+// �n�C�X�R�A�ۑ�
 function SetHightScore()
 {
 	if (GetPlayMode() == GAME_MAIN)

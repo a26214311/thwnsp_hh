@@ -1,11 +1,11 @@
-//#東方弾幕風[Stage]
+//#����e����[Stage]
 #ScriptVersion[3]
-#Title["ヒントその1"]
-#Text["ヒントその1"]
+#Title["�q���g����1"]
+#Text["�q���g����1"]
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./lib_commontitle.dnh"
 #include"./lib_talkTitle.dnh"
 
@@ -19,20 +19,20 @@
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
-	//会話処理
+	//��b����
 	FuncTalk();
 
 	FinishTalk(true);
 	CloseScript( GetOwnScriptID() );
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinChara1   = CreateTalkObject(BOSS_ID_REIMU_L, false);
 	let cutinChara2   = CreateTalkObject(BOSS_ID_TOKUBI, true);
 	let cutinChara3   = CreateTalkObject(BOSS_ID_MARISA_L, false);
@@ -40,7 +40,7 @@ function FuncTalk()
 	let cutinChara5   = CreateTalkObject(BOSS_ID_SANAE_L, false);
 	let cutinChara6   = CreateTalkObject(BOSS_ID_MINAYU, true);
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	ObjPrim_SetTexture(cutinChara1, imgCharaReimu[6]);
 	ObjPrim_SetTexture(cutinChara2, imgCharaTokubi[2]);
 	ObjPrim_SetTexture(cutinChara3, imgCharaMarisa[5]);
@@ -64,7 +64,7 @@ function FuncTalk()
 		talkID = max(0, talkID+WaitNext());
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let talk_type = 1;

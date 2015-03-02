@@ -1,13 +1,13 @@
-#東方弾幕風[Single]
+#����e����[Single]
 #ScriptVersion[3]
-#Title["Ex　ボス会話B-2"]
-#Text["Ex　ボス会話B-2"]
+#Title["Ex�@�{�X��bB-2"]
+#Text["Ex�@�{�X��bB-2"]
 #Background[""]
 #System["./../../../system/System_Main.dnh"]
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./../../../lib/lib_boss.dnh"
 #include"./../../../lib/lib_talk.dnh"
 
@@ -20,9 +20,9 @@
 }
 
 @Initialize {
-	Boss_Init();	//初期設定
+	Boss_Init();	//����ݒ�
 	objEnemy  = CreateBossTalk(BOSS_ID_KAYANO);
-	Obj_SetVisible(GetBossImageID(objEnemy), false);	//画像非表示
+	Obj_SetVisible(GetBossImageID(objEnemy), false);	//�摜��\��
 	Task_Main();
 }
 
@@ -31,23 +31,23 @@
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
-	// 魔法陣リセット
+	// ���@�w���Z�b�g
 	BossEffect_ResetMagicCircle();
 
-	// 会話準備
+	// ��b����
 	StartTalk();
 
-	// 登場モーション（最初は非表示）
+	// �o�ꃂ�[�V�����i�ŏ��͔�\���j
 	let xIni = CenX;
 	let yIni = 140;
 	wait(60);
 	
 	let resultSkilp = FuncTalk();
 	
-	// 遷移えへくと
+	// �J�ڂ��ւ���
 	if (!resultSkilp)
 	{
 		if (GetPlayMode() == GAME_MAIN)
@@ -58,20 +58,20 @@ task Task_Main()
 		FinishTalk(true);
 		wait(60);
 
-		// 会話準備
+		// ��b����
 		StartTalk();
 
 		FuncTalk2();
 	}
 	FinishTalk(true);
-	//次のシーンへ
+	//���̃V�[����
 	Boss_Finalize(objEnemy, false, false);
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinBoss3   = CreateTalkObjectEx(BOSS_ID_UKA, true, 128, -8);
 	let cutinBoss2   = CreateTalkObjectEx(BOSS_ID_TENYU, true, 0, 0);
 	let cutinBoss1   = CreateTalkObjectEx(BOSS_ID_KAYANO, true, -32, 0);
@@ -79,16 +79,16 @@ function FuncTalk()
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_RINNE, false);
 	let cutinDescri  = CreateDescriptiveObject();
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	let pathBoss1 = imgCharaKayano;
 	let pathBoss2 = imgCharaTenyu;
 	let pathBoss3 = imgCharaUka;
 	let pathPlayer1 = imgCharaMarisa;
 	let pathPlayer2 = imgCharaRinne;
 	
-	// 隠す
+	// �B��
 	SetImageVisible(cutinBoss3, false);
-	// 最初に前に出てくるキャラ
+	// �ŏ��ɑO�ɏo�Ă���L����
 	SetImageFoward(cutinPlayer2, true);
 	
 	let resultSkilp = true;
@@ -107,7 +107,7 @@ function FuncTalk()
 	}
 	return(resultSkilp);
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let xIni = CenX;
@@ -207,10 +207,10 @@ function FuncTalk()
 		{
 			SetTalkEx(cutinDescri, "解決編をスキップしますか？");
 
-			let tmp_res = SetChoiseWindow(72, 404, ["いいえ", "はい"]);
+			let tmp_res = SetChoiseWindow(72, 404, ["������", "�͂�"]);
 			if (tmp_res == 1) { resultSkilp = true; }
 			else { resultSkilp = false; }
-			// 発言自動送り
+			// ������������
 			cursorSkip = true;
 		}
 		others
@@ -221,10 +221,10 @@ function FuncTalk()
 	}
 }
 
-// 解決編
+// ������
 function FuncTalk2()
 {
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinBoss3   = CreateTalkObjectEx(BOSS_ID_UKA, true, 92-256, -24-8);
 	let cutinBoss2   = CreateTalkObjectEx(BOSS_ID_TENYU, true, -64-256, -24);
 	let cutinBoss1   = CreateTalkObjectEx(BOSS_ID_KAYANO, true, 64-256, -24);
@@ -232,20 +232,20 @@ function FuncTalk2()
 	let cutinPlayer2 = CreateTalkObjectEx(BOSS_ID_RINNE, false, 80, -24);
 	let cutinDescri  = CreateDescriptiveObject_Umineko();
 	
-	Obj_SetValue(cutinBoss1, "BOSS_NAME", "萱野　美華");
-	Obj_SetValue(cutinBoss2, "BOSS_NAME", "天雄＝萱野＝芽出");
-	Obj_SetValue(cutinBoss3, "BOSS_NAME", "門冬　羽日");
-	Obj_SetValue(cutinPlayer1, "BOSS_NAME", "霧雨　魔理沙");
-	Obj_SetValue(cutinPlayer2, "BOSS_NAME", "白菊＝萱野＝Ｌ");
+	Obj_SetValue(cutinBoss1, "BOSS_NAME", "����@���");
+	Obj_SetValue(cutinBoss2, "BOSS_NAME", "�V�Y�����쁁��o");
+	Obj_SetValue(cutinBoss3, "BOSS_NAME", "��~�@�H��");
+	Obj_SetValue(cutinPlayer1, "BOSS_NAME", "���J�@������");
+	Obj_SetValue(cutinPlayer2, "BOSS_NAME", "���e�����쁁�k");
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	let pathBoss1 = imgCharaKayano;
 	let pathBoss2 = imgCharaTenyu;
 	let pathBoss3 = imgCharaUka;
 	let pathPlayer1 = imgCharaMarisa;
 	let pathPlayer2 = imgCharaRinne;
 	
-	// 隠す
+	// �B��
 	HideAllCutin();
 	
 	wait(15);
@@ -258,7 +258,7 @@ function FuncTalk2()
 		talkID = max(0, talkID+WaitNext());
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let xIni = CenX;
@@ -269,412 +269,412 @@ function FuncTalk2()
 		case(0)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "バレちまっちゃ仕方ない。[r]私も交えて推理ショーと行こうぜ。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�o�����܂�����d��Ȃ��B[r]���������Đ����V���[�ƍs�������B");
 		}
 		case(1)
 		{
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "ぐぬぬ");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "���ʂ�");
 		}
 		case(2)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "まず時系列からであります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�܂����n�񂩂�ł���܂��I");
 		}
 		case(3)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "１周目霊夢ルート（以下霊夢１）[r]皆故は、先日得敏を異変の犯人として成敗したと言っているので、早苗１、霊夢１の順であります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�P��ڗ얲���[�g�i�ȉ��얲�P�j[r]�F�̂́A���q���ٕς̔Ɛl�Ƃ��Đ��s�����ƌ����Ă���̂ŁA���c�P�A�얲�P�̏��ł���܂��I");
 		}
 		case(4)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "魔理沙１でも得敏は、先日皆故から襲撃を受けたと言ってるぜ？[r]という事は、早苗１、魔理沙１の順だな。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�������P�ł����q�́A���F�̂���P�����󂯂��ƌ����Ă邺�H[r]�Ƃ������́A���c�P�A�������P�̏����ȁB");
 		}
 		case(5)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "さらに、魔理沙１の1面にて、雨品龍姉妹は先日同胞が異変の犯人らしき人物から襲撃を受けたと言っているな。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "����ɁA�������P��1�ʂɂāA�J�i���o���͐��E���ٕς̔Ɛl�炵���l������P�����󂯂��ƌ����Ă���ȁB");
 		}
 		case(6)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "この情報は、霊夢１にて得敏が雨品龍姉妹に襲撃された事を知らせた後であるという事。[r]よって、早苗１、霊夢１、魔理沙１となる。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "���̏��́A�얲�P�ɂē��q���J�i���o���ɏP�����ꂽ����m�点����ł���Ƃ������B[r]����āA���c�P�A�얲�P�A�������P�ƂȂ�B");
 		}
 		case(7)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "描写されてない部分で得敏ちゃんが愛宕軍に通達した可能性は無いかと考える人も居ると思うけど、");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "�`�ʂ���ĂȂ������œ��q����񂪈����R�ɒʒB�����\���͖������ƍl����l������Ǝv�����ǁA");
 		}
 		case(8)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[3]);
-			SetTalkEx_Umineko_Red(cutinDescri, cutinBoss1, "　　　　　　　　　　　　　　　というのがミステリーのルールなのよ。",
-				"提示された情報しか使っちゃ駄目");
+			SetTalkEx_Umineko_Red(cutinDescri, cutinBoss1, "�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�Ƃ����̂��~�X�e���[�̃��[���Ȃ̂�B",
+				"�񎦂��ꂽ��񂵂��g������ʖ�");
 		}
 		case(9)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "核心に近いからこれはヒント６に書いてあったみたいね。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "�j�S�ɋ߂����炱��̓q���g�U�ɏ����Ă������݂����ˁB");
 		}
 		case(10)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "１周目はこの時系列推理が一番難しかったでありますな！[r]むしろ２周目の方が時系列は簡単であります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�P��ڂ͂��̎��n�񐄗�����ԓ�������ł���܂��ȁI[r]�ނ���Q��ڂ̕��n��͊ȒP�ł���܂��I");
 		}
 		case(11)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "魔理沙２にて中将閣下が異変を解決。[r]霊夢２は途中で異変解決。[r]早苗２は異変解決後であります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�������Q�ɂĒ����t�����ٕς������B[r]�얲�Q�͓r���ňٕω����B[r]���c�Q�͈ٕω�����ł���܂��I");
 		}
 		case(12)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx_Umineko_Red(cutinDescri, cutinPlayer1, "問題は犯人だぜ。[r]まず霊夢２にて、　　　　　　　　　　　　　　　　　　　　　　　　　事が提示されてるな。",
-				"　　　　　　　　[r]　　　　　　　　黒幕は倒されたら必ず異変を収束させなければならない");
+			SetTalkEx_Umineko_Red(cutinDescri, cutinPlayer1, "���͔Ɛl�����B[r]�܂��얲�Q�ɂāA�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�@�����񎦂���Ă�ȁB",
+				"�@�@�@�@�@�@�@�@[r]�@�@�@�@�@�@�@�@�����͓|���ꂽ��K���ٕς������Ȃ���΂Ȃ�Ȃ�");
 		}
 		case(13)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "単純な消去法でいけば、得敏でさえ私に倒された後異変を開始することは出来る訳だが、ここで問題になるのが動機だな。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�P���ȏ����@�ł����΁A���q�ł������ɓ|���ꂽ��ٕς��J�n���邱�Ƃ͏o����󂾂��A�����Ŗ��ɂȂ�̂����@���ȁB");
 		}
 		case(14)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "まず動機的に有り得ない物を弾く所からだな。[r]得敏は確かに理論上倒された後も異変を継続できるが、問題は収束させるタイミングだ。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "�܂����@�I�ɗL�蓾�Ȃ�����e�������炾�ȁB[r]���q�͊m���ɗ��_��|���ꂽ����ٕς��p���ł��邪�A���͎�����^�C�~���O���B");
 		}
 		case(15)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "皆故ちゃん以外が犯人である場合、犯人は皆故ちゃんを犯人に仕立て上げる為にあのタイミングで異変を収束させたのよね？");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "�F�̂����ȊO���Ɛl�ł���ꍇ�A�Ɛl�͊F�̂�����Ɛl�Ɏd���ďグ��ׂɂ��̃^�C�~���O�ňٕς��������̂�ˁH");
 		}
 		case(16)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "スペルカードルールを利用したトリックでありますな！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�X�y���J�[�h���[���𗘗p�����g���b�N�ł���܂��ȁI");
 		}
 		case(17)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "倒されたら異変を収束させなければならないなら、倒された瞬間意図的に異変を止めれば、他人を犯人に仕立て上げる事ができるであります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�|���ꂽ��ٕς������Ȃ���΂Ȃ�Ȃ��Ȃ�A�|���ꂽ�u�ԈӐ}�I�Ɉٕς��~�߂�΁A���l��Ɛl�Ɏd���ďグ�鎖���ł���ł���܂��I");
 		}
 		case(18)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "そうなると、得敏が倒された後から異変をスタートするとおかしな事になるな。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�����Ȃ�ƁA���q���|���ꂽ�ォ��ٕς��X�^�[�g����Ƃ������Ȏ��ɂȂ�ȁB");
 		}
 		case(19)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "異変を収束させるタイミングはどうやって判断するんだ？");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�ٕς�������^�C�~���O�͂ǂ�����Ĕ��f����񂾁H");
 		}
 		case(20)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "実はこっそり見ていた？[r]適当に異変を止めたらタイミングが偶々合った？");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "���͂������茩�Ă����H[r]�K���Ɉٕς��~�߂���^�C�~���O����X�������H");
 		}
 		case(21)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "いや、それは有り得ない。[r]何故なら、それらの情報は提示されていないからだ。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "����A����͗L�蓾�Ȃ��B[r]���̂Ȃ�A�����̏��͒񎦂���Ă��Ȃ����炾�B");
 		}
 		case(22)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "やはりその、『提示されていない』という概念は重要そうね。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "��͂肻�́A�w�񎦂���Ă��Ȃ��x�Ƃ����T�O�͏d�v�����ˁB");
 		}
 		case(23)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "となると、そもそも動機としては、提示された物しか使えないのなら");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "�ƂȂ�ƁA�����������@�Ƃ��ẮA�񎦂��ꂽ�������g���Ȃ��̂Ȃ�");
 		}
 		case(24)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "得敏ちゃんは『実験がしたかった』以外は動機として有り得ない事になるわね。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "���q�����́w�����������������x�ȊO�͓��@�Ƃ��ėL�蓾�Ȃ����ɂȂ��ˁB");
 		}
 		case(25)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[4]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "なら、皆故に倒された後異変を開始した場合どうでありますか？[r]その間に実験を行ったのでは？");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�Ȃ�A�F�̂ɓ|���ꂽ��ٕς��J�n�����ꍇ�ǂ��ł���܂����H[r]���̊ԂɎ������s�����̂ł́H");
 		}
 		case(26)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "そうなると白菊以外異変を引き継げないが、白菊が引き継ぐ動機が無いだろ。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�����Ȃ�Ɣ��e�ȊO�ٕς���p���Ȃ����A���e����p�����@����������B");
 		}
 		case(27)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "白菊にとっては得敏を倒したらそれで手柄なんだからな。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "���e�ɂƂ��Ă͓��q��|�����炻��Ŏ蕿�Ȃ񂾂���ȁB");
 		}
 		case(28)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "皆故殿に倒される前はどうだ？[r]その間に実験を行い、それを皆故殿が引き継いだなら…");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "�F�̓a�ɓ|�����O�͂ǂ����H[r]���̊ԂɎ������s���A������F�̓a����p�����Ȃ�c");
 		}
 		case(29)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "皆故ちゃんが倒された後引き継ぐ者が居ないわ。[r]という事は、得敏ちゃんはそもそも犯人の可能性が無くなった訳ね。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "�F�̂���񂪓|���ꂽ���p���҂����Ȃ���B[r]�Ƃ������́A���q�����͂��������Ɛl�̉\���������Ȃ�����ˁB");
 		}
 		case(30)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "次に皆故が犯人の場合であります！[r]倒された後も異変が継続しているので、中将閣下の関与が確定したであります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "���ɊF�̂��Ɛl�̏ꍇ�ł���܂��I[r]�|���ꂽ����ٕς��p�����Ă���̂ŁA�����t���̊֗^���m�肵���ł���܂��I");
 		}
 		case(31)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "しかし待てよ？[r]どこかのタイミングで引き継ぐとして、いつそれをお互いに把握するんだ？");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�������҂Ă�H[r]�ǂ����̃^�C�~���O�ň�p���Ƃ��āA����������݂��ɔc������񂾁H");
 		}
 		case(32)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "そもそも皆故殿と白菊は魔理沙２まで会っていないのだから、この2人の間での引き継ぎは不可能ではないか？");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "���������F�̓a�Ɣ��e�͖������Q�܂ŉ���Ă��Ȃ��̂�����A����2�l�̊Ԃł̈�p���͕s�\�ł͂Ȃ����H");
 		}
 		case(33)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "となると、残ってるのは異変解決までに一度も倒されて無いシロちゃんだけって訳ね");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "�ƂȂ�ƁA�c���Ă�͈ٕ̂ω����܂łɈ�x���|����Ė����V������񂾂����Ė��");
 		}
 		case(34)
 		{
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "待って下さい！[r]そんなに提示された情報云々で私を犯人にしたいなら、私からも反論があります！");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "�҂��ĉ������I[r]����Ȃɒ񎦂��ꂽ���]�X�Ŏ���Ɛl�ɂ������Ȃ�A����������_������܂��I");
 		}
 		case(35)
 		{
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "そもそも魔理沙さんは本編ではずっと私と一緒に居て、他のルートと接点を持った事は提示されてません！");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "������������������͖{�҂ł͂����Ǝ��ƈꏏ�ɋ��āA���̃��[�g�Ɛړ_�����������͒񎦂���Ă܂���I");
 		}
 		case(36)
 		{
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "余所のルートの会話なんて魔理沙さんが把握できる根拠が無いんだから、証拠になんて使えませんよ！");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "�]���̃��[�g�̉�b�Ȃ�Ė��������񂪔c���ł��鍪���������񂾂���A�؋��ɂȂ�Ďg���܂����I");
 		}
 		case(37)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "おいおい、何の為にあんなにメタ発言を連発してると思ってるんだ？");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "���������A���ׂ̈ɂ���ȂɃ��^������A�����Ă�Ǝv���Ă�񂾁H");
 		}
 		case(38)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "霊夢２のエンディングでも言ってるだろう。[r]早く会話文を持ってきなさいと。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "�얲�Q�̃G���f�B���O�ł������Ă邾�낤�B[r]������b���������Ă��Ȃ����ƁB");
 		}
 		case(39)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "登場人物が全会話文を把握する手段がある事はきちんと『提示されている』");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "�o��l�����S��b����c�������i�����鎖�͂�����Ɓw�񎦂���Ă���x");
 		}
 		case(40)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[4]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "でも、ここからが問題よ。[r]そもそもシロちゃん一人が犯人で動機は辻褄が合うの？");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "�ł��A�������炪����B[r]���������V��������l���Ɛl�œ��@�͒��낪�����́H");
 		}
 		case(41)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[4]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "中将閣下は何でわざわざ自分でプロデュースした神を陥れるような真似をしたでありますか？");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�����t���͉��ł킴�킴�����Ńv���f���[�X�����_���ׂ��悤�Ȑ^���������ł���܂����H");
 		}
 		case(42)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "私も、そこが引っかかったから最初犯人は途中で入れ替わらないといけないと思ったんだぜ。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�����A���������������������ŏ��Ɛl�͓r���œ��ւ��Ȃ��Ƃ����Ȃ��Ǝv�����񂾂��B");
 		}
 		case(43)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "そもそも、出題形式が選択だったから今までこんな推理をしてきたが、");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "���������A�o��`�����I�����������獡�܂ł���Ȑ��������Ă������A");
 		}
 		case(44)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "ミステリーの推理は、本来こういう他の可能性を排除していくような物ではない。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "�~�X�e���[�̐����́A�{�������������̉\����r�����Ă����悤�ȕ��ł͂Ȃ��B");
 		}
 		case(45)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "根拠をつなぎ合わせて行って、犯人の描いたストーリーを組み上げて行く物よね。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "�������Ȃ����킹�čs���āA�Ɛl�̕`�����X�g�[���[��g�ݏグ�čs������ˁB");
 		}
 		case(46)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "では時系列に合わせて、中将閣下の行動の理由を探っていくであります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�ł͎��n��ɍ��킹�āA�����t���̍s���̗��R��T���Ă����ł���܂��I");
 		}
 		case(47)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "シロちゃんにとって異変を起こすメリットは何か？");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "�V�������ɂƂ��Ĉٕς��N���������b�g�͉����H");
 		}
 		case(48)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "一つは、愛宕軍のせいにして、異変解決の手柄を立てる事。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "��́A�����R�̂����ɂ��āA�ٕω����̎蕿�𗧂Ă鎖�B");
 		}
 		case(49)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "しかしある事が切欠で、良からぬ事を思いついた。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "���������鎖���،��ŁA�ǂ���ʎ����v�������B");
 		}
 		case(50)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "発端は、異変の前。皆故に名前を付けてやった時の事だな。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "���[�́A�ٕς̑O�B�F�̂ɖ��O��t���Ă�������̎����ȁB");
 		}
 		case(51)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "忘れの神をプロデュースした後、その信仰を塗り潰しかねない異変が起こったら？");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�Y��̐_���v���f���[�X������A���̐M��h��ׂ����˂Ȃ��ٕς��N��������H");
 		}
 		case(52)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "しかも塗り潰そうとしてる相手が、愛宕軍だったら？");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�������h��ׂ����Ƃ��Ă鑊�肪�A�����R��������H");
 		}
 		case(53)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "バックストーリーでも言っているでありますな。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�o�b�N�X�g�[���[�ł������Ă���ł���܂��ȁB");
 		}
 		case(54)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "決して信仰を上書きされぬようにと。[r]こうして、皆故を嗾（けしか）けて、得敏と戦わせて負けさせようとしたのであります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�����ĐM���㏑������ʂ悤�ɂƁB[r]�������āA�F�̂�t�i�������j���āA���q�Ɛ�킹�ĕ��������悤�Ƃ����̂ł���܂��I");
 		}
 		case(55)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "傍から見れば、得敏は我が軍がプロデュースしようとしている神の信仰を実験の為に奪おうとする極悪人。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "�T���猩��΁A���q�͉䂪�R���v���f���[�X���悤�Ƃ��Ă���_�̐M�������ׂ̈ɒD�����Ƃ���Ɉ��l�B");
 		}
 		case(56)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "これを白菊が倒して異変を解決し、悲劇のヒロインを愛宕から救うというシナリオが完成する訳だ。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "����𔒋e���|���Ĉٕς��������A�ߌ��̃q���C������������~���Ƃ����V�i���I����������󂾁B");
 		}
 		case(57)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "しかし誤算があった。[r]シロちゃんは思わなかったのよね。まさか、“皆故ちゃんが勝つなんて”");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "��������Z���������B[r]�V�������͎v��Ȃ������̂�ˁB�܂����A�g�F�̂���񂪏��Ȃ�āh");
 		}
 		case(58)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "魔理沙１にて、愛宕軍の筆頭書記官ともあろう者が情けないと言ってるな。[r]お前は得敏の実力を認めていた。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�������P�ɂāA�����R�̕M�����L���Ƃ����낤�҂���Ȃ��ƌ����Ă�ȁB[r]���O�͓��q�̎��͂�F�߂Ă����B");
 		}
 		case(59)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "だから、まさか皆故に負けるなんて考えもしてなかったんだ。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "������A�܂����F�̂ɕ�����Ȃ�čl�������ĂȂ������񂾁B");
 		}
 		case(60)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "得敏は、実際ただ犯人を推理するだけなら、かなり容疑者の線は薄い人物であります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "���q�́A���ۂ����Ɛl�𐄗����邾���Ȃ�A���Ȃ�e�^�҂̐�͔����l���ł���܂��I");
 		}
 		case(61)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "しかし、わざわざそんな人物を容疑者に加えるという事は、動機を推理する上では重要な人物であるという事なのであります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�������A�킴�킴����Ȑl����e�^�҂ɉ�����Ƃ������́A���@�𐄗������ł͏d�v�Ȑl���ł���Ƃ������Ȃ̂ł���܂��I");
 		}
 		case(62)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "霊夢１エンディングにて、愛宕も姫様も一般人に迷惑をかけるのを好まないと言っているな。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "�얲�P�G���f�B���O�ɂāA�������P�l����ʐl�ɖ��f��������̂��D�܂Ȃ��ƌ����Ă���ȁB");
 		}
 		case(63)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "これで白菊は困った訳だ。[r]犯人にするはずの人物が、異変を起こせない状況になってしまった。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "����Ŕ��e�͍������󂾁B[r]�Ɛl�ɂ���͂��̐l�����A�ٕς��N�����Ȃ��󋵂ɂȂ��Ă��܂����B");
 		}
 		case(64)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "ここで入れ替わる訳ね。[r]“犯人が”ではなく、“だれを犯人に仕立て上げたいか”という動機が。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "�����œ��ւ���ˁB[r]�g�Ɛl���h�ł͂Ȃ��A�g�����Ɛl�Ɏd���ďグ�������h�Ƃ������@���B");
 		}
 		case(65)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "動機が“利益”から、“保身”に変わった瞬間でありますな！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "���@���g���v�h����A�g�ېg�h�ɕς�����u�Ԃł���܂��ȁI");
 		}
 		case(66)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "こうして、やむをえず皆故を倒して罪を被って貰おうとしたんであります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "�������āA��ނ������F�̂�|���č߂����ĖႨ���Ƃ�����ł���܂��I");
 		}
 		case(67)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "しかしここでまた誤算があった。[r]恐らく本来はこれで全て解決のはずだったんだ。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�����������ł܂���Z���������B[r]���炭�{���͂���őS�ĉ����̂͂��������񂾁B");
 		}
 		case(68)
 		{
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "魔理沙１にて、得敏は白菊に、霊夢と共に皆故を討伐した事を言ってない。");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer1, "�������P�ɂāA���q�͔��e�ɁA�얲�Ƌ��ɊF�̂𓢔��������������ĂȂ��B");
 		}
 		case(69)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "魔理沙２ではお前も焦っただろうな。[r]何しろ、遂に誰も異変の犯人に仕立て上げられなくなったのだから。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "�������Q�ł͂��O���ł������낤�ȁB[r]������A���ɒN���ٕς̔Ɛl�Ɏd���ďグ���Ȃ��Ȃ����̂�����B");
 		}
 		case(70)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "それ以降は事を有耶無耶にして誤魔化そうとしてたようだが、結果はこれだ。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "����ȍ~�͎���L�떳��ɂ��Č떂�������Ƃ��Ă��悤�����A���ʂ͂��ꂾ�B");
 		}
 		case(71)
 		{
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "完璧な…正解です…");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "����ȁc�����ł��c");
 		}
 		case(72)
 		{
 			ObjPrim_SetTexture(cutinBoss1, pathBoss1[4]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "降格まではしないけど、一時階級を剥奪。新人研修を受けて反省してね。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss1, "�~�i�܂ł͂��Ȃ����ǁA�ꎞ�K���𔍒D�B�V�l���C���󂯂Ĕ��Ȃ��ĂˁB");
 		}
 		case(73)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "丁度いい、羽日は同期だろう。[r]お前が白菊の指導役になりなさい。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "���x�����A�H��͓���낤�B[r]���O�����e�̎w�����ɂȂ�Ȃ����B");
 		}
 		case(74)
 		{
 			ObjPrim_SetTexture(cutinBoss2, pathBoss2[1]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "重役の不正を見抜いたからな。人事部にも昇格の進言をしておこう。");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss2, "�d���̕s����������������ȁB�l�����ɂ����i�̐i�������Ă������B");
 		}
 		case(75)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "光栄であります！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "���h�ł���܂��I");
 		}
 		case(76)
 		{
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "よ、よりによって羽日ですか！？");
+			SetTalkEx_Umineko(cutinDescri, cutinPlayer2, "��A���ɂ���ĉH��ł����I�H");
 		}
 		case(77)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "んん〜？何でありますかぁ〜？[r]上官に対してその口の利き方はぁ〜！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "���`�H���ł���܂������`�H[r]�㊯�ɑ΂��Ă��̌�̗�����͂��`�I");
 		}
 		case(78)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "これからたっぷり可愛がってあげるでありますよ！[r]シロちゃん！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "���ꂩ�炽���Ղ�������Ă�����ł���܂���I[r]�V�������I");
 		}
 		case(79)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[2]);
-			SetTalkEx_Umineko(cutinDescri, -1, "羽日は、白菊が階級を取り戻した後の事を考えているのだろうか？");
+			SetTalkEx_Umineko(cutinDescri, -1, "�H��́A���e���K�������߂�����̎����l���Ă���̂��낤���H");
 		}
 		case(80)
 		{
-			SetTalkEx_Umineko(cutinDescri, -1, "魔理沙は、こいつは権力に溺れて身を亡ぼすタイプだなと直感した。");
+			SetTalkEx_Umineko(cutinDescri, -1, "�������́A�����͌��͂ɓM��Đg��S�ڂ��^�C�v���Ȃƒ��������B");
 		}
 		case(81)
 		{
-			SetTalkEx_Umineko(cutinDescri, -1, "そして、二度とこんな醜い権力争いに巻き込まれるのは御免だと思う魔理沙であった。");
+			SetTalkEx_Umineko(cutinDescri, -1, "�����āA��x�Ƃ���ȏX�����͑����Ɋ������܂��̂͌�Ƃ��Ǝv���������ł������B");
 		}
 		others
 		{
@@ -685,45 +685,45 @@ function FuncTalk2()
 }
 
 
-//遷移えへくと
+//�J�ڂ��ւ���
 task Swich_Talk02B()
 {
-	//レンダリングターゲットに使用するテクスチャ
+	//�����_�����O�^�[�Q�b�g�Ɏg�p����e�N�X�`��
 	let renderTexture = GetReservedRenderTargetName(0);
 	RenderToTextureA1(renderTexture, 0, 100, true);
 
 	//--------------------------------
-	let objImg = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	ObjPrim_SetTexture(objImg, renderTexture); //テクスチャを設定
+	let objImg = ObjPrim_Create(OBJ_SPRITE_2D); //2D�X�v���C�g�I�u�W�F�N�g����
+	ObjPrim_SetTexture(objImg, renderTexture); //�e�N�X�`����ݒ�
 	ObjSprite2D_SetSourceRect(objImg, 0, 0, GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestRect(objImg, 0, 0, GetScreenWidth, GetScreenHeight);
 	Obj_SetRenderPriorityI(objImg, 100);
 
-	//ゆがみオブジェクトにシェーダを設定
+	//�䂪�݃I�u�W�F�N�g�ɃV�F�[�_��ݒ�
 	ObjShader_SetShaderF(objImg, hlslNoise);
 	ObjShader_SetTechnique(objImg, "TecNoise");
 
 	let t = 0;
 	loop(30)
 	{
-		//シェーダにパラメータを設定
+		//�V�F�[�_�Ƀp�����[�^��ݒ�
 		let power = t/30;
 		ObjShader_SetFloat(objImg, "seed_", t);
-		ObjShader_SetFloat(objImg, "power_", power);	// power＝歪み率(%)
+		ObjShader_SetFloat(objImg, "power_", power);	// power���c�ݗ�(%)
 		t++;
 		yield;
 	}
 
-	// 枠を取っ払う
+	// �g���������
 	SetAreaCommonData(CAREA_SYSTEM, "StgWorldBreak", true );
 	SetStgFrame(0, 0, GetScreenWidth, GetScreenHeight, 20, 80);
 
 	ascent(i in 0 .. 120)
 	{
-		//シェーダにパラメータを設定
+		//�V�F�[�_�Ƀp�����[�^��ݒ�
 		let power = 1 - i/120;
 		ObjShader_SetFloat(objImg, "seed_", t);
-		ObjShader_SetFloat(objImg, "power_", power);	// power＝歪み率(%)
+		ObjShader_SetFloat(objImg, "power_", power);	// power���c�ݗ�(%)
 		ObjRender_SetAlpha(objImg, 255 * (1-i/60));
 		t++;
 		yield;
@@ -734,7 +734,7 @@ task Swich_Talk02B()
 
 
 
-// --- 以下は地の文用の会話枠
+// --- �ȉ��͒n�̕��p�̉�b�g
 
 let baseWidth_Umi = GetScreenWidth;
 let baseHeight_Umi = 128;
@@ -745,13 +745,13 @@ let baseTextX_Umi = baseX_Umi+32;
 let baseTextY_Umi = baseY_Umi+10 - 96;
 
 
-// 会話メッセージ（吹き出し消去機能つき）
+// ��b���b�Z�[�W�i�����o�������@�\���j
 function SetTalkEx_Umineko_Red(objDes, objCutin, text, red_text)
 {
 	_SetTalkEx_Umineko(objDes, objCutin, text);
 	Obj_SetValue(objDes, "TEXT_RED", red_text);
 	
-	// スペースに置換
+	// �X�y�[�X�ɒu��
 	function GetSpaceText(text)
 	{
 		let result_text = "";
@@ -761,7 +761,7 @@ function SetTalkEx_Umineko_Red(objDes, objCutin, text, red_text)
 			ObjText_SetText(tmp_obj, red_text[i]);
 			let tlen = ObjText_GetTextLength(tmp_obj);
 			if (tlen == 1) { result_text = result_text ~ " "; }
-			else if (tlen == 2) { result_text = result_text ~ "　"; }
+			else if (tlen == 2) { result_text = result_text ~ "�@"; }
 		}
 		Obj_Delete(tmp_obj);
 		return(result_text);
@@ -774,20 +774,20 @@ function SetTalkEx_Umineko(objDes, objCutin, text)
 }
 function _SetTalkEx_Umineko(objDes, objCutin, text)
 {
-	// 名前取得
+	// ���O�擾
 	let e_name = "";
 	if (!Obj_IsDeleted(objCutin)) { e_name = Obj_GetValueD(objCutin, "BOSS_NAME", ""); }
-	// 吹き出しリセット
+	// �����o�����Z�b�g
 	SetFukidashiType(objDes, FUKIDASHI_NORMAL);
-	// 吹き出し削除
+	// �����o���폜
 	DeleteAllFukidashi();
-	// カットインを隠す
+	// �J�b�g�C�����B��
 	HideAllCutin();
-	// 会話
+	// ��b
 	_SetTalk(objDes, text, 0, 0);
-	// 名前セット
+	// ���O�Z�b�g
 	Obj_SetValue(objDes, "NAME", e_name);
-	// カットインを前面に出す
+	// �J�b�g�C����O�ʂɏo��
 	if (!Obj_IsDeleted(objCutin))
 	{
 		ChangeImageFoward(objCutin);
@@ -795,7 +795,7 @@ function _SetTalkEx_Umineko(objDes, objCutin, text)
 	}
 }
 
-// カットインを隠す
+// �J�b�g�C�����B��
 function HideAllCutin()
 {
 	ascent(i in 0 .. length(objTalkObject))
@@ -804,19 +804,19 @@ function HideAllCutin()
 	}
 }
 
-// 地の文を出したい場合はこちら！
+// �n�̕����o�������ꍇ�͂�����I
 function CreateDescriptiveObject_Umineko()
 {
 	let obj = ObjPrim_Create(OBJ_PRIMITIVE_2D);
-	Obj_SetValue(obj, "DES", true);		// 地の文フラグ立て
+	Obj_SetValue(obj, "DES", true);		// �n�̕��t���O����
 	Obj_SetValue(obj, "FW", false);
 	ChangeDescriptive_Umineko(obj);
-	objTalkObject = objTalkObject ~ [obj];	//配列に登録
+	objTalkObject = objTalkObject ~ [obj];	//�z��ɓo�^
 	return(obj);
 }
 
 
-// 吹き出し変更監視（地の文用）
+// �����o���ύX�Ď��i�n�̕��p�j
 task ChangeDescriptive_Umineko(parent)
 {
 	let objFukidashi = -1;
@@ -837,22 +837,22 @@ task ChangeDescriptive_Umineko(parent)
 			{
 				if (length(before_tx) > 0)
 				{
-					// 連続会話時は吹き出し変更チェックのみ
+					// �A����b���͐����o���ύX�`�F�b�N�̂�
 					ChangeDescriptiveFrame_Umineko(objFukidashi, [0, 1][length(tn)>0]);
 				}
 				else
 				{
-					// 吹き出し削除→配置
+					// �����o���폜���z�u
 					if (objFukidashi != -1) { DeleteFukidashi(objFukidashi); }
 					objFukidashi = _MakeDescriptiveFrame_Umineko(99);
 					ChangeDescriptiveFrame_Umineko(objFukidashi, [0, 1][length(tn)>0]);
 				}
-				// テキスト削除→配置
+				// �e�L�X�g�폜���z�u
 				if (objText != -1) { DeleteFukidashi(objText); }
 				if (objTextRed != -1) { DeleteFukidashi(objTextRed); }
 				objText = _MakeDescriptiveText_Umineko(tx, 99, 0);
 				objTextRed = _MakeDescriptiveText_Umineko(tx_red, 99, 1);
-				// 名前せっつ
+				// ���O������
 				Obj_SetValue(objFukidashi, "NAME", tn);
 			}
 			else
@@ -873,10 +873,10 @@ task ChangeDescriptive_Umineko(parent)
 	if (objText != -1) { DeleteFukidashi(objText); }
 }
 
-// 吹き出しを設置する（文字）
+// �����o����ݒu����i�����j
 function _MakeDescriptiveText_Umineko(text, t_priority, t_type)
 {
-	// テキスト作るよ！
+	// �e�L�X�g����I
 	let objText = DesText(t_priority);
 	ObjText_SetText(objText, text);
 	ObjText_SetTransCenter(objText, 0, baseHeight_Umi-48);
@@ -932,15 +932,15 @@ function DesText(t_priority)
 	return(objText);
 }
 
-// 吹き出しを設置する（フレーム＆名前）
+// �����o����ݒu����i�t���[�������O�j
 function _MakeDescriptiveFrame_Umineko(t_priority)
 {
-	//吹き出しセット
+	//�����o���Z�b�g
 	let objFukidashi = MakeDescriptiveObj_Umineko(0);
 	Obj_SetRenderPriorityI(objFukidashi, t_priority);
 	ObjRender_SetPosition(objFukidashi, baseX_Umi, baseY_Umi, 0);
 	
-	// 名前！
+	// ���O�I
 	let objName = DesText(t_priority);
 	ObjText_SetTransCenter(objName, 0, baseHeight_Umi+36);
 	ObjRender_SetPosition(objName, baseTextX_Umi+8, baseTextY_Umi-36, 0);
@@ -982,7 +982,7 @@ function ChangeDescriptiveFrame_Umineko(obj, e_type)
 	ObjSprite2D_SetSourceRect(obj, 0, 128*e_type, 512, 128*(e_type+1));
 }
 
-//吹き出しオブジェクト作成
+//�����o���I�u�W�F�N�g�쐬
 function MakeDescriptiveObj_Umineko(e_type)
 {
 	let obj = ObjPrim_Create(OBJ_SPRITE_2D);

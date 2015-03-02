@@ -1,17 +1,17 @@
-//#東方弾幕風[Single]
+//#����e����[Single]
 #ScriptVersion[3]
-#Title["1面　会話"]
-#Text["1面　会話"]
+#Title["1�ʁ@��b"]
+#Text["1�ʁ@��b"]
 #Background[""]
 #System["./../../../system/System_Main.dnh"]
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./../../../lib/lib_boss.dnh"
 #include"./../../../lib/lib_talk.dnh"
 
-// 各ボスのオブジェクトID
+// �e�{�X�̃I�u�W�F�N�gID
 let objEnemy2;
 
 
@@ -23,8 +23,8 @@ let objEnemy2;
 }
 
 @Initialize {
-	Boss_Init();	//初期設定
-	objEnemy2 = CreateBossTalkEx(BOSS_ID_ANZA);	// ザコ扱い
+	Boss_Init();	//����ݒ�
+	objEnemy2 = CreateBossTalkEx(BOSS_ID_ANZA);	// �U�R����
 	objEnemy  = CreateBossTalk(BOSS_ID_KOUKAI);
 	Task_Main();
 }
@@ -34,16 +34,16 @@ let objEnemy2;
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
-	// 魔法陣リセット
+	// ���@�w���Z�b�g
 	BossEffect_ResetMagicCircle();
 
-	// 会話準備
+	// ��b����
 	StartTalk();
 
-	// 登場モーション（最初は非表示）
+	// �o�ꃂ�[�V�����i�ŏ��͔�\���j
 	let xIni = CenX;
 	let yIni = 140;
 	EnterBoss(objEnemy, xIni-64, yIni+32);
@@ -52,28 +52,28 @@ task Task_Main()
 	
 	FuncTalk();
 	
-	//次のシーンへ
+	//���̃V�[����
 	FinishTalk(true);
 	Boss_Finalize(objEnemy2, false, false);
 	Boss_Finalize(objEnemy, false, false);
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_KOUKAI, true);
 	let cutinBoss2   = CreateTalkObject(BOSS_ID_ANZA, true);
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	let pathBoss1 = imgCharaKoukai;
 	let pathBoss2 = imgCharaAnza;
 	let pathPlayer1 = imgCharaSanae;
 	let pathPlayer2 = imgCharaMinayu;
 	
-	// 最初に前に出てくるキャラ
+	// �ŏ��ɑO�ɏo�Ă���L����
 	SetImageFoward(cutinBoss1, true);
 	
 	wait(15);
@@ -86,7 +86,7 @@ function FuncTalk()
 		talkID = max(0, talkID+WaitNext());
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let xIni = CenX;
@@ -101,7 +101,7 @@ function FuncTalk()
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
 			SetTalkEx(cutinBoss1, "何だ、またお前らか。異変は[r]解決したってのに、何の用だ？");
-			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
 		}
 		case(1)
 		{

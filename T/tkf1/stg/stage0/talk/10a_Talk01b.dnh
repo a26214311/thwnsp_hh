@@ -1,13 +1,13 @@
-//東方弾幕風[Single]
+//����e����[Single]
 #ScriptVersion[3]
-#Title["0面　会話"]
-#Text["0面　会話"]
+#Title["0�ʁ@��b"]
+#Text["0�ʁ@��b"]
 #Background[""]
 #System["./../../../system/System_Main.dnh"]
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./../../../lib/lib_boss.dnh"
 #include"./../../../lib/lib_talk.dnh"
 
@@ -19,8 +19,8 @@
 }
 
 @Initialize {
-	Boss_Init();	//初期設定
-	objEnemy = CreateBossTalk(BOSS_ID_RINNE);	//ボスセット
+	Boss_Init();	//����ݒ�
+	objEnemy = CreateBossTalk(BOSS_ID_RINNE);	//�{�X�Z�b�g
 	Task_Main();
 }
 
@@ -29,48 +29,48 @@
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
 	let xIni = CenX;
 	let yIni = 140;
 	
-	// 魔法陣リセット
+	// ���@�w���Z�b�g
 	BossEffect_ResetMagicCircle();
-	//ボスネーム表示状態
+	//�{�X�l�[���\�����
 	BossScene_SetNameVisible(objScene, false);
 
 	EnterBoss(objEnemy, xIni, yIni);
 
-	// 会話準備
+	// ��b����
 	StartTalk();
 	wait(60);
 	
-	//会話処理
+	//��b����
 	FuncTalk();
 	wait(15);
 	
-	// 画面外へ
+	// ��ʊO��
 	ObjMove_SetDestAtWeightSpeedUp(objEnemy, CenX+64, -256, 15, 3, 0.1, 12);
 	SetAction(objEnemy, ACT_MOVE, 60);
 
-	//次のシーンへ
+	//���̃V�[����
 	FinishTalk(true);
 	Boss_Finalize(objEnemy, false, false);
 
-	// やっぱりショットボム禁止
+	// ����ς�V���b�g�{���֎~
 	SetForbidPlayerShot(true);
 	SetForbidPlayerSpell(true);
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_RINNE, true);
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_MARISA_L, false);
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	let pathBoss1   = imgCharaRinne;
 	let pathPlayer1 = imgCharaMarisa;
 	
@@ -85,7 +85,7 @@ function FuncTalk()
 		talkID = max(0, talkID+WaitNext());
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let talk_type = 1;

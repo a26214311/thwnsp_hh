@@ -1,9 +1,9 @@
-// 一時停止スクリプト等共通処理
+// �ꎞ��~�X�N���v�g�����ʏ���
 let IsReplaySave = false;
 let menu_on	= true;
 
 
-// 解説用
+// ����p
 let imgHelp = [
 	imgDir ~ "system/help00.png",
 	imgDir ~ "system/help01.png",
@@ -19,7 +19,7 @@ let imgHelpCharacter = [
 	imgDir ~ "system/help08.png",
 	];
 
-// 表示用 [min_y, max_y, 画像ファイル,フラグ]
+// �\���p [min_y, max_y, �摜�t�@�C��,�t���O]
 let CharacterIndex = [
 	["0", "128", imgHelpCharacter[0], BOSS_ID_TOKUBI],
 	["128", "256", imgHelpCharacter[0], BOSS_ID_RINNE],
@@ -34,99 +34,99 @@ let CharacterIndex = [
 	["352", "704", imgHelpCharacter[2], BOSS_ID_AZUMA],
 	["704", "928", imgHelpCharacter[2], BOSS_ID_KAYANO],
 ];
-// 出会ったことのないキャラ
+// �o��������Ƃ̂Ȃ��L����
 let CharacterNone = ["416", "480", imgHelpCharacter[0], ""];
 
 
-// 文字配置
+// �����z�u
 function SetSceneSelectImage(id, text)
 {
 	let sca		= 0.8;
 	let sca2	= 1;
 
 	alternative(text)
-	case("一時停止"){
+	case("�ꎞ��~"){
 		ObjSprite2D_SetSourceRect(id,0,0,256,64);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca2,sca2,0);
 		ObjRender_SetColor(id,255,255,255);
 	}
-	case("満身創痍"){
+	case("���g�n�w"){
 		ObjSprite2D_SetSourceRect(id,0,64,256,128);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca2,sca2,0);
 		ObjRender_SetColor(id,255,255,255);
 	}
-	case("再生終了"){
+	case("�Đ��I��"){
 		ObjSprite2D_SetSourceRect(id,0,128,256,192);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca2,sca2,0);
 		ObjRender_SetColor(id,255,255,255);
 	}
-	case("はい"){
+	case("�͂�"){
 		ObjSprite2D_SetSourceRect(id,0,192,256,256);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca,sca,0);
 	}
-	case("いいえ"){
+	case("������"){
 		ObjSprite2D_SetSourceRect(id,0,256,256,320);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca,sca,0);
 	}
-	case("本当に"){
+	case("�{����"){
 		ObjSprite2D_SetSourceRect(id,0,320,256,384);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca,sca,0);
 		ObjRender_SetColor(id,255,255,255);
 	}
-	case("再開"){
+	case("�ĊJ"){
 		ObjSprite2D_SetSourceRect(id,0,384,256,448);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca,sca,0);
 	}
-	case("タイトルに戻る"){
+	case("�^�C�g���ɖ߂�"){
 		ObjSprite2D_SetSourceRect(id,0,448,256,512);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca,sca,0);
 	}
-	case("最初から始める"){
+	case("�ŏ�����n�߂�"){
 		ObjSprite2D_SetSourceRect(id,0,512,256,576);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca,sca,0);
 	}
-	case("リプレイを保存する"){
+	case("���v���C��ۑ�����"){
 		ObjSprite2D_SetSourceRect(id,0,576,256,640);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca,sca,0);
 	}
-	case("再挑戦"){
+	case("�Ē���"){
 		ObjSprite2D_SetSourceRect(id,0,640,256,704);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca,sca,0);
 	}
-	case("操作説明"){
+	case("�������"){
 		ObjSprite2D_SetSourceRect(id,0,704,256,768);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca,sca,0);
 	}
-	case("円満解決"){
+	case("�~������"){
 		ObjSprite2D_SetSourceRect(id,0,768,256,832);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca2,sca2,0);
 	}
-	case("無事解決"){
+	case("��������"){
 		ObjSprite2D_SetSourceRect(id,0,832,256,896);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca2,sca2,0);
 	}
-	case("迷宮入り"){
+	case("���{���"){
 		ObjSprite2D_SetSourceRect(id,0,896,256,960);
 		ObjSprite2D_SetDestCenter(id);
 		ObjRender_SetScaleXYZ(id,sca2,sca2,0);
 	}
 }
 
-//　わかめ配置
+//�@�킩�ߔz�u
 task SetWakame(parent, mx, my, color)
 {
 	let alpha1		= 0;
@@ -164,10 +164,10 @@ task SetWakame(parent, mx, my, color)
 }
 
 
-//　エフェクト
+//�@�G�t�F�N�g
 //----------------------------------------------------------------
 //----------------------------------------------------------------
-//　はっぱっぱ
+//�@�͂��ς���
 task CreatePauseEffect(pos,angle,speed,acc,mx,rgb_h,alpha,kill){
 	let ID		= ObjPrim_Create(OBJ_SPRITE_2D);
 	let csd		= GetCurrentScriptDirectory();
@@ -227,46 +227,46 @@ task CreatePauseEffect(pos,angle,speed,acc,mx,rgb_h,alpha,kill){
 }
 
 
-// 暗転
+// �Ó]
 task TBackground
 {
 	let filterCount = 15;
 	let renderTexture = GetTransitionRenderTargetName();
-	let renderTexture2 = renderTexture;	// 描画先
+	let renderTexture2 = renderTexture;	// �`���
 	
-	// ベースの背景
-	let objBaseBg = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	ObjPrim_SetTexture(objBaseBg, GetTransitionRenderTargetName()); //テクスチャを設定
+	// �x�[�X�̔w�i
+	let objBaseBg = ObjPrim_Create(OBJ_SPRITE_2D); //2D�X�v���C�g�I�u�W�F�N�g����
+	ObjPrim_SetTexture(objBaseBg, GetTransitionRenderTargetName()); //�e�N�X�`����ݒ�
 	ObjSprite2D_SetSourceRect(objBaseBg, 0, 0, GetScreenWidth, GetScreenHeight);
 	ObjSprite2D_SetDestRect(objBaseBg, 0, 0, GetScreenWidth, GetScreenHeight);
 	Obj_SetRenderPriorityI(objBaseBg, 0);
 	
 	//--------------------------------
-	//ゆがみオブジェクト
+	//�䂪�݃I�u�W�F�N�g
 	let frameX1 = GetStgFrameLeft; let frameY1 = GetStgFrameTop;
 	let frameX2 = frameX1+GetStgFrameWidth; let frameY2 = frameY1+GetStgFrameHeight;
 
-	let objBg = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	ObjPrim_SetTexture(objBg, renderTexture); //テクスチャを設定
+	let objBg = ObjPrim_Create(OBJ_SPRITE_2D); //2D�X�v���C�g�I�u�W�F�N�g����
+	ObjPrim_SetTexture(objBg, renderTexture); //�e�N�X�`����ݒ�
 	ObjSprite2D_SetSourceRect(objBg, frameX1, frameY1, frameX2, frameY2);
 	ObjSprite2D_SetDestRect(objBg, frameX1, frameY1, frameX2, frameY2);
 	Obj_SetRenderPriorityI(objBg, 0);
 
-	let objBg2 = ObjPrim_Create(OBJ_SPRITE_2D); //2Dスプライトオブジェクト生成
-	ObjPrim_SetTexture(objBg2, renderTexture2); //テクスチャを設定
+	let objBg2 = ObjPrim_Create(OBJ_SPRITE_2D); //2D�X�v���C�g�I�u�W�F�N�g����
+	ObjPrim_SetTexture(objBg2, renderTexture2); //�e�N�X�`����ݒ�
 	ObjSprite2D_SetSourceRect(objBg2, frameX1, frameY1, frameX2, frameY2);
 	ObjSprite2D_SetDestRect(objBg2, frameX1, frameY1, frameX2, frameY2);
 	Obj_SetRenderPriorityI(objBg2, 0);
 
-	//暗転えへくと
+	//�Ó]���ւ���
 	let objBlack = ObjPrim_Create(OBJ_SPRITE_2D);
 	ObjSprite2D_SetDestRect(objBlack, 0, 0, GetScreenWidth, GetScreenHeight);
 	ObjRender_SetColor(objBlack, 0, 0, 0);
 	ObjRender_SetBlendType(objBlack, BLEND_MULTIPLY);
 	Obj_SetRenderPriorityI(objBlack, 0);
 
-	//ゆがみオブジェクトにシェーダを設定
-	//フィルタの再起処理をさせたかったけど技術ぢからが足りない！→なんか分からないけど出来た！
+	//�䂪�݃I�u�W�F�N�g�ɃV�F�[�_��ݒ�
+	//�t�B���^�̍ċN���������������������ǋZ�p�����炪����Ȃ��I���Ȃ񂩕�����Ȃ����Ǐo�����I
 	ObjShader_SetShaderF(objBg, hlslGaussian);
 	ObjShader_SetTechnique(objBg, "TecGaussian");
 	
@@ -276,13 +276,13 @@ task TBackground
 		
 		let tmp_c = 255 * (1-i/filterCount*0.5);
 		ObjRender_SetColor(objBlack, tmp_c, tmp_c, tmp_c);
-		// 少しずつ暗く
+		// �������Â�
 		ObjRender_SetColor(objBg, 240, 240, 240);
 		yield;
 	}
 }
 
-//　メニュー作成関数
+//�@���j���[�쐬�֐�
 task TMenuItem(parent, index, mx, my, text){
 	let alpha	= 0;
 	let move1	= 0;
@@ -292,7 +292,7 @@ task TMenuItem(parent, index, mx, my, text){
 	let move3	= 0;
 	let moveC	= 0;
 
-	let offset_text = 128;	//テキストのオフセット
+	let offset_text = 128;	//�e�L�X�g�̃I�t�Z�b�g
 	
 	let objText = CreateMenuTextObject(mx, my, text);
 	let objSelect = CreateMenuTextObject(mx, my, text);
@@ -302,7 +302,7 @@ task TMenuItem(parent, index, mx, my, text){
 	{
 		let selectIndex = Obj_GetValueD(parent, "VALUE", -1);
 		
-		//　選択中は横に移動
+		//�@�I�𒆂͉��Ɉړ�
 		if( index == selectIndex )
 		{
 			move1 = sin( moveA );
@@ -359,11 +359,11 @@ function CreateMenuTextObject(let mx, let my, let text)
 	return id;
 }
 
-//キーチェック  押しっぱなし時のみディレイ付き
-//check_keys=感知キーを配列で
+//�L�[�`�F�b�N  �������ςȂ����̂݃f�B���C�t��
+//check_keys=���m�L�[��z���
 function CheckKey_Menu(key_delay, check_keys)
 {
-//	let tmp_flag = Menu_ReDrawFlag; //強制再描画フラグ
+//	let tmp_flag = Menu_ReDrawFlag; //�����ĕ`��t���O
 	let key_count = length(check_keys);
 	let key_value = -1;
 	let t = 0;
@@ -422,22 +422,22 @@ task TMenuBg(parent)
 	Obj_Delete(objText);
 }
 
-//　確認よ
+//�@�m�F��
 function TReverify(mx, my)
 {
-	//メニュー配置
-	let texts		= [ "はい", "いいえ" ];
+	//���j���[�z�u
+	let texts		= [ "�͂�", "������" ];
 	let countMenu	= length(texts);
 	let returnValue = false;
 
-	//　メニュータイトル作成
-	let objParent = ObjText_Create();	//適当なオブジェクトを生成（データのやり取り用）
+	//�@���j���[�^�C�g���쐬
+	let objParent = ObjText_Create();	//�K���ȃI�u�W�F�N�g�𐶐��i�f�[�^�̂����p�j
 	Obj_SetValue(objParent, "VALUE", 0);
 
-	//　項目作成
+	//�@���ڍ쐬
 	TMenuBg(objParent);
 	SetWakame(objParent, mx-64, my-12, [60, 100, 140]);
-	TMenuItem(objParent, countMenu+1, mx+32, my-46, "本当に" );
+	TMenuItem(objParent, countMenu+1, mx+32, my-46, "�{����" );
 	
 	ascent( var iText in 0 .. countMenu )
 	{
@@ -446,12 +446,12 @@ function TReverify(mx, my)
 		mx += 8;
 	}
 	
-	//キー状態がリセットされるまで待機
+	//�L�[��Ԃ����Z�b�g�����܂őҋ@
 	WaitForResetKey();
 	
 	loop
 	{
-		//キー入力待ち
+		//�L�[��͑҂�
 		let downKey = CheckKey_Menu(5, [VK_UP, VK_DOWN, VK_CANCEL, VK_OK]);
 
 		alternative (downKey)
@@ -486,7 +486,7 @@ function TReverify(mx, my)
 			}
 			break;
 		}
-		loop(3) { yield; }	//適当に固定ディレイ
+		loop(3) { yield; }	//�K���ɌŒ�f�B���C
 	}
 	Obj_Delete(objParent);
 	if (!returnValue) { WaitForResetKey(); }
@@ -496,7 +496,7 @@ function TReverify(mx, my)
 
 function THelp()
 {
-	let objParent = ObjText_Create();	//適当なオブジェクトを生成（データのやり取り用）
+	let objParent = ObjText_Create();	//�K���ȃI�u�W�F�N�g�𐶐��i�f�[�^�̂����p�j
 	Obj_SetValue(objParent, "VALUE", 0);
 	Obj_SetValue(objParent, "VALUE2", 0);
 	Obj_SetValue(objParent, "VALUE3", 0);
@@ -506,7 +506,7 @@ function THelp()
 	let selectMax3  = length(CharacterIndex);
 	let selectHelpCaracter = 5;
 	
-	//メニュー配置
+	//���j���[�z�u
 	local
 	{
 		let bx = 240;
@@ -521,12 +521,12 @@ function THelp()
 		}
 	}
 	
-	//キー状態がリセットされるまで待機
+	//�L�[��Ԃ����Z�b�g�����܂őҋ@
 	WaitForResetKey();
 	
 	loop
 	{
-		//キー入力待ち
+		//�L�[��͑҂�
 		let downKey = CheckKey_Menu(5, [VK_UP, VK_DOWN, VK_LEFT, VK_RIGHT, VK_CANCEL, VK_OK]);
 
 		alternative (downKey)
@@ -607,7 +607,7 @@ function THelp()
 				CallHelpCaracter();
 			}
 		}
-		loop(3) { yield; }	//適当に固定ディレイ
+		loop(3) { yield; }	//�K���ɌŒ�f�B���C
 	}
 	Obj_Delete(objParent);
 	WaitForResetKey();
@@ -742,7 +742,7 @@ function THelp()
 }
 
 
-//キーリセットまで待機
+//�L�[���Z�b�g�܂őҋ@
 function WaitForResetKey()
 {
 	while(GetVirtualKeyState(VK_OK) != KEY_FREE || GetVirtualKeyState(VK_CANCEL) != KEY_FREE) { yield; }

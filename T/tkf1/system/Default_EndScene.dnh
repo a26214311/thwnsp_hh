@@ -6,7 +6,7 @@
 
 
 
-//　こっちは多分ゲームオーバー用になる
+//�@�������͑����Q�[���I�[�o�[�p�ɂȂ�
 
 @Initialize{
 	SetAutoDeleteObject(true);
@@ -29,15 +29,15 @@
 //----------------------------------------------------------------------------------------------------------------
 task TMenu
 {
-	// ゲームオーバーBGM
+	// �Q�[���I�[�o�[BGM
 	if (GetPlayMode() != GAME_SPELL) { PlayMusic(1, true, 30); }
 	
-	//メニュー配置
+	//���j���[�z�u
 	let mx			= 172+24;
 	let my			= 224+96;
 	let myRESULT_HELP = 107777;
 	
-	let texts		= ["リプレイを保存する", "タイトルに戻る", "最初から始める"];
+	let texts		= ["���v���C��ۑ�����", "�^�C�g���ɖ߂�", "�ŏ�����n�߂�"];
 	let listResult		= [RESULT_SAVE_REPLAY, RESULT_END, RESULT_RETRY];
 	let listReverify	= [ false, true, true ];
 	let rgb			= [64,160,160];
@@ -47,45 +47,45 @@ task TMenu
 	let stage_clear		= GetAreaCommonData(CAREA_SYSTEM, "ClearStage", false);
 	let clear		= (spell_clear || stage_clear);
 
-	//　リプレイの時
+	//�@���v���C�̎�
 	if( IsReplay )
 	{
-		texts		= ["タイトルに戻る", "最初から始める"];
+		texts		= ["�^�C�g���ɖ߂�", "�ŏ�����n�߂�"];
 		listResult	= [RESULT_END, RESULT_RETRY];
 		listReverify	= [ true, true ];
 	}
 	else{
-		//　リプレイじゃない時
-		//　本編
+		//�@���v���C����Ȃ���
+		//�@�{��
 		if( GetPlayMode() == GAME_MAIN ){
 			if( Difficult() == D_EXTRA )
 			{
 				if (stage_clear)
 				{
-					texts		= ["リプレイを保存する", "操作説明", "タイトルに戻る"];
+					texts		= ["���v���C��ۑ�����", "�������", "�^�C�g���ɖ߂�"];
 					listResult	= [RESULT_SAVE_REPLAY, myRESULT_HELP, RESULT_END];
 					listReverify	= [ false, false, true ];
 				}
 				else
 				{
-					texts		= ["再挑戦", "リプレイを保存する", "操作説明", "タイトルに戻る"];
+					texts		= ["�Ē���", "���v���C��ۑ�����", "�������", "�^�C�g���ɖ߂�"];
 					listResult	= [RESULT_RETRY, RESULT_SAVE_REPLAY, myRESULT_HELP, RESULT_END];
 					listReverify	= [ true, false, false, true ];
 				}
 			}
 			else
 			{
-				// ステージ１の場合は再挑戦のみ
+				// �X�e�[�W�P�̏ꍇ�͍Ē���̂�
 				if( GetStageIndex() == 1 )
 				{
 					if( continue ){
-						//　コンティニューしてるとリプレイ保存できない
-						texts		= ["再挑戦", "操作説明", "タイトルに戻る" ];
+						//�@�R���e�B�j���[���Ă�ƃ��v���C�ۑ��ł��Ȃ�
+						texts		= ["�Ē���", "�������", "�^�C�g���ɖ߂�" ];
 						listResult	= [RESULT_RETRY, myRESULT_HELP, RESULT_END];
 						listReverify	= [ false, false, true ];
 					}
 					else{
-						texts		= ["再挑戦", "リプレイを保存する", "操作説明", "タイトルに戻る"];
+						texts		= ["�Ē���", "���v���C��ۑ�����", "�������", "�^�C�g���ɖ߂�"];
 						listResult	= [RESULT_RETRY, RESULT_SAVE_REPLAY, myRESULT_HELP, RESULT_END];
 						listReverify	= [ true, false, false, true ];
 					}
@@ -93,51 +93,51 @@ task TMenu
 				else
 				{
 					if( continue ){
-						//　コンティニューしてるとリプレイ保存できない
-						texts		= ["再挑戦", "操作説明", "タイトルに戻る", "最初から始める"];
+						//�@�R���e�B�j���[���Ă�ƃ��v���C�ۑ��ł��Ȃ�
+						texts		= ["�Ē���", "�������", "�^�C�g���ɖ߂�", "�ŏ�����n�߂�"];
 						listResult	= [MY_RESULT_CONTINUE, myRESULT_HELP, RESULT_END, RESULT_RETRY];
 						listReverify	= [ true, false, true, true ];
 					}
 					else{
-						texts		= ["再挑戦", "リプレイを保存する", "操作説明", "タイトルに戻る", "最初から始める"];
+						texts		= ["�Ē���", "���v���C��ۑ�����", "�������", "�^�C�g���ɖ߂�", "�ŏ�����n�߂�"];
 						listResult	= [MY_RESULT_CONTINUE, RESULT_SAVE_REPLAY, myRESULT_HELP, RESULT_END, RESULT_RETRY];
 						listReverify	= [ true, false, false, true, true ];
 					}
 				}
 			}
-			// ゲームオーバーBGM
+			// �Q�[���I�[�o�[BGM
 			PlayMusic(1, true, 30);
 		}
-		//　スペプラの時
+		//�@�X�y�v���̎�
 		if( GetPlayMode() == GAME_SPELL || GetPlayMode() == GAME_PRACTICE )
 		{
-			texts		= ["再挑戦", "リプレイを保存する", "操作説明", "タイトルに戻る"];
+			texts		= ["�Ē���", "���v���C��ۑ�����", "�������", "�^�C�g���ɖ߂�"];
 			listResult	= [RESULT_RETRY, RESULT_SAVE_REPLAY, myRESULT_HELP, RESULT_END];
 			listReverify	= [ false, false, false, true ];
 		}
 	}
 	let countMenu	= length(texts);
 
-	//　メニュータイトル作成
-	let objParent = ObjText_Create();	//適当なオブジェクトを生成（データのやり取り用）
+	//�@���j���[�^�C�g���쐬
+	let objParent = ObjText_Create();	//�K���ȃI�u�W�F�N�g�𐶐��i�f�[�^�̂����p�j
 	Obj_SetValue(objParent, "VALUE", 0);
 
 
 
-	//　項目作成
+	//�@���ڍ쐬
 	if( IsReplay ){
 		SetWakame(objParent, mx-64, my-32, rgb);
-		TMenuItem(objParent, countMenu+1, mx, my-80, "再生終了");
+		TMenuItem(objParent, countMenu+1, mx, my-80, "�Đ��I��");
 	}
 	else if( !clear ){
 		rgb = [160,64,64];
 		SetWakame(objParent, mx-64, my-32, rgb);
-		TMenuItem(objParent, countMenu+1, mx, my-80, "迷宮入り");
+		TMenuItem(objParent, countMenu+1, mx, my-80, "���{���");
 	}
 	else{
 		rgb = [160,160,64];
 		SetWakame(objParent, mx-64, my-32, rgb);
-		TMenuItem(objParent, countMenu+1, mx, my-80, "無事解決");
+		TMenuItem(objParent, countMenu+1, mx, my-80, "��������");
 	}
 	
 	ascent( var iText in 0 .. countMenu )
@@ -148,19 +148,19 @@ task TMenu
 	//	if (iText == 0) { mx += 32; }
 	}
 	
-	//　8フレーム待機
+	//�@8�t���[���ҋ@
 	loop( 8 ){ yield; }
 	
-	//キー状態がリセットされるまで待機
+	//�L�[��Ԃ����Z�b�g�����܂őҋ@
 	while( GetVirtualKeyState(VK_PAUSE) != KEY_FREE ){ yield; }
 	
-	//メニュー選択処理
-	//キー状態がリセットされるまで待機
+	//���j���[�I������
+	//�L�[��Ԃ����Z�b�g�����܂őҋ@
 	loop(5) { yield; }
 	
 	loop
 	{
-		//キー入力待ち
+		//�L�[��͑҂�
 		let downKey = CheckKey_Menu(8, [VK_UP, VK_DOWN, VK_CANCEL, VK_OK]);
 
 		alternative (downKey)
@@ -194,13 +194,13 @@ task TMenu
 			{
 				if (listResult[selectIndex] == myRESULT_HELP)
 				{
-					// ヘルプ
+					// �w���v
 					CallSoundPackage(sndTtDecide);
 					THelp();
 				}
 				else
 				{
-					//　リザルトセット
+					//�@���U���g�Z�b�g
 					SetScriptResult( listResult[selectIndex] );
 					
 					if( listResult[ selectIndex ] == RESULT_SAVE_REPLAY )
@@ -210,9 +210,9 @@ task TMenu
 					}
 					else
 					{
-						//　得点リセット
+						//�@���_���Z�b�g
 						AddScore( -GetScore() );
-						//　スペプラクリアフラグリセット　かけら系リセット　点符リセット
+						//�@�X�y�v���N���A�t���O���Z�b�g�@������n���Z�b�g�@�_�����Z�b�g
 						menu_on = false;
 						CallSoundPackage(sndTtDecide);
 						loop( 12 ){ yield; }
@@ -222,7 +222,7 @@ task TMenu
 				}
 			}
 		}
-		loop(3) { yield; }	//適当に固定ディレイ
+		loop(3) { yield; }	//�K���ɌŒ�f�B���C
 	}
 	Obj_Delete(objParent);
 }
@@ -238,12 +238,12 @@ function CallReplaySaveScene()
 	let cc			= 0;
 	
 	IsReplaySave = true;
-//	SetScriptArgument(idScript, 0, 1);	//クリア時はキーボードを真ん中に
+//	SetScriptArgument(idScript, 0, 1);	//�N���A���̓L�[�{�[�h��^�񒆂�
 	StartScript(idScript);
 	
 	while( !IsCloseScript(idScript) )
 	{
-		// はっぱっぱ
+		// �͂��ς���
 		if( cc%10 == 0 ){
 			CreatePauseEffect([randEffect(32,32+384),randEffect(-64,256)], 90+randEffect(-32,32), 1, 0, 10,
 								[255,255,255], randEffect(32,64), 128 );
@@ -255,7 +255,7 @@ function CallReplaySaveScene()
 	IsReplaySave = false;
 }
 
-// ハイスコア保存
+// �n�C�X�R�A�ۑ�
 function SetHightScore()
 {
 	let stage_clear		= GetAreaCommonData(CAREA_SYSTEM, "ClearStage", false);

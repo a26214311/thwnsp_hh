@@ -1,16 +1,16 @@
-// スペカのデータ
+// �X�y�J�̃f�[�^
 
 let STAGE_NAME = ["Stage1", "Stage2", "Stage3A", "Stage3B", "Stage3C", "Extra"];
 let STAGE_MAX = 6;
 let FLAG_EXTRA = 5;
 
 
-// スペカのリストを返す
-// 難易度ごとにスペカ数の増減はないけど念のため
+// �X�y�J�̃��X�g��Ԃ�
+// ��Փx���ƂɃX�y�J���̑����͂Ȃ����ǔO�̂���
 function GetSpellCardList(idStage)
 {
 	let GetDifficulty	= GetAreaCommonData(CAREA_TITLE, "Difficulty", D_EASY );
-	let GetLap		= GetAreaCommonData(CAREA_TITLE, "Lap", 0 );	//周回数
+	let GetLap		= GetAreaCommonData(CAREA_TITLE, "Lap", 0 );	//���
 	return( _GetSpellCardList(idStage, GetDifficulty, GetLap) );
 }
 function _GetSpellCardList(idStage, idDifficult, idLap)
@@ -21,32 +21,32 @@ function _GetSpellCardList(idStage, idDifficult, idLap)
 		alternative(idStage)
 		case(0)
 		{
-			// ステージ1
+			// �X�e�[�W1
 			return([ 1, 3, 4, 5 ]);
 		}
 		case(1)
 		{
-			// ステージ2
+			// �X�e�[�W2
 			return([ 12, 13, 14, 15 ]);
 		}
 		case(2)
 		{
-			// ステージ3A
+			// �X�e�[�W3A
 			return([ 21 ]);
 		}
 		case(3)
 		{
-			// ステージ3B
+			// �X�e�[�W3B
 			return([ 21 ]);
 		}
 		case(4)
 		{
-			// ステージ3C
+			// �X�e�[�W3C
 			return([ 21 ]);
 		}
 		case(5)
 		{
-			// ステージEx
+			// �X�e�[�WEx
 			return([ ]);
 		}
 	}
@@ -55,32 +55,32 @@ function _GetSpellCardList(idStage, idDifficult, idLap)
 		alternative(idStage)
 		case(0)
 		{
-			// ステージ1
+			// �X�e�[�W1
 			return([ 1, 2, 3, 4, 5, 6 ]);
 		}
 		case(1)
 		{
-			// ステージ2
+			// �X�e�[�W2
 			return([ 11, 12, 13, 14, 15, 16 ]);
 		}
 		case(2)
 		{
-			// ステージ3A
+			// �X�e�[�W3A
 			return([ 21, 22, 31, 32, 33, 34, 35 ]);
 		}
 		case(3)
 		{
-			// ステージ3B
+			// �X�e�[�W3B
 			return([ 21, 22, 41, 42, 43, 44 ]);
 		}
 		case(4)
 		{
-			// ステージ3C
+			// �X�e�[�W3C
 			return([ 21, 22, 51, 52, 53, 54, 55 ]);
 		}
 		case(5)
 		{
-			// ステージEx
+			// �X�e�[�WEx
 			return([ 101, 102, 103, 111, 112, 113, 114, 115, 116, 117, 131, 132, 133, 134, 135, 136, 137 ]);
 		}
 	}
@@ -89,75 +89,75 @@ function _GetSpellCardList(idStage, idDifficult, idLap)
 	alternative(idLap)
 	case(0)
 	{
-		// 1周目
+		// 1���
 		alternative(idStage)
 		case(0)
 		{
-			// ステージ1
+			// �X�e�[�W1
 			return([ 1, 3, 4, 5, 6 ]);
 		}
 		case(1)
 		{
-			// ステージ2
+			// �X�e�[�W2
 			return([ 11, 12, 13, 14, 15, 16 ]);
 		}
 		case(2)
 		{
-			// ステージ3A
+			// �X�e�[�W3A
 			return([ 21, 22, 31, 32, 33, 34 ]);
 		}
 		case(3)
 		{
-			// ステージ3B
+			// �X�e�[�W3B
 			return([ 21, 22, 41, 42, 43, 44 ]);
 		}
 		case(4)
 		{
-			// ステージ3C（ない）
+			// �X�e�[�W3C�i�Ȃ��j
 			return([]);
 		}
 	}
 	others
 	{
-		// 2周目
+		// 2���
 		alternative(idStage)
 		case(0)
 		{
-			// ステージ1
+			// �X�e�[�W1
 			return([ 2, 3, 4, 5, 6 ]);
 		}
 		case(1)
 		{
-			// ステージ2
+			// �X�e�[�W2
 			return([ 11, 12, 13, 14, 15, 16 ]);
 		}
 		case(2)
 		{
-			// ステージ3A
+			// �X�e�[�W3A
 			return([ 21, 22, 31, 32, 33, 34, 35 ]);
 		}
 		case(3)
 		{
-			// ステージ3B（ない）
+			// �X�e�[�W3B�i�Ȃ��j
 			return([]);
 		}
 		case(4)
 		{
-			// ステージ3C（ない）
+			// �X�e�[�W3C�i�Ȃ��j
 			return([ 21, 22, 51, 52, 53, 54, 55 ]);
 		}
 	}
 */
 }
 
-// プレイできるスペカがあるかのチェック
+// �v���C�ł���X�y�J�����邩�̃`�F�b�N
 function CheckPlayableSpell(spellList)
 {
 	let flg = 0;
 	ascent(i in 0 .. length(spellList))
 	{
 		let GetDifficulty	= GetAreaCommonData(CAREA_TITLE, "Difficulty", D_EASY );
-		let GetLap		= GetAreaCommonData(CAREA_TITLE, "Lap", 0 );	//周回数
+		let GetLap		= GetAreaCommonData(CAREA_TITLE, "Lap", 0 );	//���
 		let sID = GetSpellCardIDEx( spellList[i], GetLap, GetDifficulty );
 		flg = LoadResult( GetSpellCardIndex(sID) );
 		if (flg) { break; }
@@ -165,17 +165,17 @@ function CheckPlayableSpell(spellList)
 	return(flg);
 }
 
-// スペカの名前を返す
+// �X�y�J�̖��O��Ԃ�
 function GetSpellCardName(idSpell)
 {
 	let GetDifficulty	= GetAreaCommonData(CAREA_TITLE, "Difficulty", D_EASY );
-	let GetLap		= GetAreaCommonData(CAREA_TITLE, "Lap", 0 );	//周回数
+	let GetLap		= GetAreaCommonData(CAREA_TITLE, "Lap", 0 );	//���
 	return( _GetSpellCardName(idSpell, GetDifficulty, GetLap) );
 }
 function _GetSpellCardName(idSpell, idDifficult, idLap)
 {
 	alternative(idSpell)
-	/* 1面中ボス */
+	/* 1�ʒ��{�X */
 	case(1)
 	{
 		return("錯舌「三武具馬具六武具馬具」						////	錯舌「三武具馬具六武具馬具」");
@@ -184,7 +184,7 @@ function _GetSpellCardName(idSpell, idDifficult, idLap)
 	{
 		return("錯師「三野良如来六野良如来」						////	錯師「三野良如来六野良如来」");
 	}
-	/* 1面ボス */
+	/* 1�ʃ{�X */
 	case(3)
 	{
 		if (idDifficult <= D_NORM) { return("高符「火の山、水の谷」						////	高符「火の山、水の谷」"); }
@@ -207,7 +207,7 @@ function _GetSpellCardName(idSpell, idDifficult, idLap)
 		if (idDifficult <= D_NORM) { return("「ハインリッヒの波数皇帝」						////	「ハインリッヒの波数皇帝」"); }
 		else { return("「カイザーオブカイザー」						////	「カイザーオブカイザー」"); }
 	}
-	/* 2面中ボス */
+	/* 2�ʒ��{�X */
 	case(11)
 	{
 		if (idDifficult <= D_NORM) { return("月影「月光照らす禿山の一夜」						////	月影「月光照らす禿山の一夜」"); }
@@ -219,7 +219,7 @@ function _GetSpellCardName(idSpell, idDifficult, idLap)
 		else if (idDifficult <= D_NORM) { return("六軒「見えない影の密室」						////	六軒「見えない影の密室」"); }
 		else { return("六影「ファンジターシャドウ」						////	六影「ファンジターシャドウ」"); }
 	}
-	/* 2面ボス */
+	/* 2�ʃ{�X */
 	case(13)
 	{
 		if (idDifficult == D_DRIVE) { return("暗理「4次元上の3次元曲面」						////	暗理「4次元上の3次元曲面」"); }
@@ -244,7 +244,7 @@ function _GetSpellCardName(idSpell, idDifficult, idLap)
 	{
 		return("「ハーディワインベルグの血」						////	「ハーディワインベルグの血」");
 	}
-	/* 3面中ボス */
+	/* 3�ʒ��{�X */
 	case(21)
 	{
 		if (idDifficult <= D_NORM) { return("回符「盆飛ぶ蜻蛉」						////	回符「盆飛ぶ蜻蛉」"); }
@@ -254,7 +254,7 @@ function _GetSpellCardName(idSpell, idDifficult, idLap)
 	{
 		return("「三会談大監査」						////	「三会談大監査」");
 	}
-	/* 3面ボス1 - 皆故 */
+	/* 3�ʃ{�X1 - �F�� */
 	case(31)
 	{
 		return("残夏「雲の消えゆく蒼天」						////	残夏「雲の消えゆく蒼天」");
@@ -275,7 +275,7 @@ function _GetSpellCardName(idSpell, idDifficult, idLap)
 	{
 		return("「透き通る皆豊かな神意の雨水」						////	「透き通る皆豊かな神意の雨水」");
 	}
-	/* 3面ボス2 - 得敏 */
+	/* 3�ʃ{�X2 - ���q */
 	case(41)
 	{
 		if (idDifficult <= D_NORM) { return("孔符「ド・ブロイの不確定波」						////	孔符「ド・ブロイの不確定波」"); }
@@ -295,7 +295,7 @@ function _GetSpellCardName(idSpell, idDifficult, idLap)
 	{
 		return("「得敏シュレディンガーの波動状弾幕」						////	「得敏シュレディンガーの波動状弾幕」");
 	}
-	/* 3面ボス3 - 白菊 */
+	/* 3�ʃ{�X3 - ���e */
 	case(51)
 	{
 		if (idDifficult <= D_NORM) { return("分類「2つの5つの世界」						////	分類「2つの5つの世界」"); }
@@ -320,7 +320,7 @@ function _GetSpellCardName(idSpell, idDifficult, idLap)
 		if (idDifficult <= D_HARD) { return("「白は失われた過去に名前を付ける」						////	「白は失われた過去に名前を付ける」"); }
 		else { return("「ホワイトネイムズスポイルドパスト」						////	「ホワイトネイムズスポイルドパスト」"); }
 	}
-	/* Exステージ */
+	/* Ex�X�e�[�W */
 	case(101)
 	{
 		return("怒符「チューブブレイクアロー」						////	怒符「チューブブレイクアロー」");
@@ -333,7 +333,7 @@ function _GetSpellCardName(idSpell, idDifficult, idLap)
 	{
 		return("「フェアリーハイロゥ」						////	「フェアリーハイロゥ」");
 	}
-	/* Exステージ2 - 雷 */
+	/* Ex�X�e�[�W2 - �� */
 	case(111)
 	{
 		return("雨乞「ハバキリの必中落雷」						////	雨乞「ハバキリの必中落雷」");
@@ -362,7 +362,7 @@ function _GetSpellCardName(idSpell, idDifficult, idLap)
 	{
 		return("「始海根源の蛇切」						////	「始海根源の蛇切」");
 	}
-	/* Exステージ2 - 姫 */
+	/* Ex�X�e�[�W2 - �P */
 	case(131)
 	{
 		return("天花「雲の上のお花畑」						////	天花「雲の上のお花畑」");

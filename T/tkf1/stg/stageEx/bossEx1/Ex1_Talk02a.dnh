@@ -1,17 +1,17 @@
-#東方弾幕風[Single]
+#����e����[Single]
 #ScriptVersion[3]
-#Title["Exボス1　会話A-2"]
-#Text["Exボス1　会話A-2"]
+#Title["Ex�{�X1�@��bA-2"]
+#Text["Ex�{�X1�@��bA-2"]
 #Background[""]
 #System["./../../../system/System_Main.dnh"]
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./../../../lib/lib_boss.dnh"
 #include"./../../../lib/lib_talk.dnh"
 
-// 各ボスのオブジェクトID
+// �e�{�X�̃I�u�W�F�N�gID
 
 @Event {
 	alternative(GetEventType())
@@ -21,9 +21,9 @@
 }
 
 @Initialize {
-	Boss_Init();	//初期設定
-	objEnemy = CreateBossTalk(BOSS_ID_AZUMA);	//ボスセット
-	Obj_SetVisible(GetBossImageID(objEnemy), false);	//画像非表示
+	Boss_Init();	//����ݒ�
+	objEnemy = CreateBossTalk(BOSS_ID_AZUMA);	//�{�X�Z�b�g
+	Obj_SetVisible(GetBossImageID(objEnemy), false);	//�摜��\��
 	Task_Main();
 }
 
@@ -32,40 +32,40 @@
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
-	// 魔法陣リセット
+	// ���@�w���Z�b�g
 	BossEffect_ResetMagicCircle();
 
-	// 会話準備
+	// ��b����
 	StartTalk();
 
 	wait(30);
 	
-	//会話処理
+	//��b����
 	FuncTalk();
 	
-	//次のシーンへ
+	//���̃V�[����
 	FinishTalk(true);
 	Boss_Finalize(objEnemy, false, false);
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_AZUMA, true);
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_REIMU, false);
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_TOKUBI, false);
 	let cutinDescri = CreateDescriptiveObject();
 	
-	// 画像ファイル
+	// �摜�t�@�C��
 	let pathBoss1 = imgCharaAzuma;
 	let pathPlayer1 = imgCharaReimu;
 	let pathPlayer2 = imgCharaTokubi;
 	
-	// 最初に前に出てくるキャラ
+	// �ŏ��ɑO�ɏo�Ă���L����
 	SetImageFoward(cutinBoss1, true);
 	wait(15);
 	
@@ -77,7 +77,7 @@ function FuncTalk()
 		talkID = max(0, talkID+WaitNext());
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let xIni = CenX;

@@ -1,8 +1,8 @@
-// 魔理沙エンディング1周目
+// �������G���f�B���O1���
 
 //---------------------------------------------------------------------
 
-// 関数取り込み
+// �֐���荞��
 #include"./../../../lib/lib_common.dnh"
 #include"./../../../lib/lib_talk_ed.dnh"
 #include"./../../../lib/lib_stage.dnh"
@@ -17,7 +17,7 @@
 
 }
 
-// メインタスク
+// ���C���^�X�N
 task Task_Main()
 {
 	TBackground();
@@ -26,14 +26,14 @@ task Task_Main()
 	//  BGM
 	PlayMusic( 8, true, 60 );
 	
-	// 会話準備
+	// ��b����
 	StartTalk();
 	wait(120);
 
 	FuncTalk();
 	wait(15);
 
-	//次のシーンへ
+	//���̃V�[����
 	FinishTalk(true);
 	SetForbidPlayerShot(true);
 	SetForbidPlayerSpell(true);
@@ -47,7 +47,7 @@ task Task_Main()
 	}
 }
 
-// 会話処理
+// ��b����
 function FuncTalk()
 {
 	let COL0 = [160, 160, 160];
@@ -55,7 +55,7 @@ function FuncTalk()
 	let COL2 = [255, 192, 255];
 	let COL3 = [160, 160, 255];
 	
-	// オブジェクト作成
+	// �I�u�W�F�N�g�쐬
 	let cutinDescri = CreateDescriptiveObject();
 	wait(15);
 	
@@ -67,7 +67,7 @@ function FuncTalk()
 		talkID = max(0, talkID+WaitNext());
 	}
 
-	// 会話処理単発（巻き戻しも出来るように）
+	// ��b�����P���i�����߂����o����悤�Ɂj
 	function FuncTalkSingle(talkID)
 	{
 		let talk_type = 1;
