@@ -16,7 +16,7 @@
 
 ### “我恐怕是，掌管季节更换的神吧。”
 
-出自早苗2周目序章，皆故语。和日语读音有关。
+出自早苗2周目序章，皆故语。参考(touhouwiki)[http://en.touhouwiki.net/wiki/White_Names_Spoiled_Past/Story/Sanae_and_Minayu%27s_Scenario_-_Part_2#cite_ref-1]的说法，和日语读音有关。
 
 - 根据忆尘皆故的Profile，在失忆的皆故印象里，“きをうつろはせる（KI wo utsuro haseru）”这句话表明了她的能力。
 - 白菊把这句话解释为“記憶を移ろはせる（KIOKU wo utsuro haseru，转移记忆的能力）”，并据此让皆故以“掌管记忆之神”的身份出道。
@@ -102,7 +102,7 @@
 
 ### “先出现者为黑幕”定律？
 
-魔理沙1周目ED名。引用自东方妖妖梦1面BOSS蕾迪·霍瓦特罗克的台词，似乎是在影射侦探作品（比如柯南）中的凶手规律。
+魔理沙1周目ED名。据(touhouwiki)[http://en.touhouwiki.net/wiki/White_Names_Spoiled_Past/Story/Marisa_and_Shiragiku%27s_Scenario_-_Part_1#cite_ref-2]，该句引用自东方妖妖梦1面BOSS蕾迪·霍瓦特罗克的台词，似乎是在影射侦探作品（比如柯南）中的凶手规律。
 
 ### All's Well That Ends Well —— 皆大欢喜
 
@@ -140,3 +140,6 @@ TODO
 > 关于诸神云集出云的目的，一说是当年天照大神把全国的政事交给大国主大神处理，而自己隐退后负责处理神事。这里的神事指的是缔结各种“缘”，包括男女间的缘分等等。
 > 因此，八百万神每年10月在出云开会，处理全国的结缘事宜。
 
+### “萱野姬非常震怒daze，就像某大佐一样”
+
+出自魔理沙E3。TODO

@@ -8,20 +8,21 @@
 
 - [x] 灵梦1周目
 - [x] 灵梦2周目
-- [ ] 灵梦EX
+- [x] 灵梦EX
 - [x] 魔理沙1周目
 - [x] 魔理沙2周目
-- [ ] 魔理沙EX
+- [x] 魔理沙EX
 - [x] 早苗1周目
 - [x] 早苗2周目
 - [ ] 早苗EX
-- [ ] 疑难句，初步润色
+- [x] 疑难句
+- [ ] 初步润色
 - [ ] neta考据
 
 ## 参考资料
 
-- THWiki http://thwiki.cc/%E4%B8%9C%E6%96%B9%E7%99%BD%E5%B0%98%E8%AE%B0
-- 英文 http://en.touhouwiki.net/wiki/White_Names_Spoiled_Past/Story
+- thwiki http://thwiki.cc/%E4%B8%9C%E6%96%B9%E7%99%BD%E5%B0%98%E8%AE%B0
+- touhouwiki http://en.touhouwiki.net/wiki/White_Names_Spoiled_Past/Story
 - 英翻 http://xingqu.baidu.com/p/3559027002?qq-pf-to=pcqq.c2c
 
 ## 吉祥物
