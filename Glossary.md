@@ -115,13 +115,13 @@ TODO
 
 ### “真不想承认啊，这是我太过年轻而犯下的错。”
 
-出自魔理沙1周目3面，BOSS战后，白菊语。
+出自早苗2周目3面，BOSS战后，白菊语。
 
-原文是普通的一句话，被译者擅自换成了这句[知名台词](http://zh.moegirl.org/%E5%9B%A0%E4%B8%BA%E5%B9%B4%E8%BD%BB%E8%80%8C%E7%8A%AF%E4%B8%8B%E7%9A%84%E9%94%99)。
+原文是普通的一句话，被译者~~因个人喜好擅自换成~~意译为了这句[知名台词](http://zh.moegirl.org/%E5%9B%A0%E4%B8%BA%E5%B9%B4%E8%BD%BB%E8%80%8C%E7%8A%AF%E4%B8%8B%E7%9A%84%E9%94%99)。
 
 ## ED
 
-### 道上人士不能给普通人添麻烦
+### 道上人士不给普通人添麻烦
 
 灵梦1周目ED名。
 
@@ -133,7 +133,7 @@ TODO
 
 据[touhouwiki](http://en.touhouwiki.net/wiki/White_Names_Spoiled_Past/Story/Marisa_and_Shiragiku%27s_Scenario_-_Part_1#cite_ref-2)，该句引用自东方妖妖梦1面BOSS蕾迪·霍瓦特罗克的台词，似乎是在影射侦探作品（比如柯南）中的凶手规律。
 
-### All's Well That Ends Well —— 皆大欢喜
+### All's Well That Ends Well（皆大欢喜）
 
 早苗2周目ED名。
 
@@ -173,22 +173,10 @@ TODO
 
 ### “萱野姬非常震怒daze，就像某大佐一样”
 
-出自魔理沙E3。TODO
+出自魔理沙EX3。TODO
 
 ### “哇啊啊啊啊啊啊啊啊说话了啊～～～!!!”
 
 出自早苗EX1。
 
 原文「キェェェェェェアァァァァァァシャベッタァァァァァァ!!!」，出自日本麦当劳欢乐套餐广告中，孩子们听到玩具说话时因极度惊讶而~~做出的过激举动~~发出的尖叫。参见[niocnico视频](http://www.nicovideo.jp/watch/sm13365336)。
-
-# 翻译NOTE
-
-XXさん=>XX小姐
-敬語=>普通的汉语
-輩/そいつ=>家伙
-
-神=>神
-神様=>神明
-
-手柄=>功劳
-異変が解決=>解决异变
