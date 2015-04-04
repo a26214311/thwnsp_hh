@@ -28,6 +28,9 @@
 
 本作中作为白菊的种族设定出现。
 
+（三月精OSP第8话，三妖精碰到了那条大蛇，被它教训了。）
+
+
 ### “我恐怕是，掌管季节更换的神吧。”
 
 出自早苗2周目序章，皆故语。参考[touhouwiki](http://en.touhouwiki.net/wiki/White_Names_Spoiled_Past/Story/Sanae_and_Minayu%27s_Scenario_-_Part_2#cite_ref-1)的说法，和日语读音有关。
