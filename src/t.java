@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public class t {
@@ -12,17 +13,52 @@ public class t {
 	static int c=0;
 	static int sn=0;
 	public static void main(String[] args) {
-		String folder = "T/TK/";
+		String folder = "T/tkf2";
 		c=0;
 		sn=0;
-		exptalk(folder);
-		System.out.println("alllines:"+c);
-		System.out.println("allwords:"+sn);
+		TObig(folder);
+		returnbig("T/tkf3");
+		comparer(folder);
+		System.out.println("total font:"+hs.size());
+		System.out.println(hs);
 		System.out.println("finish");
 	}
 
 	
+	public static void extall(String folderpath) {
+		File f = null;
+		f = new File(folderpath);
+		File[] files = f.listFiles(); 
+		for(int i=0;i<files.length;i++)
+		{
+			if(files[i].isDirectory()){
+				String newfolderpath = folderpath+"/"+files[i].getName();
+				extall(newfolderpath);
+			}else if(files[i].getName().indexOf(".dnh")>0||files[i].getName().indexOf("txt")>0){
+				ArrayList<String> r = readfile(files[i]);
+				try {
+					String newfilepath = files[i].getPath().replaceAll("/script/", "/tkf6/");
+		    		File newfile = new File(newfilepath);
+		    		new File(newfile.getParent()).mkdirs();
+		    		FileOutputStream fo = new FileOutputStream(newfile);
+		    		OutputStreamWriter out = new OutputStreamWriter(fo,"utf-8");	
+					out.write(r.get(1));
+					out.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+    	try {
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	
 	public static void exttalk(String folderpath) {
+		
 		File f = null;
 		f = new File(folderpath);
 		File[] files = f.listFiles(); 
@@ -63,6 +99,7 @@ public class t {
 	}
 	
 	public static void exptalk(String folderpath){
+		
 		File f = null;
 		f = new File(folderpath);
 		File[] files = f.listFiles(); 
@@ -101,6 +138,7 @@ public class t {
 	
 	public static ArrayList<String> readfile(File filename)
 	{
+		System.out.println(filename.getName());
 		String rn="\r\n";
 		String content = new String();
 		String jc = new String();
@@ -162,7 +200,7 @@ public class t {
 		String translatedfilepath = filename.getPath().replace("/TK/", "/tkf2/");
 		File translatedfile = new File(translatedfilepath);
 		try{
-			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename),"utf-8"));
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename),"Shift-JIS"));
 			BufferedReader br2 = null;
 			try {
 				br2 = new BufferedReader(new InputStreamReader(new FileInputStream(translatedfile),"utf-8"));
@@ -223,6 +261,227 @@ public class t {
 	
 	
 	
+public static void TObig(String folderpath){
+		File f = null;
+		f = new File(folderpath);
+		File[] files = f.listFiles(); 
+		for(int i=0;i<files.length;i++)
+		{
+			if(files[i].isDirectory()){
+				String newfolderpath = folderpath+"/"+files[i].getName();
+				TObig(newfolderpath);
+			}else{
+				ArrayList<String> r = ToBig5(files[i]);
+				try {
+					String newfilepath = files[i].getPath().replaceAll("/tkf2/", "/tkf3/");
+		    		File newfile = new File(newfilepath);
+		    		new File(newfile.getParent()).mkdirs();
+		    		FileOutputStream fo = new FileOutputStream(newfile);
+		    		OutputStreamWriter out = new OutputStreamWriter(fo,"shift-JIS");	
+					out.write(r.get(1));
+					out.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+    	try {
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	
+	public static ArrayList<String> ToBig5(File filename)
+	{
+		String rn="\r\n";
+		String content = new String();
+		String jc = new String();
+		
+		try{
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename),"utf-8"));
+			String s;
+			while ((s = br.readLine()) != null) {
+				String translatedchat=s;
+				String[] e = translatedchat.split("////");
+				if(e.length==2){
+					String tc = e[0];
+					String tcr=tc.trim();
+					String b5=tcr;
+					content=content+b5+rn;
+				}else{
+					System.out.println("error e length:"+translatedchat);
+					content=content+s+rn;
+				}
+			}
+			br.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		ArrayList<String> r = new ArrayList<String>();
+		r.add(jc);
+		r.add(content);
+		return r;
+	}
+	
+	public static void returnbig(String folderpath){
+		File f = null;
+		f = new File(folderpath);
+		File[] files = f.listFiles(); 
+		for(int i=0;i<files.length;i++)
+		{
+			if(files[i].isDirectory()){
+				String newfolderpath = folderpath+"/"+files[i].getName();
+				returnbig(newfolderpath);
+			}else{
+				ArrayList<String> r = returnBig5(files[i]);
+				try {
+					String newfilepath = files[i].getPath().replaceAll("/tkf3/", "/tkf4/");
+		    		File newfile = new File(newfilepath);
+		    		new File(newfile.getParent()).mkdirs();
+		    		FileOutputStream fo = new FileOutputStream(newfile);
+		    		OutputStreamWriter out = new OutputStreamWriter(fo,"utf-8");	
+					out.write(r.get(1));
+					out.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+    	try {
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	
+	public static ArrayList<String> returnBig5(File filename)
+	{
+		String rn="\r\n";
+		String content = new String();
+		String jc = new String();
+		
+		try{
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename),"shift-JIS"));
+			String s;
+			while ((s = br.readLine()) != null) {
+				content=content+s+rn;
+			}
+			br.close();
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		ArrayList<String> r = new ArrayList<String>();
+		r.add(jc);
+		r.add(content);
+		return r;
+	}
+	
+	
+	
+public static void comparer(String folderpath){
+		
+		File f = null;
+		f = new File(folderpath);
+		File[] files = f.listFiles(); 
+		for(int i=0;i<files.length;i++)
+		{
+			if(files[i].isDirectory()){
+				String newfolderpath = folderpath+"/"+files[i].getName();
+				comparer(newfolderpath);
+			}else{
+				ArrayList<String> r = compare(files[i]);
+				try {
+					String newfilepath = files[i].getPath().replaceAll("/tkf2/", "/tkf7/");
+		    		File newfile = new File(newfilepath);
+		    		new File(newfile.getParent()).mkdirs();
+		    		FileOutputStream fo = new FileOutputStream(newfile);
+		    		OutputStreamWriter out = new OutputStreamWriter(fo,"utf-8");	
+					out.write(r.get(1));
+					out.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+    	try {
+    		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	static HashSet<String> hs = new HashSet<String>();
+	public static ArrayList<String> compare(File filename)
+	{
+		String rn="\r\n";
+		String content = new String();
+		String jc = new String();
+		
+		String translatedfilepath = filename.getPath().replace("/tkf2/", "/tkf4/");
+		File translatedfile = new File(translatedfilepath);
+		try{
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(filename),"utf-8"));
+			BufferedReader br2 = null;
+			try {
+				br2 = new BufferedReader(new InputStreamReader(new FileInputStream(translatedfile),"utf-8"));
+			} catch (Exception e) {
+				
+			}
+			String s;
+			while ((s = br.readLine()) != null) {
+				String translatedchat = br2.readLine();
+				String[] e = s.split("////");
+				if(e.length==2){
+					String tc = e[0];
+					String tcr=tc.trim();
+					if(tcr.length()==translatedchat.length()){
+						for(int i=0;i<tcr.length();i++){
+							char ori = tcr.charAt(i);
+							char big = translatedchat.charAt(i);
+							if(tcr.charAt(i)==translatedchat.charAt(i)){
+								
+							}else{
+								if((big+"").equals("?")){
+									hs.add(ori+"");
+								}else{
+									System.out.println("eeeeee");
+								}
+							}
+						}
+					}else{
+						System.out.println("error different length");
+					}
+				}else{
+					System.out.println(filename.getName());
+					System.out.println("error e length:"+translatedchat);
+				}
+			}
+			if(br2!=null){
+				if(br2.readLine()!=null){
+					System.out.println("exception!!!different lines!!!!!"+filename.getPath());
+				}
+				br2.close();
+			}
+	        br.close(); 
+	       
+	        
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		ArrayList<String> r = new ArrayList<String>();
+		r.add(jc);
+		r.add(content);
+		return r;
+	}
 	
 	
 	
