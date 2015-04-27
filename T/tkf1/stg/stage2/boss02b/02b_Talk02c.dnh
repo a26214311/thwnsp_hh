@@ -1,154 +1,308 @@
-//#����e����[Single]
+//#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["2��1��ځ@��bA"]
-#Text["2��1��ځ@��bA"]
+
+#Title["2面1周目　会話A"]
+
+#Text["2面1周目　会話A"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
 
+
+
+
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
+
+	Boss_Init();	//初期設定
+
 	objEnemy  = CreateBossTalk(BOSS_ID_UKA);
-	Obj_SetVisible(GetBossImageID(objEnemy), false);	//�摜��\��
+
+	Obj_SetVisible(GetBossImageID(objEnemy), false);	//画像非表示
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
-	// �o�ꃂ�[�V�����i�ŏ��͔�\���j
+
+
+	// 登場モーション（最初は非表示）
+
 	wait(60);
+
 	
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_UKA, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaUka;
+
 	let pathPlayer1 = imgCharaSanae;
+
 	let pathPlayer2 = imgCharaMinayu;
+
 	
-	// �ŏ��ɑO�ɏo�Ă���L����
+
+	// 最初に前に出てくるキャラ
+
 	SetImageFoward(cutinBoss1, true);
-	//����O���ύX
+
+	//初期グラ変更
+
 	ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 	
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let xIni = CenX;
+
 		let yIni = 140;
+
 		
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "这些家伙是什么人啊！[r]这下子升职的机会又……");
+
+			SetTalkEx(cutinBoss1, "这都什么人啊！[r]这下子升职的机会又……");
+
 			SetFukidashiType(cutinBoss1, FUKIDASHI_AFRAID);
+
 		}
+
 		case(1)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "权利斗争这种事情，还真是丑陋啊。");
+
+			SetTalkEx(cutinPlayer2, "权利斗争真是丑陋啊。");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "尽快解决掉，[r]不要再扯上关系为好。");
+
+			SetTalkEx(cutinPlayer2, "得立即解决掉这件事，[r]和她脱离掉关系呢。");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer1, "如果为升职的事情苦恼的话，[r]请立即到守矢神社来哟！");
+
+			SetTalkEx(cutinPlayer1, "如果还为升职的事情苦恼的话，[r]就请立即到守矢神社来哟！");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer1, "无论何时，神奈子大人都会用最丰厚的待遇，[r]来迎接您的吧。");
+
+			SetTalkEx(cutinPlayer1, "无论何时，神奈子大人[r]都会用最丰厚的待遇来迎接你的吧。");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "如果萱野姫大人能允许的话……");
+
+			SetTalkEx(cutinBoss1, "如果萱野姬大人批准的话……");
+
 			SetFukidashiType(cutinBoss1, FUKIDASHI_AFRAID);
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "不能被奇怪的宗教给骗了！");
+
+			SetTalkEx(cutinPlayer2, "不可以被奇怪的宗教给骗了啊！");
+
 			SetFukidashiType(cutinPlayer2, FUKIDASHI_ANGER);
+
 		}
+
 		case(7)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer1, "“越是自己办事不靠谱的人，越容易被别人说服”，是这么回事啊，[r]笔记笔记。");
+
+			SetTalkEx(cutinPlayer1, "“越是抓不住重点的人，越容易被别人说服”这样，[r]笔记笔记。");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

@@ -1,241 +1,482 @@
-//#����e����[Single]
+//#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["3��1��ځ@��bA"]
-#Text["3��1��ځ@��bA"]
+
+#Title["3面1周目　会話A"]
+
+#Text["3面1周目　会話A"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
 
+
+
+
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
+
+	Boss_Init();	//初期設定
+
 	objEnemy  = CreateBossTalk(BOSS_ID_TOKUBI);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
-	// �o�ꃂ�[�V�����i�ŏ��͔�\���j
+
+
+	// 登場モーション（最初は非表示）
+
 	wait(60);
+
 	
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_TOKUBI, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_MARISA, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_RINNE, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaTokubi;
+
 	let pathPlayer1 = imgCharaMarisa;
+
 	let pathPlayer2 = imgCharaRinne;
+
 	
-	// �B��
+
+	// 隠す
+
 	SetImageVisible(cutinBoss1, false);
-	// �ŏ��ɑO�ɏo�Ă���L����
+
+	// 最初に前に出てくるキャラ
+
 	SetImageFoward(cutinPlayer1, true);
+
 	
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let xIni = CenX;
+
 		let yIni = 140;
+
 		
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
-			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "いよいよ黒幕の登場か？");
-		}
-		case(1)
-		{
-			SetImageVisible(cutinBoss1, false);	// �{�X�摜�o���t���O
-			
-			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
-			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "ええ、さあ、諸悪の根源のお出ましですよ");
-		}
-		case(2)
-		{
-			EnterBoss(objEnemy, xIni, yIni);
-			BossScene_SetNameVisible(objScene, true);	//�{�X�l�[���\�����
-			SetImageVisible(cutinBoss1, true);	// �{�X�摜�o���t���O
 
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
+			SetTalkEx(cutinPlayer1, "终于轮到黑幕登场了吗？");
+
+		}
+
+		case(1)
+
+		{
+
+			SetImageVisible(cutinBoss1, false);	// ボス画像出現フラグ
+
+			
+
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "どの口がほざくか！白菊！");
+
+			SetTalkEx(cutinPlayer2, "哎哎，好啦，万恶之源哟，请快快现身吧。");
+
+		}
+
+		case(2)
+
+		{
+
+			EnterBoss(objEnemy, xIni, yIni);
+
+			BossScene_SetNameVisible(objScene, true);	//ボスネーム表示状態
+
+			SetImageVisible(cutinBoss1, true);	// ボス画像出現フラグ
+
+
+
+			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
+			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+
+			SetTalkEx(cutinBoss1, "你在胡说什么啊！白菊！");
+
 			SetFukidashiType(cutinBoss1, FUKIDASHI_ANGER);
-			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
+
+			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "先日記憶を司る神などという奴から[r]襲撃を受けたが、今度はお前か！");
+
+			SetTalkEx(cutinBoss1, "前几天才被叫什么掌管记忆之神的家伙袭击了，[r]这次换成你了吗！");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "本当に今回の異変は面倒な事になってるな");
+
+			SetTalkEx(cutinPlayer1, "这次的异变还真是越来越麻烦了。");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "襲撃を受けたって、まさか負けたんですか？");
+
+			SetTalkEx(cutinPlayer2, "说是被袭击了什么的，难道你打输了吗？");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "相手も忘れの異変の最中で力が[r]上がっていたのであろうな。不覚にも");
+
+			SetTalkEx(cutinBoss1, "大概是对手在这场忘却的异变中，力量得以增强的缘故吧。[r]真是失策。");
+
 		}
+
 		case(7)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "あはは、愛宕軍の筆頭書記官も[r]落ちぶれたものですね");
+
+			SetTalkEx(cutinPlayer2, "啊哈哈，爱宕军的第一书记[r]也会沦落至此呢。");
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "して、何故また私はお前らに[r]襲われねばならん？");
+
+			SetTalkEx(cutinBoss1, "所以，为什么我非得又被你们[r]袭击一次不可啊？");
+
 		}
+
 		case(9)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "今回の異変、貴方が自分の理論の正しさを証明[r]する為の実験材料として起こしたんでしょう？");
+
+			SetTalkEx(cutinPlayer2, "这次的异变，是你为了验证自己理论的正确性，[r]而引发来当做试验的，对吧？");
+
 		}
+
 		case(10)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "理論とか実験って何だ？記憶操作術か？");
+
+			SetTalkEx(cutinPlayer1, "理论啊实验什么的是指什么？记忆操纵术吗？");
+
 		}
+
 		case(11)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "まあ、そんな所です");
+
+			SetTalkEx(cutinPlayer2, "嘛，就是那类东西。");
+
 		}
+
 		case(12)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "お前ら不貞の輩に説明する義理は無い！");
+
+			SetTalkEx(cutinBoss1, "对于你们这种无耻之徒，我没有说明的义务！");
+
 		}
+
 		case(13)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "しかしまあ、折角ノコノコとやって来て[r]くれたのだ。私の実験材料にしてやろう");
+
+			SetTalkEx(cutinBoss1, "不过嘛，难得你们不合时宜地来到了这里，[r]就把你们变成我的实验材料好了。");
+
 		}
+
 		case(14)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "このマッドサイエンティストめ！");
+
+			SetTalkEx(cutinPlayer2, "你这个混蛋疯子科学家！");
+
 		}
+
 		case(15)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "あやしい実験を今すぐ止めさせ、[r]幻想郷の平和を守るのです！");
+
+			SetTalkEx(cutinPlayer2, "我要立即阻止你那奇怪的实验，[r]守护幻想乡的和平！");
+
 		}
+
 		case(16)
+
 		{
+
 			//  BGM
+
 			PlayMusicWithName( 7, true, 30 );
 
+
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "幻想郷という外から観測する[r]事のできない密室の箱。");
+
+			SetTalkEx(cutinBoss1, "这里名为幻想乡，[r]是个外界无法观测的封闭盒子。");
+
 		}
+
 		case(17)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "私は、貴様らの敗北する未来に[r]可能性を収束させる観測者となる！");
+
+			SetTalkEx(cutinBoss1, "我将成为观察者，[r]见证你们的世界线收束至“战败”！");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+
+
 
 task EnterBoss(objEnemy, xIni, yIni)
+
 {
+
 	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+
 	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
 
+
+
 	SetMovePositionHermite(objEnemy, xIni, yIni,
+
 		1000, 120, 0, 180, 90);
+
 	SetAction(objEnemy, ACT_MOVE_L, 90);
+
 }
+

@@ -1,147 +1,294 @@
-//#����e����[Single]
+//#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["3��1��ځ@��bA"]
-#Text["3��1��ځ@��bA"]
+
+#Title["3面1周目　会話A"]
+
+#Text["3面1周目　会話A"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
 
+
+
+
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
+
+	Boss_Init();	//初期設定
+
 	objEnemy  = CreateBossTalk(BOSS_ID_RAKU);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
-	// �o�ꃂ�[�V����
+
+
+	// 登場モーション
+
 	let xIni = CenX;
+
 	let yIni = 140;
+
 	EnterBoss(objEnemy, xIni, yIni);
+
 	wait(60);
+
 	
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_RAKU, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaRaku;
+
 	let pathPlayer1 = imgCharaSanae;
+
 	let pathPlayer2 = imgCharaMinayu;
+
 	
-	// �ŏ��ɑO�ɏo�Ă���L����
+
+	// 最初に前に出てくるキャラ
+
 	SetImageFoward(pathBoss1, true);
+
 	
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID++;
+
 		WaitNext();
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let xIni = CenX;
+
 		let yIni = 140;
+
 		
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "ラクククク、これはこれは、[r]早苗さんではございませんか");
-			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
+
+			SetTalkEx(cutinBoss1, "拉库库库库，瞧这吹得哪阵风，[r]这不是早苗小姐大驾光临吗。");
+
+			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+
 		}
+
 		case(1)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "あら？異変は収束したのに、[r]まだここら辺を嗅ぎ回ってるんですか？");
+
+			SetTalkEx(cutinPlayer1, "啊啦？明明异变已经结束了，[r]你却还在这块晃悠吗？");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "長年の記者の勘でしょうか、[r]スキャンダルの香りがするのでございます");
+
+			SetTalkEx(cutinBoss1, "这是长年从事记者行业练成的嗅觉。[r]我闻到了丑闻的气息。");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "ならこんなスキャンダル[r]記事を書いたらどうでしょう？");
+
+			SetTalkEx(cutinPlayer2, "那么写这么一篇[r]丑闻报道怎么样？");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "『大天狗の編集長、コテンパン[r]　にされ天狗の面目丸つぶれ』");
+
+			SetTalkEx(cutinPlayer2, "『大天狗主编，被打得满地找牙，[r]天狗的颜面尽失』");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "おやおや、これは手厳しい。[r]ラクククク");
+
+			SetTalkEx(cutinBoss1, "哎呀呀，那还真是毫不留情。[r]拉库库库库。");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+
 task EnterBoss(objEnemy, xIni, yIni)
+
 {
+
 	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+
 	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
 
+
+
 	SetMovePositionHermite(objEnemy, xIni+64, yIni-32,
+
 		600, 45, 0, 0, 50);
+
 	SetAction(objEnemy, ACT_MOVE_R, 50);
+
 	wait(60);
+
 	SetMovePositionHermite(objEnemy, xIni, yIni,
+
 		0, 0, 0, 0, 30);
+
 	SetAction(objEnemy, ACT_MOVE_L, 30);
+
 	wait(30);
+
 }
+

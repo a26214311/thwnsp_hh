@@ -1,105 +1,210 @@
-//#����e����[Stage]
+//#東方弾幕風[Stage]
+
 #ScriptVersion[3]
-#Title["�q���g����3"]
-#Text["�q���g����3"]
+
+#Title["ヒントその3"]
+
+#Text["ヒントその3"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./lib_commontitle.dnh"
+
 #include"./lib_talkTitle.dnh"
 
+
+
 @Initialize {
+
 	SetAutoDeleteObject(true);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
 
+
+
 	FinishTalk(true);
+
 	CloseScript( GetOwnScriptID() );
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinChara1   = CreateTalkObject(BOSS_ID_MARISA_L, false);
+
 	let cutinChara2   = CreateTalkObject(BOSS_ID_RINNE, true);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	ObjPrim_SetTexture(cutinChara1, imgCharaMarisa[5]);
+
 	ObjPrim_SetTexture(cutinChara2, imgCharaRinne[2]);
+
 	
+
 	SetImageFoward(cutinChara1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinChara1, "参ったな");
+
+			SetTalkEx(cutinChara1, "服了！");
+
 		}
+
 		case(1)
+
 		{
-			SetTalkEx(cutinChara1, "時系列はともかく、犯人の方は選択肢が[r]多すぎてどこから手を付けていいかわからないぜ");
+
+			SetTalkEx(cutinChara1, "就算不提时间顺序，但犯人这边的选项也太多了吧？[r]我不知道该如何下手了。");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara2, imgCharaRinne[3]);
-			SetTalkEx(cutinChara2, "やはりこういうミステリーでは、必ず推理の[r]鍵になる言葉が各所に現れるものです");
+
+			SetTalkEx(cutinChara2, "像这种推理故事，推理需要的关键句子[r]总会在各个地方出现的。");
+
 		}
+
 		case(3)
+
 		{
-			SetTalkEx(cutinChara2, "膨大な選択肢を狭めるようなヒントを、会話[r]文から拾っていくのがいいかもしれませんね");
+
+			SetTalkEx(cutinChara2, "从对话内容中寻找[r]能缩小庞大的选项的线索说不定是个好主意。");
+
 		}
+
 		case(4)
+
 		{
-			SetTalkEx(cutinChara1, "骨の折れそうな作業だな。[r]具体的にはどんな感じだ？");
+
+			SetTalkEx(cutinChara1, "真是个大费力气的工作。[r]具体的话像是什么样的？");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara2, imgCharaRinne[2]);
-			SetTalkEx(cutinChara2, "皆故さんは２週目で、異変は必ず自らの[r]意志で起こされるという事を言っていますね？");
+
+			SetTalkEx(cutinChara2, "二周目里，皆故说过“异变一定是[r]凭着自己的意志来引发的”之类的对吧？");
+
 		}
+
 		case(6)
+
 		{
-			SetTalkEx(cutinChara2, "まさにこんな感じのがヒントです。");
+
+			SetTalkEx(cutinChara2, "要找的就是这样的线索。");
+
 		}
+
 		case(7)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara2, imgCharaRinne[3]);
-			SetTalkEx(cutinChara2, "もっとも、私は皆故さんを犯人だと思って[r]いますので、これは嘘だと思ってますがね");
+
+			SetTalkEx(cutinChara2, "当然，因为我觉得皆故是犯人，[r]所以我觉得那个肯定是撒谎啦。");
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara1, imgCharaMarisa[3]);
-			SetTalkEx(cutinChara1, "どこまでを信じるかも重要って事か");
+
+			SetTalkEx(cutinChara1, "能信任几分也是很重要的吗…");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

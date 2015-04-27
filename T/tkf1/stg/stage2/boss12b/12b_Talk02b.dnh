@@ -1,153 +1,306 @@
-//#����e����[Single]
+//#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["2��1��ځ@��bA"]
-#Text["2��1��ځ@��bA"]
+
+#Title["2面1周目　会話A"]
+
+#Text["2面1周目　会話A"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
 
+
+
+
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
+
+	Boss_Init();	//初期設定
+
 	objEnemy  = CreateBossTalk(BOSS_ID_UKA);
-	Obj_SetVisible(GetBossImageID(objEnemy), false);	//�摜��\��
+
+	Obj_SetVisible(GetBossImageID(objEnemy), false);	//画像非表示
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
-	// �o�ꃂ�[�V�����i�ŏ��͔�\���j
+
+
+	// 登場モーション（最初は非表示）
+
 	wait(60);
+
 	
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_UKA, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_MARISA, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_RINNE, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaUka;
+
 	let pathPlayer1 = imgCharaMarisa;
+
 	let pathPlayer2 = imgCharaRinne;
+
 	
-	// �ŏ��ɑO�ɏo�Ă���L����
+
+	// 最初に前に出てくるキャラ
+
 	SetImageFoward(cutinPlayer2, true);
-	//����O���ύX
+
+	//初期グラ変更
+
 	ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 	
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let xIni = CenX;
+
 		let yIni = 140;
+
 		
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "これで満足しましたか？");
+
+			SetTalkEx(cutinPlayer2, "这下满足了吗？");
+
 		}
+
 		case(1)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "あんまり真面目過ぎるのも考え物だぜ？");
+
+			SetTalkEx(cutinPlayer1, "过于认真也是个问题哦。");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "こいつを倒そうと思うなら、[r]闇討ちでもしないとな");
+
+			SetTalkEx(cutinPlayer1, "既然想要打倒这家伙，[r]起码也该试试偷袭之类的招数啊。");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "やはりまだまだ中将閣下の尻に敷かれた[r]生活が続くでありますかぁ〜トホホ");
+
+			SetTalkEx(cutinBoss1, "果然被中将阁下骑在头上的[r]生活还要继续吗……（吐血）");
+
 			SetFukidashiType(cutinBoss1, FUKIDASHI_AFRAID);
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "お前も少しこいつを見習って[r]要領の良さを覚えたらどうだ？");
+
+			SetTalkEx(cutinPlayer1, "你啊，也稍微学学这家伙，[r]掌握些处事的方法怎么样？");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "そういうのは他人を見る事から[r]始まりますからね");
+
+			SetTalkEx(cutinPlayer2, "也就是说，要先从观察他人[r]开始学起。");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "ふむ、ではまず中将閣下を[r]よく観察してみるであります");
+
+			SetTalkEx(cutinBoss1, "呜，那么先试着[r]多观察下中将阁下吧。");
+
 		}
+
 		case(7)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "あ、あまりジロジロ見ないで下さい");
+
+			SetTalkEx(cutinPlayer2, "别、别这样盯着人家看嘛。");
+
 			SetFukidashiType(cutinPlayer2, FUKIDASHI_AFRAID);
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

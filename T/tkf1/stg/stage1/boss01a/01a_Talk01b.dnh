@@ -1,128 +1,256 @@
-//#����e����[Single]
+//#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["1�ʓ����@��b"]
-#Text["1�ʓ����@��b"]
+
+#Title["1面道中　会話"]
+
+#Text["1面道中　会話"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
+
+
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
-	objEnemy = CreateBossTalk(BOSS_ID_SETUJO);	//�{�X�Z�b�g
+
+	Boss_Init();	//初期設定
+
+	objEnemy = CreateBossTalk(BOSS_ID_SETUJO);	//ボスセット
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
-	// �o�ꃂ�[�V����
+
+
+	// 登場モーション
+
 	let xIni = CenX;
+
 	let yIni = 140;
+
 	SetAction(objEnemy, ACT_MOVE, 60);
+
 	ObjMove_SetDestAtWeightSpeedUp(objEnemy, xIni, yIni, 15, 4, 0.1, 12);
+
 	wait(60);
+
 	
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_SETUJO, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_MARISA, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_RINNE, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss = imgCharaSetujo;
+
 	let pathPlayer1 = imgCharaMarisa;
+
 	let pathPlayer2 = imgCharaRinne;
+
 	
+
 	SetImageFoward(cutinBoss1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "何故魔理沙さんが白菊さんと一緒に？");
-			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
+
+			SetTalkEx(cutinBoss1, "为什么魔理沙小姐会和白菊小姐在一起？");
+
+			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+
 		}
+
 		case(1)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "なんだ、知り合いか？");
+
+			SetTalkEx(cutinPlayer1, "什么啊，你们认识的啊？");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "いえ、初対面です。しかしまあ、[r]大方愛宕の連中が雇った用心棒でしょう");
+
+			SetTalkEx(cutinPlayer2, "不，是初次见面。不过在我看来，[r]大概是爱宕的人雇佣的保镖吧。");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "話が早いですね");
+
+			SetTalkEx(cutinBoss1, "定论下得真快呢。");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "では魔理沙さんには申し訳ない[r]ですが、倒させていただきます");
+
+			SetTalkEx(cutinBoss1, "好了，魔理沙小姐，[r]虽然有点抱歉，但我要把你打倒了。");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "やれやれ、いきなり損な[r]役回りを引いたらしいな");
+
+			SetTalkEx(cutinPlayer1, "哎呀呀，翻脸翻得[r]真快呢。");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

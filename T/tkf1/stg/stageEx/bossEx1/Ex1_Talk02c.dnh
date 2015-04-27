@@ -1,175 +1,350 @@
-#����e����[Single]
+#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["Ex�{�X1�@��bC-2"]
-#Text["Ex�{�X1�@��bC-2"]
+
+#Title["Exボス1　会話C-2"]
+
+#Text["Exボス1　会話C-2"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
-// �e�{�X�̃I�u�W�F�N�gID
+
+
+// 各ボスのオブジェクトID
+
+
 
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
-	objEnemy = CreateBossTalk(BOSS_ID_AZUMA);	//�{�X�Z�b�g
-	Obj_SetVisible(GetBossImageID(objEnemy), false);	//�摜��\��
+
+	Boss_Init();	//初期設定
+
+	objEnemy = CreateBossTalk(BOSS_ID_AZUMA);	//ボスセット
+
+	Obj_SetVisible(GetBossImageID(objEnemy), false);	//画像非表示
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
+
+
 	wait(30);
+
 	
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_AZUMA, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
+
 	let cutinDescri = CreateDescriptiveObject();
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaAzuma;
+
 	let pathPlayer1 = imgCharaSanae;
+
 	let pathPlayer2 = imgCharaMinayu;
+
 	
-	// �ŏ��ɑO�ɏo�Ă���L����
+
+	// 最初に前に出てくるキャラ
+
 	SetImageFoward(cutinPlayer1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let xIni = CenX;
+
 		let yIni = 140;
+
 		
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "やりました！");
+
+			SetTalkEx(cutinPlayer1, "成功了！");
+
 			SetFukidashiType(cutinPlayer1, FUKIDASHI_ANGER);
+
 		}
+
 		case(1)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "イテテ、[r]まさかこんな形で決着がつくとはな。");
+
+			SetTalkEx(cutinBoss1, "痛痛痛，[r]没想到会被这样打败啊。");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "もう八坂を封じる注連縄も[r]解除する時期って事か");
+
+			SetTalkEx(cutinBoss1, "把封印八坂的注连绳也解除[r]的时候到了吗。");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "じゃあこれで、神奈子様も諏訪子様[r]も幻想郷から出て行ってしまうんですか？");
+
+			SetTalkEx(cutinPlayer2, "那么今后，神奈子大人和诹访子大人[r]都要离开幻想乡了吗？");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "いえ、そんな事はありません。");
+
+			SetTalkEx(cutinPlayer1, "不，没有那回事。");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "私達は今の幻想郷が好きなんです。[r]今回の勝負は私の個人的なケジメです");
+
+			SetTalkEx(cutinPlayer1, "我们爱着现在的幻想乡。[r]这次战斗只是我的个人行为。");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "良い心意気だ。[r]私の軍に欲しいくらいだな");
+
+			SetTalkEx(cutinBoss1, "气魄真不错啊。[r]我军也想要你这种人啊。");
+
 		}
+
 		case(7)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "そんな貴方に守矢教はいかがでしょう？");
+
+			SetTalkEx(cutinPlayer1, "你来加入守矢教如何呢？");
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "って、折角良い雰囲気だったのに[r]いつもの早苗さんに戻ってるーっ！！");
+
+			SetTalkEx(cutinPlayer2, "哈，好不容易有了点气氛，[r]结果又变回平常的早苗小姐了！！");
+
 			SetFukidashiType(cutinPlayer2, FUKIDASHI_ANGER);
+
 		}
+
 		case(9)
+
 		{
-			SetTalkEx(cutinDescri, "遠い昔、雷と神奈子は力比べをし、敗れた神奈子は諏訪の地に封じられた。");
+
+			SetTalkEx(cutinDescri, "很久很久以前，雷和神奈子较量了一番，战败的神奈子被封印在了诹访之地。");
+
 		}
+
 		case(10)
+
 		{
-			SetTalkEx(cutinDescri, "今その因縁に決着がつき、神奈子は自由の身となったのであった。");
+
+			SetTalkEx(cutinDescri, "现在那桩因缘得到了了结，神奈子变回了自由之身。");
+
 		}
+
 		case(11)
+
 		{
-			SetTalkEx(cutinDescri, "しかし、神奈子が今の守矢神社を捨て他の地へ移る事は無い。");
+
+			SetTalkEx(cutinDescri, "但是，神奈子并没有舍弃现在的守矢神社而迁往其它的地方。");
+
 		}
+
 		case(12)
+
 		{
-			SetTalkEx(cutinDescri, "何故なら守矢神社には、かけがえのない物が沢山詰まっているから……");
+
+			SetTalkEx(cutinDescri, "那是因为，在守矢神社，有着无数的，无可替代的事物……");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

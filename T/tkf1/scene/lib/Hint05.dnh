@@ -1,108 +1,216 @@
-//#����e����[Stage]
+//#東方弾幕風[Stage]
+
 #ScriptVersion[3]
-#Title["�q���g����5"]
-#Text["�q���g����5"]
+
+#Title["ヒントその5"]
+
+#Text["ヒントその5"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./lib_commontitle.dnh"
+
 #include"./lib_talkTitle.dnh"
 
+
+
 @Initialize {
+
 	SetAutoDeleteObject(true);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
 
+
+
 	FinishTalk(true);
+
 	CloseScript( GetOwnScriptID() );
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinChara1   = CreateTalkObject(BOSS_ID_SANAE_L, false);
+
 	let cutinChara2   = CreateTalkObject(BOSS_ID_MINAYU, true);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	ObjPrim_SetTexture(cutinChara1, imgCharaSanae[2]);
+
 	ObjPrim_SetTexture(cutinChara2, imgCharaMinayu[3]);
+
 	
+
 	SetImageFoward(cutinChara1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinChara1, "ここでヒントではないですが、[r]ミステリーにおけるルールをおさらいしましょう");
+
+			SetTalkEx(cutinChara1, "虽然并不是线索，[r]不过来回顾下推理故事中通常会有的规则吧。");
+
 		}
+
 		case(1)
+
 		{
-			SetTalkEx(cutinChara2, "やはり最大のルールは、答えはどこかから[r]降って湧くようなものではなく、必ず文章[r]中に根拠があるって事ですかね");
+
+			SetTalkEx(cutinChara2, "果然最大的规则还是，[r]答案绝不会从天上掉下来，[r]而必须是根据于文章本身的。");
+
 		}
+
 		case(2)
+
 		{
-			SetTalkEx(cutinChara1, "よく、フーダニット（誰がやったか）[r]ハウダニット（どうやったか）ホワイダニット[r]（何故やったか）");
+
+			SetTalkEx(cutinChara1, "“who-done-it（谁做的）”、[r]“how-done-it（怎么做的）”[r]和“why-done-it（为什么做）”…");
+
 		}
+
 		case(3)
+
 		{
-			SetTalkEx(cutinChara1, "…が推理要素になりますが、[r]今回はどうでしょう？");
+
+			SetTalkEx(cutinChara1, "…这些通常都是推理要素，[r]不过这起案件又如何呢？");
+
 		}
+
 		case(4)
+
 		{
-			SetTalkEx(cutinChara2, "どうやって、というのは、私達みんな[r]不思議な力を使いますから、考えなくて[r]いいでしょう");
+
+			SetTalkEx(cutinChara2, "关于“怎么做的”，因为[r]我们所有人都有不可思议的力量，[r]所以还是不要去管比较好吧。");
+
 		}
+
 		case(5)
+
 		{
-			SetTalkEx(cutinChara2, "問題は、誰がやったかと、何故やったか");
+
+			SetTalkEx(cutinChara2, "问题是，“谁做的”，“为什么做”。");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara1, imgCharaSanae[3]);
-			SetTalkEx(cutinChara1, "何故やったかって、あんまり推理して[r]考える要素じゃない気がしますね。");
+
+			SetTalkEx(cutinChara1, "我想“为什么做”一般并不被认为是[r]值得推理的要素。");
+
 		}
+
 		case(7)
+
 		{
-			SetTalkEx(cutinChara1, "大抵犯人を追いつめたら崖っぷちで[r]刑事に向かってベラベラと喋り出す的な");
+
+			SetTalkEx(cutinChara1, "因为大抵只要把犯人逼到穷途末路，[r]他们就会冲着刑警喋喋不休地给说出来了。");
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara2, imgCharaMinayu[2]);
-			SetTalkEx(cutinChara2, "しかしこの物語、この何故やったかが非常[r]に大きな役割を果たしている気がします");
+
+			SetTalkEx(cutinChara2, "不过我觉得，在这个故事里，这个“为什么做”[r]占了非常大的戏份。");
+
 		}
+
 		case(9)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara2, imgCharaMinayu[5]);
-			SetTalkEx(cutinChara2, "むしろこれのせいで[r]推理が難しくなってるような…");
+
+			SetTalkEx(cutinChara2, "不如说，似乎正因为这个[r]才让推理变得更困难了啊…");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

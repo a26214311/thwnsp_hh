@@ -1,120 +1,240 @@
-//#����e����[Stage]
+//#東方弾幕風[Stage]
+
 #ScriptVersion[3]
-#Title["�q���g����1"]
-#Text["�q���g����1"]
+
+#Title["ヒントその1"]
+
+#Text["ヒントその1"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./lib_commontitle.dnh"
+
 #include"./lib_talkTitle.dnh"
 
+
+
 @Initialize {
+
 	SetAutoDeleteObject(true);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
 
+
+
 	FinishTalk(true);
+
 	CloseScript( GetOwnScriptID() );
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinChara1   = CreateTalkObject(BOSS_ID_REIMU_L, false);
+
 	let cutinChara2   = CreateTalkObject(BOSS_ID_TOKUBI, true);
+
 	let cutinChara3   = CreateTalkObject(BOSS_ID_MARISA_L, false);
+
 	let cutinChara4   = CreateTalkObject(BOSS_ID_RINNE, true);
+
 	let cutinChara5   = CreateTalkObject(BOSS_ID_SANAE_L, false);
+
 	let cutinChara6   = CreateTalkObject(BOSS_ID_MINAYU, true);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	ObjPrim_SetTexture(cutinChara1, imgCharaReimu[6]);
+
 	ObjPrim_SetTexture(cutinChara2, imgCharaTokubi[2]);
+
 	ObjPrim_SetTexture(cutinChara3, imgCharaMarisa[5]);
+
 	ObjPrim_SetTexture(cutinChara4, imgCharaRinne[3]);
+
 	ObjPrim_SetTexture(cutinChara5, imgCharaSanae[2]);
+
 	ObjPrim_SetTexture(cutinChara6, imgCharaMinayu[3]);
+
 	
+
 	SetImageFoward(cutinChara1, true);
+
 	SetImageVisible(cutinChara2, false);
+
 	SetImageVisible(cutinChara3, false);
+
 	SetImageVisible(cutinChara4, false);
+
 	SetImageVisible(cutinChara5, false);
+
 	SetImageVisible(cutinChara6, false);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinChara1, "ちょっと！いきなり何なの！？[r]こんなの聞いてないんだけど！");
+
+			SetTalkEx(cutinChara1, "等下！这突然是怎么了！？[r]这种事情我可从没听说过！");
+
 		}
+
 		case(1)
+
 		{
+
 			SetImageVisible(cutinChara1, false);
+
 			SetImageVisible(cutinChara2, true);
-			SetTalkEx(cutinChara2, "エンディングで言っておった[r]ような気もするがな");
+
+			SetTalkEx(cutinChara2, "我记得，我在Ending里[r]好像对你说过了。");
+
 		}
+
 		case(2)
+
 		{
+
 			SetImageVisible(cutinChara2, false);
+
 			SetImageVisible(cutinChara3, true);
-			SetTalkEx(cutinChara3, "でもシューティングが苦手な奴らには、[r]全ステージクリアして会話を確認するのは大変だぜ？");
+
+			SetTalkEx(cutinChara3, "不过对不擅长STG游戏的人而言，[r]靠通关所有关卡来确认对话有些困难吧？");
+
 		}
+
 		case(3)
+
 		{
+
 			SetImageVisible(cutinChara3, false);
+
 			SetImageVisible(cutinChara4, true);
-			SetTalkEx(cutinChara4, "ご安心下さい");
+
+			SetTalkEx(cutinChara4, "请放心。");
+
 		}
+
 		case(4)
+
 		{
-			SetTalkEx(cutinChara4, "ちゃんと、会話文だけを集めたロジカルプ[r]ラクティスというツールをスタート画面に[r]用意してますので");
+
+			SetTalkEx(cutinChara4, "我们在开始画面有好好准备了[r]只收集了对话内容的に[r]“Logical Practice”功能。");
+
 		}
+
 		case(5)
+
 		{
+
 			SetImageVisible(cutinChara4, false);
+
 			SetImageVisible(cutinChara5, true);
-			SetTalkEx(cutinChara5, "１回でもそのステージに入れば、エンディング[r]まで含めて見る事ができるんですよ");
+
+			SetTalkEx(cutinChara5, "只要进入过某个关卡至少一次的话就可以看了。[r]Ending的内容也是一样。");
+
 		}
+
 		case(6)
+
 		{
+
 			SetImageVisible(cutinChara5, false);
+
 			SetImageVisible(cutinChara6, true);
-			SetTalkEx(cutinChara6, "Easyでもクリアできないって人の為に、[r]公式サイトで全会話文公開されてたりします");
+
+			SetTalkEx(cutinChara6, "对于连Easy都通关不了的人，[r]我们在官方网站公布了所有对话内容。");
+
 		}
+
 		case(7)
+
 		{
-			SetTalkEx(cutinChara6, "どうしても無理な方はそちらをご覧ください");
+
+			SetTalkEx(cutinChara6, "若您无论如何也不行的话，还请去那边一阅。");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

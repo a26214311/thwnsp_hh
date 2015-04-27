@@ -1,154 +1,308 @@
-//#����e����[Single]
+//#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["1�ʁ@��b ���j��"]
-#Text["1�ʁ@��b ���j��"]
+
+#Title["1面　会話 撃破後"]
+
+#Text["1面　会話 撃破後"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
 
 
+
+
+
+
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
+
+	Boss_Init();	//初期設定
+
 	objEnemy  = CreateBossTalk(BOSS_ID_KOUKAI);
-	Obj_SetVisible(GetBossImageID(objEnemy), false);	//�摜��\��
+
+	Obj_SetVisible(GetBossImageID(objEnemy), false);	//画像非表示
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
-	// �o�ꃂ�[�V�����i�ŏ��͔�\���j
+
+
+	// 登場モーション（最初は非表示）
+
 	let xIni = CenX;
+
 	let yIni = 140;
+
 	wait(60);
+
 	
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_KOUKAI, true);
+
 	let cutinBoss2   = CreateTalkObject(BOSS_ID_ANZA, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_REIMU, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_TOKUBI, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaKoukai;
+
 	let pathBoss2 = imgCharaAnza;
+
 	let pathPlayer1 = imgCharaReimu;
+
 	let pathPlayer2 = imgCharaTokubi;
+
 	
-	// �ŏ��ɑO�ɏo�Ă���L����
+
+	// 最初に前に出てくるキャラ
+
 	SetImageFoward(cutinBoss1, true);
+
 	
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let xIni = CenX;
+
 		let yIni = 140;
+
 		
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "可恶！如果是得敏一个人的话，[r]我们两人合力本该不在话下。");
+
+			SetTalkEx(cutinBoss1, "可恶！如果是得敏一个人的话，[r]我们两个以多对少总归是能赢的。");
+
 		}
+
 		case(1)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "但这个巫女是出乎意料的麻烦啊！");
+
+			SetTalkEx(cutinBoss1, "这个巫女出乎意料的麻烦啊！");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "带来麻烦的不正是你们两人吗？");
+
+			SetTalkEx(cutinPlayer1, "找麻烦的不正是你们两个吗？");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+
 			SetTalkEx(cutinPlayer2, "请不要怪我啊。[r]我会负起责任，把犯人打倒并解决异变的。");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss2, "异变什么的和我们没有关系！");
+
+			SetTalkEx(cutinBoss2, "异变什么的随它怎么样啦！");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+
 			SetTalkEx(cutinBoss2, "啊啊，没想到功劳竟然[r]被得敏小姐抢走了。");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinBoss2,     pathBoss2[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
+
 			SetTalkEx(cutinPlayer1, "看来即便是神明，也生活在麻烦得要死的世界里呢。");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

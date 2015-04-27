@@ -1,121 +1,242 @@
-//#����e����[Stage]
+//#東方弾幕風[Stage]
+
 #ScriptVersion[3]
-#Title["�q���g����7"]
-#Text["�q���g����7"]
+
+#Title["ヒントその7"]
+
+#Text["ヒントその7"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./lib_commontitle.dnh"
+
 #include"./lib_talkTitle.dnh"
 
+
+
 @Initialize {
+
 	SetAutoDeleteObject(true);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
 
+
+
 	FinishTalk(true);
+
 	CloseScript( GetOwnScriptID() );
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinChara1   = CreateTalkObject(BOSS_ID_RINNE, false);
+
 	let cutinChara2   = CreateTalkObject(BOSS_ID_UKA, true);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	ObjPrim_SetTexture(cutinChara1, imgCharaRinne[3]);
+
 	ObjPrim_SetTexture(cutinChara2, imgCharaUka[2]);
+
 	
+
 	SetImageFoward(cutinChara1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinChara1, "さて、ミステリーではタブーとされている[r]超能力を使った探偵をお呼びしましたよ");
+
+			SetTalkEx(cutinChara1, "来，我刚召唤了一位拥有超能力，[r]对推理故事而言堪称禁忌的侦探。");
+
 		}
+
 		case(1)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara2, imgCharaUka[3]);
-			SetTalkEx(cutinChara2, "任せるであります！");
+
+			SetTalkEx(cutinChara2, "交给我吧！");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara1, imgCharaRinne[2]);
-			SetTalkEx(cutinChara1, "多分余りに影の薄い能力だから[r]皆さん忘れてると思いますが、");
+
+			SetTalkEx(cutinChara1, "因为是个很不起眼的能力，[r]大家可能都忘了，");
+
 		}
+
 		case(3)
+
 		{
-			SetTalkEx(cutinChara1, "羽日は物の数を瞬時に把握する程度の能力");
+
+			SetTalkEx(cutinChara1, "羽日可是有着瞬间知道物件数量程度的能力。");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara1, imgCharaRinne[3]);
-			SetTalkEx(cutinChara1, "この能力を持つ羽日に、ズバリ、[r]今回の異変の犯人を聞いてしまいましょう");
+
+			SetTalkEx(cutinChara1, "来直接了当地问问拥有这个能力的羽日，[r]关于这次异变的犯人吧。");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara2, imgCharaUka[5]);
-			SetTalkEx(cutinChara2, "わからないでありますっ！[r]申し訳ないでありますっ！");
+
+			SetTalkEx(cutinChara2, "我不知道！[r]万分抱歉！");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara1, imgCharaRinne[5]);
-			SetTalkEx(cutinChara1, "犯人が誰かなんて聞いてません！[r]犯人は何人なんですか？");
+
+			SetTalkEx(cutinChara1, "没在问你犯人是谁！[r]犯人有几个？");
+
 		}
+
 		case(7)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara2, imgCharaUka[2]);
-			SetTalkEx(cutinChara2, "一人であります！");
+
+			SetTalkEx(cutinChara2, "一个！");
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara1, imgCharaRinne[4]);
-			SetTalkEx(cutinChara1, "ひ、一人！？[r]最初から最後まで通しでですか！？");
+
+			SetTalkEx(cutinChara1, "一、一个！？[r]从头到尾只有一个！？");
+
 		}
+
 		case(9)
+
 		{
-			SetTalkEx(cutinChara2, "そうでありますっ！[r]紛れも無く、終始一貫して一人の人物に[r]よって引き起こされているであります！");
+
+			SetTalkEx(cutinChara2, "正是如此！[r]毫无疑问，自始至终都是[r]由一个人所引发的！");
+
 		}
+
 		case(10)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara1, imgCharaRinne[5]);
-			SetTalkEx(cutinChara1, "これは意外な展開ですね");
+
+			SetTalkEx(cutinChara1, "这可真是个意外的展开。");
+
 		}
+
 		case(11)
+
 		{
-			SetTalkEx(cutinChara1, "犯人が入れ替わらない限り、この複雑な[r]異変は成立しないと思ってたんですが…");
+
+			SetTalkEx(cutinChara1, "我还以为要不是犯人换人了的话，[r]这般复杂的异变不可能成立呢…");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

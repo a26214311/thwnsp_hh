@@ -1,273 +1,546 @@
-#����e����[Single]
+#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["Ex�{�X2�@��bB"]
-#Text["Ex�{�X2�@��bB"]
+
+#Title["Exボス2　会話B"]
+
+#Text["Exボス2　会話B"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
-// �e�{�X�̃I�u�W�F�N�gID
+
+
+// 各ボスのオブジェクトID
+
+
 
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
-	objEnemy = CreateBossTalk(BOSS_ID_KAYANO);	//�{�X�Z�b�g
+
+	Boss_Init();	//初期設定
+
+	objEnemy = CreateBossTalk(BOSS_ID_KAYANO);	//ボスセット
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
+
+
 	wait(30);
+
 	
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_KAYANO, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_MARISA, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_RINNE, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaKayano;
+
 	let pathPlayer1 = imgCharaMarisa;
+
 	let pathPlayer2 = imgCharaRinne;
+
 	
-	// �B��
+
+	// 隠す
+
 	SetImageVisible(cutinBoss1, false);
-	//�{�X�l�[���\�����
+
+	//ボスネーム表示状態
+
 	BossScene_SetNameVisible(objScene, false);
-	// �ŏ��ɑO�ɏo�Ă���L����
+
+	// 最初に前に出てくるキャラ
+
 	SetImageFoward(cutinPlayer2, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let xIni = CenX;
+
 		let yIni = 140;
+
 		
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);		// �\��t���i���݃{�X�͉摜���Ȃ��̂ł��̂܂܁j
+
+			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);		// 表情付け（現在ボスは画像がないのでそのまま）
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "姫、報告に参りました！");
+
+			SetTalkEx(cutinPlayer2, "公主，我前来汇报了！");
+
 		}
+
 		case(1)
+
 		{
-			BossScene_SetNameVisible(objScene, false);	//�{�X�l�[���\�����
-			SetImageVisible(cutinBoss1, false);	// �{�X�摜�o���t���OOFF
+
+			BossScene_SetNameVisible(objScene, false);	//ボスネーム表示状態
+
+			SetImageVisible(cutinBoss1, false);	// ボス画像出現フラグOFF
+
+
 
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "幻想郷の証人も一緒だぜ。");
+
+			SetTalkEx(cutinPlayer1, "幻想乡的证人也一起来了。");
+
 		}
+
 		case(2)
+
 		{
+
 			EnterBoss(objEnemy, xIni, yIni);
-			SetBossNameEx(cutinBoss1, 280, 200, objEnemy);	// �{�X�l�[���\��
-			SetImageVisible(cutinBoss1, true);	// �{�X�摜�o���t���OON
+
+			SetBossNameEx(cutinBoss1, 280, 200, objEnemy);	// ボスネーム表示
+
+			SetImageVisible(cutinBoss1, true);	// ボス画像出現フラグON
+
+
 
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "あら、シロちゃん。たった今ナメクジ野郎[r]をコテンパンにした所よ。");
+
+			SetTalkEx(cutinBoss1, "啊啦，小白。我刚刚把那只蛞蝓混蛋[r]打了个落花流水呢。");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "こっちも被害は大きいけどね。");
+
+			SetTalkEx(cutinBoss1, "虽然我这边的损伤也挺严重的。");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "姫ご自身が戦っておられたのですか！");
+
+			SetTalkEx(cutinPlayer2, "公主大人您亲自出手了吗！");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "こいつも幻想郷では、[r]記憶喪失の神の暴走を止めたり");
+
+			SetTalkEx(cutinPlayer1, "这家伙也在幻想乡里[r]又是阻止失忆之神的暴走，");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "愛宕軍の筆頭書記官を討伐したり、[r]大活躍だったぜ！");
+
+			SetTalkEx(cutinPlayer1, "又是讨伐爱宕军的第一书记，[r]真可谓是大活跃！");
+
 		}
+
 		case(7)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "これでいいんだよな？");
+
+			SetTalkEx(cutinPlayer1, "这样说就行了吧？");
+
 			SetFukidashiType(cutinPlayer1, FUKIDASHI_THINK);
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss1, "よくそこまでやってくれたものだわ。");
+
+			SetTalkEx(cutinBoss1, "多亏了你，为我军做了这么多呢。");
+
 		}
+
 		case(9)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "光栄です！");
+
+			SetTalkEx(cutinPlayer2, "这是我的光荣！");
+
 		}
+
 		case(10)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "よし、誤魔化せた！");
+
+			SetTalkEx(cutinPlayer2, "好的，骗过去了！");
+
 			SetFukidashiType(cutinPlayer2, FUKIDASHI_THINK);
+
 		}
+
 		case(11)
+
 		{
+
 			//  BGM
+
 			if (!IsSkip()) { PlayMusic( 12, true, 30 ); }
 
+
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "と言いたい所だが貴方達には消えて貰う。[r]貴方は我が軍の信頼を奪ってしまった。");
+
+			SetTalkEx(cutinBoss1, "虽然本想那样说，但现在要把你们两个抹杀掉。[r]我军的信誉都被你丢光了。");
+
 		}
+
 		case(12)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "これは許されざる反逆行為と言えよう。");
+
+			SetTalkEx(cutinBoss1, "这已经构成了无可容忍的叛逆行为。");
+
 		}
+
 		case(13)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "バレてるぅー！");
+
+			SetTalkEx(cutinPlayer2, "暴露了——！");
+
 			SetFukidashiType(cutinPlayer2, FUKIDASHI_ANGER);
+
 		}
+
 		case(14)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer1, "破綻したな。相当ご立腹だぜ。[r]どっかの大佐みたいだ。");
+
+			SetTalkEx(cutinPlayer1, "失败了啊。相当震怒呢。[r]就像某大佐一样。");
+
 		}
+
 		case(15)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "この最終鬼畜弾幕をもって[r]私自らが処罰を与える。");
+
+			SetTalkEx(cutinBoss1, "就以这最终鬼畜弹幕，[r]亲自下以处罚。");
+
 		}
+
 		case(16)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "死ぬが…");
+
+			SetTalkEx(cutinBoss1, "那么，去s……");
+
 		}
+
 		case(17)
+
 		{
+
 			//  BGM
+
 			if (!IsSkip()) { PlayMusic( -1, true, 60 ); }
 
+
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer1, "言わせねーよ！？");
+
+			SetTalkEx(cutinPlayer1, "你够了啊！");
+
 			SetFukidashiType(cutinPlayer1, FUKIDASHI_ANGER);
+
 		}
+
 		case(18)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "大佐より中将が偉いのです！");
+
+			SetTalkEx(cutinPlayer2, "中将比大佐更大啊！");
+
 		}
+
 		case(19)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "ナメクジとの戦闘で戦力が落ちてます！[r]こうなったら強行突破です！");
+
+			SetTalkEx(cutinPlayer2, "和蛞蝓战斗后她的战力已经下降了！[r]既然如此就强行突破好了！");
+
 		}
+
 		case(20)
+
 		{
+
 			//  BGM
+
 			PlayMusicWithName( 12, true, 30 );
 
+
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "貴方達の命も、生まれ消え行く[r]生態系の遷移の一瞬であると知りなさい！");
+
+			SetTalkEx(cutinBoss1, "我要让你们明白，你们的生命，[r]也只不过是生态系统消长演替的一瞬间罢了！");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
 
+
+
 task EnterBoss(objEnemy, xIni, yIni)
+
 {
+
 	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+
 	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
+
 	
+
 	ObjMove_SetPosition(objEnemy, CenX, -128);
+
 	SetMovePositionHermite(objEnemy, xIni, yIni,
+
 		0, 0, 0, 0, 120);
+
 }
+

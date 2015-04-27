@@ -1,112 +1,230 @@
-// �������G���f�B���O1���
+// 魔理沙エンディング1周目
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_common.dnh"
+
 #include"./../../../lib/lib_talk_ed.dnh"
+
 #include"./../../../lib/lib_stage.dnh"
 
+
+
 @Initialize {
+
 	init();
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
+
 	TBackground();
+
 	wait(180);
+
 	TEndingImage(imgEDEnding[1]);
+
 	//  BGM
+
 	PlayMusic( 8, true, 60 );
+
 	
-	// ��b����
+
+	// 会話準備
+
 	StartTalk();
+
 	wait(120);
 
+
+
 	FuncTalk();
+
 	wait(15);
 
-	//���̃V�[����
+
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	SetForbidPlayerShot(true);
+
 	SetForbidPlayerSpell(true);
+
 	
+
 	if (GetPlayMode() == GAME_MAIN || GetPlayMode() == GAME_DEBUG)
+
 	{
+
 		wait(180);
+
 		My_CloseStageScene();
+
 	} else {
+
 		CloseMine(60);
+
 	}
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
+
 	let COL0 = [160, 160, 160];
+
 	let COL1 = [160, 255, 255];
+
 	let COL2 = [255, 192, 255];
+
 	let COL3 = [160, 160, 255];
+
 	
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinDescri = CreateDescriptiveObject();
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinDescri, "[r]霧雨亭", COL0);
+
+			SetTalkEx(cutinDescri, "[r]雾雨宅", COL0);
+
 		}
+
 		case(1)
+
 		{
-			SetTalkEx(cutinDescri, "[r]得敏を倒しても、[r]異変は解決しなかった。", COL0);
+
+			SetTalkEx(cutinDescri, "[r]即使打倒了得敏，[r]异变也没有消失。", COL0);
+
 		}
+
 		case(2)
+
 		{
-			SetTalkEx(cutinDescri, "得敏[r]だから言ったであろう！私は犯人ではないと！", COL3);
+
+			SetTalkEx(cutinDescri, "得敏[r]所以我说过了啊！我根本不是犯人！", COL3);
+
 		}
+
 		case(3)
+
 		{
-			SetTalkEx(cutinDescri, "魔理沙[r]確かに、倒しても解決してないな。", COL1);
+
+			SetTalkEx(cutinDescri, "魔理沙[r]确实，即使打倒她，异变也没消失呐。", COL1);
+
 		}
+
 		case(4)
+
 		{
-			SetTalkEx(cutinDescri, "白菊[r]まだ完全には信用してませんよ。他に実行犯が居るのかも。", COL2);
+
+			SetTalkEx(cutinDescri, "白菊[r]现在还不能完全相信她。说不定还有其它的共犯。", COL2);
+
 		}
+
 		case(5)
+
 		{
-			SetTalkEx(cutinDescri, "魔理沙[r]もう何が何やら。", COL1);
+
+			SetTalkEx(cutinDescri, "魔理沙[r]完全弄不明白了啊。", COL1);
+
 		}
+
 		case(6)
+
 		{
-			SetTalkEx(cutinDescri, "[r]ＥＤ　Ｎｏ．２[r]くろまく〜　が先に出るのはお約束？", COL0);
+
+			SetTalkEx(cutinDescri, "[r]ＥＤ　Ｎｏ．２[r]惯例是“黑幕～”先出现？", COL0);
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

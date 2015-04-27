@@ -1,123 +1,252 @@
-// �얲�G���f�B���O1���
+// 霊夢エンディング1周目
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_common.dnh"
+
 #include"./../../../lib/lib_talk_ed.dnh"
+
 #include"./../../../lib/lib_stage.dnh"
 
+
+
 @Initialize {
+
 	init();
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
+
 	TBackground();
+
 	wait(180);
+
 	TEndingImage(imgEDEnding[0]);
+
 	//  BGM
+
 	PlayMusic( 8, true, 60 );
+
 	
-	// ��b����
+
+	// 会話準備
+
 	StartTalk();
+
 	wait(120);
 
+
+
 	FuncTalk();
+
 	wait(15);
 
-	//���̃V�[����
+
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	SetForbidPlayerShot(true);
+
 	SetForbidPlayerSpell(true);
+
 	
+
 	if (GetPlayMode() == GAME_MAIN || GetPlayMode() == GAME_DEBUG)
+
 	{
+
 		wait(180);
+
 		My_CloseStageScene();
+
 	} else {
+
 		CloseMine(60);
+
 	}
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
+
 	let COL0 = [160, 160, 160];
+
 	let COL1 = [255, 160, 160];
+
 	let COL2 = [160, 160, 255];
+
 	
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinDescri = CreateDescriptiveObject();
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			SetTalkEx(cutinDescri, "[r]博丽神社", COL0);
+
 		}
+
 		case(1)
+
 		{
-			SetTalkEx(cutinDescri, "[r]虽然打倒了皆故，但异变没有消失。", COL0);
+
+			SetTalkEx(cutinDescri, "[r]虽然打倒了皆故，但异变并没有结束。", COL0);
+
 		}
+
 		case(2)
+
 		{
-			SetTalkEx(cutinDescri, "灵梦[r]真奇怪啊。把掌管记忆的家伙打倒后异变还没消失的话，究竟谁才是犯人呢？", COL1);
+
+			SetTalkEx(cutinDescri, "灵梦[r]真奇怪啊。把掌管记忆的家伙打倒后异变还没结束的话，究竟谁才是犯人呢？", COL1);
+
 		}
+
 		case(3)
+
 		{
-			SetTalkEx(cutinDescri, "得敏[r]虽然记忆变得混乱了，但在没弄明白的情况下打赢了呢。", COL2);
+
+			SetTalkEx(cutinDescri, "得敏[r]也许是记忆混乱了，不知道怎么地就打赢了。", COL2);
+
 		}
+
 		case(4)
+
 		{
-			SetTalkEx(cutinDescri, "灵梦[r]即便如此，我们总归是赢了。可如果那个家伙是犯人，异变还没有消失就很奇怪了。", COL1);
+
+			SetTalkEx(cutinDescri, "灵梦[r]即便如此，赢了就是赢了。可如果那个家伙是犯人的话，异变到现在还没有消失就显得很奇怪了。", COL1);
+
 		}
+
 		case(5)
+
 		{
-			SetTalkEx(cutinDescri, "得敏[r]唔，那么皆故殿下是被错当成犯人了吗？", COL2);
+
+			SetTalkEx(cutinDescri, "得敏[r]唔，那么皆故阁下是被陷害了吗？", COL2);
+
 		}
+
 		case(6)
+
 		{
+
 			SetTalkEx(cutinDescri, "灵梦[r]虽然我觉得比起把罪责推到别人身上，自己造成异变来邀功要更快。", COL1);
+
 		}
+
 		case(7)
+
 		{
-			SetTalkEx(cutinDescri, "得敏[r]不管是爱宕大人还是萱野姫大人，两位都喜欢给普通人添麻烦呢。", COL2);
+
+			SetTalkEx(cutinDescri, "得敏[r]不管是爱宕大人还是萱野姬，两位都不喜欢给普通人添麻烦呢。", COL2);
+
 		}
+
 		case(8)
+
 		{
-			SetTalkEx(cutinDescri, "得敏[r]把普通人卷入战斗可是军队的耻辱啊。", COL2);
+
+			SetTalkEx(cutinDescri, "得敏[r]把普通人卷入战斗可是自军的耻辱啊。", COL2);
+
 		}
+
 		case(9)
+
 		{
-			SetTalkEx(cutinDescri, "[r]ＥＤ　Ｎｏ．１[r]不能给普通人添麻烦", COL0);
+
+			SetTalkEx(cutinDescri, "[r]ED No.1[r]道上人士不能给普通人添麻烦", COL0);
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

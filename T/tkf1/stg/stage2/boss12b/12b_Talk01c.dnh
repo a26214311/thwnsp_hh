@@ -1,227 +1,454 @@
-//#����e����[Single]
+//#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["2��1��ځ@��bA"]
-#Text["2��1��ځ@��bA"]
+
+#Title["2面1周目　会話A"]
+
+#Text["2面1周目　会話A"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
 
+
+
+
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
+
+	Boss_Init();	//初期設定
+
 	objEnemy  = CreateBossTalk(BOSS_ID_UKA);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
-	// �o�ꃂ�[�V�����i�ŏ��͔�\���j
+
+
+	// 登場モーション（最初は非表示）
+
 	let xIni = CenX;
+
 	let yIni = 140;
+
 	
+
 	EnterBoss(objEnemy, xIni, yIni);
-	BossScene_SetNameVisible(objScene, true);	//�{�X�l�[���\�����
+
+	BossScene_SetNameVisible(objScene, true);	//ボスネーム表示状態
+
 	
+
 	wait(60);
+
 	
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_UKA, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaUka;
+
 	let pathPlayer1 = imgCharaSanae;
+
 	let pathPlayer2 = imgCharaMinayu;
+
 	
-	// �ŏ��ɑO�ɏo�Ă���L����
+
+	// 最初に前に出てくるキャラ
+
 	SetImageFoward(cutinPlayer1, true);
+
 	
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let xIni = CenX;
+
 		let yIni = 140;
+
 		
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "さて、白菊さんの情報を聞くのに[r]最適な方の所にやってきました");
+
+			SetTalkEx(cutinPlayer1, "那么，我们终于来到了，[r]最适合打听白菊小姐的情报的那位面前了呢。");
+
 		}
+
 		case(1)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "な、何でありますか？もう異変は[r]とっくに収束したであります！");
-			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
+
+			SetTalkEx(cutinBoss1, "什，什么啊？[r]异变都已经结束了！");
+
+			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "でも、犯人がまだ明らかになって[r]ないじゃないですか");
+
+			SetTalkEx(cutinPlayer2, "但是，不是还没弄清楚[r]犯人是谁吗？");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "犯人？中将閣下が記憶を司る神を…って、[r]貴様が犯人ではないのでありますか！？");
+
+			SetTalkEx(cutinBoss1, "犯人？中将阁下已经把掌管记忆的神打……[r]等等，你这个混蛋不就是犯人吗！？");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "私も、ひょっとしたら意図せずして異変を[r]起こしたんじゃないかって言ったんですけど");
+
+			SetTalkEx(cutinPlayer1, "虽然我也说过“说不定是她无意间引发了异变”<br>这样的话，但是……");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "かつて記憶を司っていた専門家[r]として言わせて貰いますが、");
+
+			SetTalkEx(cutinPlayer2, "作为曾经的掌管记忆专家，[r]我可以告诉你，");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "意図せずして他人の記憶を曖昧に[r]できるような手段は存在しません。");
+
+			SetTalkEx(cutinPlayer2, "“在无意间把别人的记忆变得暧昧”，[r]这种手段根本不存在。");
+
 		}
+
 		case(7)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "他人の記憶を 操作する場合は必ず[r]自らの意思で行われます");
+
+			SetTalkEx(cutinPlayer2, "要“操纵”别人的记忆，[r]必须注入自己的“意图”。");
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "ということは、貴様、[r]嘘をついているでありますな！？");
+
+			SetTalkEx(cutinBoss1, "这么说来，你这混蛋[r]一直都在撒谎了！？");
+
 		}
+
 		case(9)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "どうしてそう短絡的な発想なんですか！");
+
+			SetTalkEx(cutinPlayer1, "为什么会蹦出这么短路的想法啊！");
+
 		}
+
 		case(10)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "だから出世しないんですよ！");
+
+			SetTalkEx(cutinPlayer2, "正因为如此才升不了职哟！");
+
 		}
+
 		case(11)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "ひ、酷いであります！[r]もう怒ったでありますよ！");
+
+			SetTalkEx(cutinBoss1, "太，太过分了！[r]我生气了！");
+
 		}
+
 		case(12)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "貴様ら、異変の犯人の容疑逃れようと[r]した罪で、お仕置きするであります！");
+
+			SetTalkEx(cutinBoss1, "你们两个混蛋！[r]以企图洗脱异变嫌疑之罪，惩罚你们！");
+
 		}
+
 		case(13)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer1, "もう少しマシな罪状は無いんですか");
+
+			SetTalkEx(cutinPlayer1, "有没有更像样点的罪名啊喂。");
+
 		}
+
 		case(14)
+
 		{
+
 			//  BGM
+
 			PlayMusicWithName( 5, true, 30 );
 
+
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
+
 			alternative(Difficult)
-			case(D_EASY) { SetTalkEx(cutinBoss1, "貴様らの敗北は、[r]私の90％信頼区間の中であります！"); }
-			case(D_NORM) { SetTalkEx(cutinBoss1, "貴様らの敗北は、[r]私の95％信頼区間の中であります！"); }
-			case(D_HARD) { SetTalkEx(cutinBoss1, "貴様らの敗北は、[r]私の99％信頼区間の中であります！"); }
-			case(D_LUNA) { SetTalkEx(cutinBoss1, "貴様らの敗北は、[r]私の99.9％信頼区間の中であります！"); }
+
+			case(D_EASY) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的90％置信区间中！"); }
+
+			case(D_NORM) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的95％置信区间中！"); }
+
+			case(D_HARD) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的99％置信区间中！"); }
+
+			case(D_LUNA) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的99.9％置信区间中！"); }
+
 		}
+
 		case(15)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinBoss1, "貴様らとの実力の有意差を[r]知らしめるでありますよ！");
+
+			SetTalkEx(cutinBoss1, "你们两个混蛋在实力上和我的显著性差异，[r]就让你们弄个明白吧！");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+
 task EnterBoss(objEnemy, xIni, yIni)
+
 {
+
 	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+
 	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
+
 	
+
 	SetMovePositionHermite(objEnemy, xIni, yIni,
+
 		600, 45, 100, 150, 90);
+
 	SetAction(objEnemy, ACT_MOVE_L, 90);
+
 }
+

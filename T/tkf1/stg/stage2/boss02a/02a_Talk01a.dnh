@@ -1,168 +1,336 @@
-//#����e����[Single]
+//#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["2�ʓ����@��b"]
-#Text["2�ʓ����@��b"]
+
+#Title["2面道中　会話"]
+
+#Text["2面道中　会話"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
+
+
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
-	objEnemy = CreateBossTalk(BOSS_ID_SASHA);	//�{�X�Z�b�g
+
+	Boss_Init();	//初期設定
+
+	objEnemy = CreateBossTalk(BOSS_ID_SASHA);	//ボスセット
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
+
+
 
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
+
+
 
 	wait(30);
 
-	// �o�ꃂ�[�V����
+
+
+	// 登場モーション
+
 	let xIni = CenX;
+
 	let yIni = 160;
+
 	SashaFadeIn(xIni, yIni, 90);
+
 	BossEffect_AuraSasha(objEnemy, 0);
+
 	CallSound(sndBoon);
+
 	wait(150);
+
 	
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_SASHA, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_REIMU, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_TOKUBI, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaSasha;
+
 	let pathPlayer1 = imgCharaReimu;
+
 	let pathPlayer2 = imgCharaTokubi;
+
 	
+
 	SetImageFoward(cutinBoss1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 		
-		//�I�[���ǂ҂�[��I
+
+		//オーラどぴゅーん！
+
 		if (talkID == 5 && !Obj_GetValueD(objEnemy, "AURA_FLAG", false))
+
 		{
+
 			BossEffect_AuraSasha(objEnemy, 1);
+
 			CallSound(sndBoon);
+
 			wait(60);
+
 		}
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "噢，这不是博丽吗，好久不见了。");
-			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
+
+			SetTalkEx(cutinBoss1, "哦——，是博丽啊，好久不见。");
+
+			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+
 		}
+
 		case(1)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
 			SetTalkEx(cutinPlayer2, "熟人吗？");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
 			SetTalkEx(cutinPlayer1, "好像见过，又好像没见过。");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "“守住这里，不能让得敏等人通过。”[r]我是被这样指示的。");
+
+			SetTalkEx(cutinBoss1, "碰巧，他们对我说[r]“守住这里，不能让得敏等人通过”。");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "什么啊，小菜一碟。打一架吧。");
+
+			SetTalkEx(cutinBoss1, "我一听，什么嘛，小菜一碟。打一架吧。");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "影子和地面系……萱野那边的人的指示吗");
+
+			SetTalkEx(cutinPlayer2, "影子和地面系……萱野那边的人的指示吗？");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "总之，把她打飞就行了哟。");
+
+			SetTalkEx(cutinPlayer1, "总之把她打飞就行了吧。");
+
 			SetFukidashiType(cutinPlayer1, FUKIDASHI_ANGER);
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
 
 
-// �O�ʂ̃I�[���i�o�ꎞ�j
+
+
+
+// 前面のオーラ（登場時）
+
 task SashaFadeIn(x, y, timer)
+
 {
+
 	ObjMove_SetPosition(objEnemy, x, y);
+
 	
+
 	ascent(t in 0 .. timer)
+
 	{
-		// �{�̂̓����x
+
+		// 本体の透明度
+
 		let tmp_ba = max(0, min(1, (t+1)/timer*2-1)) * 255;
+
 		ObjRender_SetAlpha(GetBossImageID(objEnemy), tmp_ba);
+
 		yield;
+
 	}
+
 }
+

@@ -1,67 +1,134 @@
-//#����e����[Stage]
+//#東方弾幕風[Stage]
+
 #ScriptVersion[3]
-#Title["���񂳁[����1"]
-#Text["���񂳁[����1"]
+
+#Title["あんさーその1"]
+
+#Text["あんさーその1"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./lib_commontitle.dnh"
+
 #include"./lib_talkTitle.dnh"
 
+
+
 @Initialize {
+
 	SetAutoDeleteObject(true);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
 
+
+
 	FinishTalk(true);
+
 	CloseScript( GetOwnScriptID() );
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinChara1   = CreateTalkObject(BOSS_ID_RINNE, true);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	ObjPrim_SetTexture(cutinChara1, imgCharaRinne[4]);
+
 	
+
 	SetImageFoward(cutinChara1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinChara1, "ば、馬鹿な！何故私が犯人だと！？");
+
+			SetTalkEx(cutinChara1, "怎、怎么会！为什么说我是犯人！？");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

@@ -1,250 +1,500 @@
-//#����e����[Single]
+//#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["2��1��ځ@��bA"]
-#Text["2��1��ځ@��bA"]
+
+#Title["2面1周目　会話A"]
+
+#Text["2面1周目　会話A"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
 
+
+
+
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
+
+	Boss_Init();	//初期設定
+
 	objEnemy  = CreateBossTalk(BOSS_ID_UKA);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
-	// �o�ꃂ�[�V�����i�ŏ��͔�\���j
+
+
+	// 登場モーション（最初は非表示）
+
 	wait(60);
+
 	
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_UKA, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_REIMU, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_TOKUBI, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaUka;
+
 	let pathPlayer1 = imgCharaReimu;
+
 	let pathPlayer2 = imgCharaTokubi;
+
 	
-	// �B��
+
+	// 隠す
+
 	SetImageVisible(cutinBoss1, false);
-	// �ŏ��ɑO�ɏo�Ă���L����
+
+	// 最初に前に出てくるキャラ
+
 	SetImageFoward(cutinPlayer2, true);
+
 	
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let xIni = CenX;
+
 		let yIni = 140;
+
 		
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
 			SetTalkEx(cutinPlayer2, "刚才的妖怪，和我们有着同样的气味呢。");
+
 		}
+
 		case(1)
+
 		{
-			SetImageVisible(cutinBoss1, false);	// �{�X�摜�o���t���O
+
+			SetImageVisible(cutinBoss1, false);	// ボス画像出現フラグ
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "有句话怎么说的来着。[r]那个，叫什么来着，原创……");
+
+			SetTalkEx(cutinPlayer1, "那个词怎么说的来着？[r]那个，叫什么来着，原创角……");
+
 		}
+
 		case(2)
+
 		{
+
 			EnterBoss(objEnemy, xIni, yIni);
-			BossScene_SetNameVisible(objScene, true);	//�{�X�l�[���\�����
-			SetImageVisible(cutinBoss1, true);	// �{�X�摜�o���t���O
+
+			BossScene_SetNameVisible(objScene, true);	//ボスネーム表示状態
+
+			SetImageVisible(cutinBoss1, true);	// ボス画像出現フラグ
+
+
 
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "你来了啊！正鹿山笔头书记官！");
-			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
+
+			SetTalkEx(cutinBoss1, "你来了啊！第一书记正鹿山！");
+
+			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "从你那边也传来了那种原创……那种叫什么的气味来着。");
+
+			SetTalkEx(cutinPlayer2, "从你那边也传来了那种原创角……那种叫什么来着的气味。");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
 			SetTalkEx(cutinBoss1, "你们在说些什么[r]不着边际的话啊！？");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "你们准备成为[r]我换取功劳的牺牲品吧！");
+
+			SetTalkEx(cutinBoss1, "就让你们成为[r]我换取功劳的牺牲品吧！");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "原来如此。我明白得敏为什么会惊讶了。[r]所有人都是同一副嘴脸呢。");
+
+			SetTalkEx(cutinPlayer1, "原来如此。我明白得敏为什么会惊呆了。[r]所有人都是同一副嘴脸呢。");
+
 		}
+
 		case(7)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
 			SetTalkEx(cutinPlayer2, "是吧？像这种低级成员，[r]趁早收拾掉然后继续前进吧！");
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "我这种认真的性格，[r]在权力斗争方面是很弱的！");
+
+			SetTalkEx(cutinBoss1, "我这种认真的性格，[r]在权力斗争方面是不在行的！");
+
 		}
+
 		case(9)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
 			SetTalkEx(cutinBoss1, "但是，[r]在实战能力上是不会输的哟！");
+
 		}
+
 		case(10)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "还真有这种人呢。说：[r]”升不了职并不是因为自己能力差“。");
+
+			SetTalkEx(cutinPlayer1, "还真有这种人呢。[r]说什么“升不了职并不是因为自己能力差”。");
+
 		}
+
 		case(11)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer2, "真是的。地位是根据相应的能力和成果赋予的[r]というのに");
+
+			SetTalkEx(cutinPlayer2, "真是的。地位明明[r]是根据相应的能力和成果赋予的。");
+
 		}
+
 		case(12)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "快——住——嘴——！");
+
+			SetTalkEx(cutinBoss1, "快——住——口——！");
+
 			SetFukidashiType(cutinBoss1, FUKIDASHI_ANGER);
+
 		}
+
 		case(13)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+
 			SetTalkEx(cutinBoss1, "大人的世界可是很肮脏的哟！");
+
 		}
+
 		case(14)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "那种事姑且不谈，只要能把你们打倒，[r]作为升职资本的成果就足够了！");
+
+			SetTalkEx(cutinBoss1, "只要把你们打倒，[r]就是个十足的成果了！");
+
 		}
+
 		case(15)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+
 			SetTalkEx(cutinPlayer1, "不管怎样，要是妨碍我们的话，[r]就把你打飞哟！");
+
 		}
+
 		case(16)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinPlayer2, "被地位束缚的可怜的槌之子啊，[r]以爱宕大人之名，让你葬身于此！");
+
+			SetTalkEx(cutinPlayer2, "被地位束缚的可怜的野槌蛇啊，[r]以爱宕大人之名，让你葬身于此！");
+
 		}
+
 		case(17)
+
 		{
+
 			//  BGM
+
 			PlayMusicWithName( 5, true, 30 );
 
+
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
+
 			alternative(Difficult)
-			case(D_EASY) { SetTalkEx(cutinBoss1, "你们这些家伙的败北，[r]正处于我的90％置信区间中！"); }
-			case(D_NORM) { SetTalkEx(cutinBoss1, "你们这些家伙的败北，[r]正处于我的95％置信区间中！"); }
-			case(D_HARD) { SetTalkEx(cutinBoss1, "你们这些家伙的败北，[r]正处于我的99％置信区间中！"); }
-			case(D_LUNA) { SetTalkEx(cutinBoss1, "你们这些家伙的败北，[r]正处于我的99.9％置信区间中！"); }
+
+			case(D_EASY) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的90％置信区间中！"); }
+
+			case(D_NORM) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的95％置信区间中！"); }
+
+			case(D_HARD) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的99％置信区间中！"); }
+
+			case(D_LUNA) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的99.9％置信区间中！"); }
+
 		}
+
 		case(18)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
-			SetTalkEx(cutinBoss1, "你们这些家伙在实力上和我的显著性差异，[r]就让你们弄个明白吧！");
+
+			SetTalkEx(cutinBoss1, "你们两个混蛋在实力上和我的显著性差异，[r]就让你们弄个明白吧！");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+
 task EnterBoss(objEnemy, xIni, yIni)
+
 {
+
 	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+
 	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
+
 	
+
 	SetMovePositionHermite(objEnemy, xIni, yIni,
+
 		600, 45, 100, 150, 90);
+
 	SetAction(objEnemy, ACT_MOVE_L, 90);
+
 }
+

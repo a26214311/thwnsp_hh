@@ -1,285 +1,570 @@
-//����e����[Single]
+//東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["0�ʁ@��b"]
-#Text["0�ʁ@��b"]
+
+#Title["0面　会話"]
+
+#Text["0面　会話"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
+
+
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
-	objEnemy = CreateBossTalk(BOSS_ID_MINAYU);	//�{�X�Z�b�g
+
+	Boss_Init();	//初期設定
+
+	objEnemy = CreateBossTalk(BOSS_ID_MINAYU);	//ボスセット
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
-	//�{�X�l�[���\�����
+
+	//ボスネーム表示状態
+
 	BossScene_SetNameVisible(objScene, false);
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
+
 	wait(60);
+
 	
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
+
 	wait(15);
+
 	
-	// ��ʊO��
+
+	// 画面外へ
+
 	ObjMove_SetDestAtWeightSpeedUp(objEnemy, CenX+64, -256, 15, 3, 0.1, 12);
+
 	SetAction(objEnemy, ACT_MOVE, 60);
 
-	//���̃V�[����
+
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
 
-	// ����ς�V���b�g�{���֎~
+
+
+	// やっぱりショットボム禁止
+
 	SetForbidPlayerShot(true);
+
 	SetForbidPlayerSpell(true);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
+
 	let xIni = CenX;
+
 	let yIni = 140;
+
 	
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_MINAYU, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE_L, false);
+
 	let cutinDescri = CreateDescriptiveObject();
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1   = imgCharaMinayu;
+
 	let pathPlayer1 = imgCharaSanae;
+
 	
-	// �B��
+
+	// 隠す
+
 	SetImageVisible(cutinBoss1, false);
 
+
+
 	SetImageFoward(cutinPlayer1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
-			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinPlayer1, "人类之里那边的人们正在丧失着记忆，[r]异变正在发生着呢。");
-		}
-		case(1)
-		{
-			SetImageVisible(cutinBoss1, false);	// �{�X�摜�o���t���O
-			
-			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
-			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinPlayer1, "这正是守矢神社解决异变，[r]获取人们信仰的机会！");
-		}
-		case(2)
-		{
-			EnterBoss(objEnemy, xIni, yIni);
-			SetImageVisible(cutinBoss1, true);	// �{�X�摜�o���t���O
 
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinBoss1, "那边的巫女小姐，[r]可以耽误您一点时间吗？");
+
+			SetTalkEx(cutinPlayer1, "人里正发生一场人们变得[r]记不住事情的异变呢。");
+
 		}
+
+		case(1)
+
+		{
+
+			SetImageVisible(cutinBoss1, false);	// ボス画像出現フラグ
+
+			
+
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
+			SetTalkEx(cutinPlayer1, "这正是守矢神社解决异变，[r]获取人们信仰的机会！");
+
+		}
+
+		case(2)
+
+		{
+
+			EnterBoss(objEnemy, xIni, yIni);
+
+			SetImageVisible(cutinBoss1, true);	// ボス画像出現フラグ
+
+
+
+			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
+			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
+			SetTalkEx(cutinBoss1, "那边的巫女小姐，[r]可以耽误你一点时间吗？");
+
+		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			SetTalkEx(cutinPlayer1, "好的，请问有何贵干？");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "我是最近成为神明的，[r]名叫忆尘皆故。");
-			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
+
+			SetTalkEx(cutinBoss1, "我是最近出道的神，[r]名叫忆尘皆故。");
+
+			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "我原本是某一种类的神明，[r]但是最近失去了记忆。");
+
+			SetTalkEx(cutinBoss1, "本来我是某种神，[r]但记忆都丧失了。");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinPlayer1, "那还真是可怜啊。[r]是异变的受害者呢。");
+
+			SetTalkEx(cutinPlayer1, "那还真是可怜。[r]你也受异变所害呢。");
+
 		}
+
 		case(7)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
-			SetTalkEx(cutinBoss1, "不，没有记忆，[r]是异变之前的事情。");
+
+			SetTalkEx(cutinBoss1, "不是的，没有记忆这事，[r]在异变之前就是如此了。");
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "连记述神明由来的神话，[r]也想不起来了吗？");
+
+			SetTalkEx(cutinPlayer1, "就连原型的神话[r]也记不起来了吗？");
+
 		}
+
 		case(9)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinBoss1, "由来的话……是没有的……");
+
+			SetTalkEx(cutinBoss1, "那个……我并没有原型……");
+
 		}
+
 		case(10)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinPlayer1, "没有！？没有由来吗？");
+
+			SetTalkEx(cutinPlayer1, "没有！？居然没有原型吗？");
+
 		}
+
 		case(11)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinPlayer1, "真的不只是忘记了吗？没有由来，[r]神明怎么能够存在？");
+
+			SetTalkEx(cutinPlayer1, "真的不是只是忘记了吗？在没有原型的情况下，[r]神明怎么能够存在下去？");
+
 		}
+
 		case(12)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinBoss1, "一位知名的神明制作人（PRODUCER），[r]为我取了名字，");
+
+			SetTalkEx(cutinBoss1, "有位以包装神明而闻名的人，[r]为我取了现在的名字，");
+
 		}
+
 		case(13)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinBoss1, "叫做“遗忘事物之神”。");
+
+			SetTalkEx(cutinBoss1, "叫做“使遗忘事物之神”。");
+
 		}
+
 		case(14)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinPlayer1, "原来如此，那位大人还真是救世主啊。[r]等等，说起遗忘事物，[r]难道说这次的异变是……");
+
+			SetTalkEx(cutinPlayer1, "原来如此，那位当了你的救世主啊。[r]等等，说到使遗忘事物，[r]难道说这次的异变……");
+
 		}
+
 		case(15)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "不是的。实际上这次的异变，[r]让我也觉得很困扰，");
+
+			SetTalkEx(cutinBoss1, "不，其实这次的异变[r]也在困扰着我。");
+
 		}
+
 		case(16)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "感觉像是，[r]“自己的饭碗被别人抢走了”。");
+
+			SetTalkEx(cutinBoss1, "毕竟自己的神德[r]也被覆盖了。");
+
 		}
+
 		case(17)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "因此，就找到了身为“名门八坂大人的神社巫女”的您，[r]想要拜托你解决这个问题。");
+
+			SetTalkEx(cutinBoss1, "所以，我想要拜托身为名门八坂大人的神社的巫女的你[r]来帮我解决这个问题。");
+
 		}
+
 		case(18)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			SetTalkEx(cutinPlayer1, "如果不早点解决的话……");
+
 		}
+
 		case(19)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinBoss1, "其实，[r]我对这次异变的犯人有些眉目。");
+
+			SetTalkEx(cutinBoss1, "其实，[r]我对这次异变的犯人已经有些眉目了。");
+
 		}
+
 		case(20)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			SetTalkEx(cutinPlayer1, "真的吗！？");
+
 			SetFukidashiType(cutinPlayer1, FUKIDASHI_ANGER);
+
 		}
+
 		case(21)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinBoss1, "如今的幻想乡里，爱宕大人，[r]萱野姫大人，[r]这两位神明正在争斗着。");
+
+			SetTalkEx(cutinBoss1, "幻想乡现在正展开一场[r]由叫作爱宕大人和叫作萱野姬大人的神明[r]导致的斗争。");
+
 		}
+
 		case(22)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
-			SetTalkEx(cutinBoss1, "在爱宕军那边，[r]有人似乎能够做到这种事情。");
+
+			SetTalkEx(cutinBoss1, "在那位爱宕大人的军队里面，[r]似乎有能够做出这种事情的人。");
+
 		}
+
 		case(23)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			SetTalkEx(cutinPlayer1, "说到爱宕军的话，[r]和神奈子大人也有过一段因缘呢。");
+
 		}
+
 		case(24)
+
 		{
-			SetTalkEx(cutinDescri, "※原作捏他意义上的因缘，[r]和推理内容无关。");
+
+			SetTalkEx(cutinDescri, "※指原捏他意义上的因缘，[r]和本作推理内容无关。");
+
 		}
+
 		case(25)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "解决这次异变，无论是对我还是对早苗小姐您，[r]都是有利的。");
+
+			SetTalkEx(cutinBoss1, "如果能解决这次异变的话，无论是对我[r]还是早苗小姐都是有利的。");
+
 		}
+
 		case(26)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
-			SetTalkEx(cutinBoss1, "所以请允许我和您同行去解决异变吧，[r]不知您意下如何？");
+
+			SetTalkEx(cutinBoss1, "不知你意下如何？[r]让我同行去解决异变的话");
+
 		}
+
 		case(27)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1  ,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
-			SetTalkEx(cutinPlayer1, "明白了。请多多关照。");
+
+			SetTalkEx(cutinPlayer1, "明白了。请多多关照哦。");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+
+
+
 
 
 task EnterBoss(objEnemy, xIni, yIni)
+
 {
+
 	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+
 	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
+
 	
+
 	SetMovePositionHermite(objEnemy, xIni, yIni,
+
 		600, 90, 100, 210, 60);
+
 	SetAction(objEnemy, ACT_MOVE_L, 60);
+
 }
+

@@ -1,180 +1,360 @@
-#����e����[Single]
+#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["Ex�{�X1�@��bA-2"]
-#Text["Ex�{�X1�@��bA-2"]
+
+#Title["Exボス1　会話A-2"]
+
+#Text["Exボス1　会話A-2"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
-// �e�{�X�̃I�u�W�F�N�gID
+
+
+// 各ボスのオブジェクトID
+
+
 
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
-	objEnemy = CreateBossTalk(BOSS_ID_AZUMA);	//�{�X�Z�b�g
-	Obj_SetVisible(GetBossImageID(objEnemy), false);	//�摜��\��
+
+	Boss_Init();	//初期設定
+
+	objEnemy = CreateBossTalk(BOSS_ID_AZUMA);	//ボスセット
+
+	Obj_SetVisible(GetBossImageID(objEnemy), false);	//画像非表示
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
+
+
 	wait(30);
+
 	
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_AZUMA, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_REIMU, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_TOKUBI, false);
+
 	let cutinDescri = CreateDescriptiveObject();
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaAzuma;
+
 	let pathPlayer1 = imgCharaReimu;
+
 	let pathPlayer2 = imgCharaTokubi;
+
 	
-	// �ŏ��ɑO�ɏo�Ă���L����
+
+	// 最初に前に出てくるキャラ
+
 	SetImageFoward(cutinBoss1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let xIni = CenX;
+
 		let yIni = 140;
+
 		
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "はっはっは、参った、強いなお前達！");
+
+			SetTalkEx(cutinBoss1, "哈～哈～哈～，我输了，你们很强啊！");
+
 		}
+
 		case(1)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "そりゃどうも");
+
+			SetTalkEx(cutinPlayer1, "多谢指教。");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "しかし惜しいものですな。あと1本の剣が[r]見つかれば萱野姫にも勝てたでしょうに");
+
+			SetTalkEx(cutinPlayer2, "不过真是可惜啊。明明只要再找到一把剑，[r]就能打赢萱野姬了。");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "あと1本？");
+
+			SetTalkEx(cutinPlayer1, "再找到一把？");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss1, "雲を呼ぶ剣だよ。これさえ有れば[r]気象研究も大きく進歩するんだがな");
+
+			SetTalkEx(cutinBoss1, "是呼唤云的剑。要是有了这把剑，[r]气象研究也能取得很大的进步。");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "なんかどっかで見た気がするのよね。[r]まあ忘れちゃったけど");
+
+			SetTalkEx(cutinPlayer1, "好像在哪里见到过呢，[r]虽然一时间想不起来了。");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer2, "何と…いつか見つかるといいのだが");
+
+			SetTalkEx(cutinPlayer2, "这样啊……要是什么时候能找到就好了。");
+
 		}
+
 		case(7)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss1, "過ぎた事や無い物を悔やんでも仕方ない。");
+
+			SetTalkEx(cutinBoss1, "对于过去的事情、失去的东西，再后悔也无济于事。");
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinBoss1, "あたしらはまた研究を続けて、[r]今度こそ萱野の連中を倒そうじゃないか！");
+
+			SetTalkEx(cutinBoss1, "我们会继续做研究，[r]下次要把萱野的人给通通打倒！");
+
 		}
+
 		case(9)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,   pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[4]);
-			SetTalkEx(cutinPlayer1, "そん時は幻想郷に来ないで[r]貰いたいものだわ");
+
+			SetTalkEx(cutinPlayer1, "希望那个时候，[r]你们不要再到幻想乡来了。");
+
 		}
+
 		case(10)
+
 		{
-			SetTalkEx(cutinDescri, "こうして抗争は無事、萱野軍の勝利ということで決着がついた。");
+
+			SetTalkEx(cutinDescri, "就这样，战争以萱野军的胜利而告终。");
+
 		}
+
 		case(11)
+
 		{
-			SetTalkEx(cutinDescri, "ちなみに翌年の10月、出雲神様サミットにて、");
+
+			SetTalkEx(cutinDescri, "顺带一提，第二年十月，在出云诸神峰会上，");
+
 		}
+
 		case(12)
+
 		{
-			SetTalkEx(cutinDescri, "天皇家の神霊が幻想郷から雲を呼ぶ剣を見つけ出し、会場に持って現れた事に雷は驚愕した。");
+
+			SetTalkEx(cutinDescri, "天皇家的神灵从幻想乡找来了呼唤云的剑，并把它带到了会场。当时在场的雷对此相当惊讶。");
+
 		}
+
 		case(13)
+
 		{
-			SetTalkEx(cutinDescri, "同時に、気象研究を大きく進められる事を大いに喜んだのであった。");
+
+			SetTalkEx(cutinDescri, "同时，雷因气象研究能取得重大进步而感到十分高兴。");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

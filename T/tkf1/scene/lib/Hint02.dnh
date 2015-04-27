@@ -1,83 +1,166 @@
-//#����e����[Stage]
+//#東方弾幕風[Stage]
+
 #ScriptVersion[3]
-#Title["�q���g����2"]
-#Text["�q���g����2"]
+
+#Title["ヒントその2"]
+
+#Text["ヒントその2"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./lib_commontitle.dnh"
+
 #include"./lib_talkTitle.dnh"
 
+
+
 @Initialize {
+
 	SetAutoDeleteObject(true);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
 
+
+
 	FinishTalk(true);
+
 	CloseScript( GetOwnScriptID() );
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinChara1   = CreateTalkObject(BOSS_ID_REIMU_L, false);
+
 	let cutinChara2   = CreateTalkObject(BOSS_ID_TOKUBI, true);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	ObjPrim_SetTexture(cutinChara1, imgCharaReimu[4]);
+
 	ObjPrim_SetTexture(cutinChara2, imgCharaTokubi[2]);
+
 	
+
 	SetImageFoward(cutinChara1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinChara1, "さて、最初に聞かれてるのは時系列ね");
+
+			SetTalkEx(cutinChara1, "好，首先要问的是时间顺序。");
+
 		}
+
 		case(1)
+
 		{
-			SetTalkEx(cutinChara2, "何気ない会話文の中にもヒントは[r]隠されておるかもしれんぞ");
+
+			SetTalkEx(cutinChara2, "对话内容中，会无意间[r]隐藏着许多线索。");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara1, imgCharaReimu[2]);
-			SetTalkEx(cutinChara1, "誰がいつ、誰と戦ったか、[r]誰に倒されたかに着目していくと[r]解りやすいかもね");
+
+			SetTalkEx(cutinChara1, "着眼于“谁在什么时候和谁战斗，[r]谁被打败了等”的话，[r]也许会更容易解开呢。");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara2, imgCharaTokubi[3]);
-			SetTalkEx(cutinChara2, "こういうのは一気に考えず、[r]物事を順序立てて少しずつ考えて[r]いくといいかもな");
+
+			SetTalkEx(cutinChara2, "这时候，不要一口气想清楚，[r]而是一边排序一边慢慢想[r]要好一些。");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

@@ -1,139 +1,284 @@
-// �얲�G���f�B���O1���
+// 霊夢エンディング1周目
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_common.dnh"
+
 #include"./../../../lib/lib_talk_ed.dnh"
+
 #include"./../../../lib/lib_stage.dnh"
 
+
+
 @Initialize {
+
 	init();
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
+
 	TBackground();
+
 	wait(180);
+
 	TEndingImage(imgEDEnding[3]);
+
 	//  BGM
+
 	PlayMusic( 8, true, 60 );
+
 	
-	// ��b����
+
+	// 会話準備
+
 	StartTalk();
+
 	wait(120);
 
+
+
 	FuncTalk();
+
 	wait(15);
 
-	//���̃V�[����
+
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	SetForbidPlayerShot(true);
+
 	SetForbidPlayerSpell(true);
+
 	
+
 	if (GetPlayMode() == GAME_MAIN || GetPlayMode() == GAME_DEBUG)
+
 	{
+
 		wait(240);
+
 		My_CloseStageScene();
+
 	} else {
+
 		CloseMine(60);
+
 	}
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
+
 	let COL0 = [160, 160, 160];
+
 	let COL1 = [255, 160, 160];
+
 	let COL2 = [160, 160, 255];
+
 	
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinDescri = CreateDescriptiveObject();
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinDescri, "[r]博麗神社", COL0);
+
+			SetTalkEx(cutinDescri, "[r]博丽神社", COL0);
+
 		}
+
 		case(1)
+
 		{
-			SetTalkEx(cutinDescri, "霊夢[r]これで無事異変も収まったわね。", COL1);
+
+			SetTalkEx(cutinDescri, "灵梦[r]这样一来，异变终于平安无事结束了呢。", COL1);
+
 		}
+
 		case(2)
+
 		{
-			SetTalkEx(cutinDescri, "得敏[r]今回は霊夢殿の手柄ではなかったが、良いのか？", COL2);
+
+			SetTalkEx(cutinDescri, "得敏[r]这次的功劳不是灵梦阁下的，不介意吗？", COL2);
+
 		}
+
 		case(3)
+
 		{
-			SetTalkEx(cutinDescri, "霊夢[r]うーん、人々の信仰を得られなかったのは残念だけど。", COL1);
+
+			SetTalkEx(cutinDescri, "灵梦[r]嗯……没能得到人们的信仰，确实挺遗憾的。", COL1);
+
 		}
+
 		case(4)
+
 		{
-			SetTalkEx(cutinDescri, "得敏[r]まあ、普段から解決してもあまり信仰を得られていなさそうだしな。", COL2);
+
+			SetTalkEx(cutinDescri, "得敏[r]嘛，平常就算亲手解决了，也得不到多少信仰就是了。", COL2);
+
 		}
+
 		case(5)
+
 		{
-			SetTalkEx(cutinDescri, "霊夢[r]余計な事言わないの！", COL1);
+
+			SetTalkEx(cutinDescri, "灵梦[r]你话太多了！", COL1);
+
 		}
+
 		case(6)
+
 		{
-			SetTalkEx(cutinDescri, "得敏[r]しかし、どうも今回の異変、全てが有耶無耶に終わった気がしてならんな。", COL2);
+
+			SetTalkEx(cutinDescri, "得敏[r]但是，这次异变不得不认为在不了了之之下结束了呢。", COL2);
+
 		}
+
 		case(7)
+
 		{
-			SetTalkEx(cutinDescri, "霊夢[r]どうでもいいんじゃない？収まったんだし。", COL1);
+
+			SetTalkEx(cutinDescri, "灵梦[r]无所谓了吧？反正异变都消失了。", COL1);
+
 		}
+
 		case(8)
+
 		{
-			SetTalkEx(cutinDescri, "得敏[r]こちらとしてはそうもいかん。顛末を愛宕様に報告せねば。これまでの情報をもとに推理してみよう。", COL2);
+
+			SetTalkEx(cutinDescri, "得敏[r]我这边可不能就这样结束。还必须把事件始末向爱宕大人汇报。以到目前为止收集到的情报推理下试试吧。", COL2);
+
 		}
+
 		case(9)
+
 		{
-			SetTalkEx(cutinDescri, "霊夢[r]もう私には関係ないわね。", COL1);
+
+			SetTalkEx(cutinDescri, "灵梦[r]已经和我没有关系了啦。", COL1);
+
 		}
+
 		case(10)
+
 		{
-			SetTalkEx(cutinDescri, "得敏[r]推理に協力してくれたら、相応の報酬は約束するが。", COL2);
+
+			SetTalkEx(cutinDescri, "得敏[r]如果协助我进行推理，我可以答应提供相应的报酬……", COL2);
+
 		}
+
 		case(11)
+
 		{
-			SetTalkEx(cutinDescri, "霊夢[r]ほら、何やってんの？さっさと会話文全部持ってきなさい！", COL1);
+
+			SetTalkEx(cutinDescri, "灵梦[r]喂，我说你还在磨蹭什么？快把对话文本全都拿过来！", COL1);
+
 		}
+
 		case(12)
+
 		{
-			SetTalkEx(cutinDescri, "[r]結局、白菊を倒しても異変の真相は明らかにならなかった。霊夢と得敏は、クリアしたステージのテキストを読むことで、隠された真相を暴く事にしたのだった。", COL0);
+
+			SetTalkEx(cutinDescri, "[r]到头来，虽然打倒了白菊，但异变的真相仍然不甚明了。灵梦和得敏在读了通掉的关卡的文本后，决定要揭露被隐藏的真相。", COL0);
+
 		}
+
 		case(13)
+
 		{
-			SetTalkEx(cutinDescri, "[r]ＥＤ．　ＮＯ４[r]やはり金か！", COL0);
+
+			SetTalkEx(cutinDescri, "[r]ED No.4[r]有钱能使鬼推磨！", COL0);
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

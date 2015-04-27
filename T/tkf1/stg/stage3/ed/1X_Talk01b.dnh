@@ -1,108 +1,222 @@
-// �������G���f�B���O1���
+// 魔理沙エンディング1周目
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_common.dnh"
+
 #include"./../../../lib/lib_talk_ed.dnh"
+
 #include"./../../../lib/lib_stage.dnh"
 
+
+
 @Initialize {
+
 	init();
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
+
 	TBackground();
+
 	wait(180);
+
 	TEndingImage(imgEDEnding[4]);
+
 	//  BGM
+
 	PlayMusic( 8, true, 60 );
+
 	
-	// ��b����
+
+	// 会話準備
+
 	StartTalk();
+
 	wait(120);
 
+
+
 	FuncTalk();
+
 	wait(15);
 
-	//���̃V�[����
+
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	SetForbidPlayerShot(true);
+
 	SetForbidPlayerSpell(true);
+
 	
+
 	if (GetPlayMode() == GAME_MAIN || GetPlayMode() == GAME_DEBUG)
+
 	{
+
 		wait(240);
+
 		My_CloseStageScene();
+
 	} else {
+
 		CloseMine(60);
+
 	}
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
+
 	let COL0 = [160, 160, 160];
+
 	let COL1 = [160, 255, 255];
+
 	let COL2 = [255, 192, 255];
+
 	let COL3 = [160, 160, 255];
+
 	
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinDescri = CreateDescriptiveObject();
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinDescri, "[r]人里", COL0);
+
+			SetTalkEx(cutinDescri, "[r]人类村落", COL0);
+
 		}
+
 		case(1)
+
 		{
-			SetTalkEx(cutinDescri, "魔理沙[r]私はちょっと急用で先にあの場を去って人里に来たんだが、白菊はあの後大天狗から取材を受けてたな。", COL1);
+
+			SetTalkEx(cutinDescri, "魔理沙[r]我因为有点急事而先走了一步，来到了人类的村庄，而白菊则在那之后接受了大天狗的采访。", COL1);
+
 		}
+
 		case(2)
+
 		{
-			SetTalkEx(cutinDescri, "[r]魔理沙は人里に来ていた。今回の異変の内容に関わる用件ではなく、本当に野暮用で。", COL0);
+
+			SetTalkEx(cutinDescri, "[r]魔理沙来到了人类村落。并没有什么与关于这次异变有关的特殊目的，只是单纯的郊游而已。", COL0);
+
 		}
+
 		case(3)
+
 		{
-			SetTalkEx(cutinDescri, "[r]魔理沙が来た時には、既に人々の記憶は正常に戻っていた。皆故を倒したことで、異変が解決に向った証拠である。", COL0);
+
+			SetTalkEx(cutinDescri, "[r]魔理沙到达的时候，人们的记忆已经开始恢复正常了。这便成了“打到了皆故使异变得到解决”这一立论的证据。", COL0);
+
 		}
+
 		case(4)
+
 		{
-			SetTalkEx(cutinDescri, "魔理沙[r]私も新聞に載りたかったな。でも…まあ、天狗の新聞になんて載っても特に良い事無いか。", COL1);
+
+			SetTalkEx(cutinDescri, "魔理沙[r]我也想被新闻报道呐。不过……嘛，被天狗新闻报道也不算是什么好事吧。", COL1);
+
 		}
+
 		case(5)
+
 		{
-			SetTalkEx(cutinDescri, "[r]ＥＤ　ＮＯ．５[r]マスコミにはご用心", COL0);
+
+			SetTalkEx(cutinDescri, "[r]ＥＤ　ＮＯ．５[r]大众传媒要提防", COL0);
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

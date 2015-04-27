@@ -1,83 +1,166 @@
-//#����e����[Stage]
+//#東方弾幕風[Stage]
+
 #ScriptVersion[3]
-#Title["���񂳁[����2"]
-#Text["���񂳁[����2"]
+
+#Title["あんさーその2"]
+
+#Text["あんさーその2"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./lib_commontitle.dnh"
+
 #include"./lib_talkTitle.dnh"
 
+
+
 @Initialize {
+
 	SetAutoDeleteObject(true);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
 
+
+
 	FinishTalk(true);
+
 	CloseScript( GetOwnScriptID() );
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinChara1   = CreateTalkObject(BOSS_ID_RINNE, true);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	ObjPrim_SetTexture(cutinChara1, imgCharaRinne[2]);
+
 	
+
 	SetImageFoward(cutinChara1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinChara1, "よく私一人が犯人だと解りましたね");
+
+			SetTalkEx(cutinChara1, "真没想到啊，发现了犯人是我一个呢。");
+
 		}
+
 		case(1)
+
 		{
-			SetTalkEx(cutinChara1, "恐らくそれが解っても、この異変の全体像の[r]１割も見えてない人がほとんどだと思います");
+
+			SetTalkEx(cutinChara1, "不过我想就算明白了这个，[r]恐怕几乎所有人连这次异变全貌的一成都看不出来吧。");
+
 		}
+
 		case(2)
+
 		{
-			SetTalkEx(cutinChara1, "Extraが実装されるまでの間、[r]私がこの異変の間、何を考えて行動して[r]いたのか、推理してみませんか？");
+
+			SetTalkEx(cutinChara1, "在Extra实装之前[r]，不来推理一下我在这次异变期间，[r]到底是为什么才做出这些行动的吗？");
+
 		}
+
 		case(3)
+
 		{
-			SetTalkEx(cutinChara1, "難易度はLunatic。果たして皆さん[r]に、この異変の全貌が見えますかね？");
+
+			SetTalkEx(cutinChara1, "难易度是Lunatic。[r]大家到底能看穿这次异变的全貌吗？");
+
 		}
+
 		case(4)
+
 		{
-			SetTalkEx(cutinChara1, "公式サイトの掲示板にて、[r]推理を募集しています");
+
+			SetTalkEx(cutinChara1, "在官网论坛[r]等待各位的推理！");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

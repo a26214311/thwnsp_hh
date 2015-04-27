@@ -1,100 +1,200 @@
-//#����e����[Stage]
+//#東方弾幕風[Stage]
+
 #ScriptVersion[3]
-#Title["�q���g����4"]
-#Text["�q���g����4"]
+
+#Title["ヒントその4"]
+
+#Text["ヒントその4"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./lib_commontitle.dnh"
+
 #include"./lib_talkTitle.dnh"
 
+
+
 @Initialize {
+
 	SetAutoDeleteObject(true);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
 
+
+
 	FinishTalk(true);
+
 	CloseScript( GetOwnScriptID() );
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinChara1   = CreateTalkObject(BOSS_ID_SETUJO, false);
+
 	let cutinChara2   = CreateTalkObject(BOSS_ID_SASHA, true);
+
 	let cutinChara3   = CreateTalkObject(BOSS_ID_RAKU, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	ObjPrim_SetTexture(cutinChara2, imgCharaSasha[2]);
+
 	
+
 	SetImageFoward(cutinChara1, true);
+
 	SetImageVisible(cutinChara2, false);
+
 	SetImageVisible(cutinChara3, false);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinChara1, "さて、重要そうな言葉は拾いました。[r]ここからどうしましょう？");
+
+			SetTalkEx(cutinChara1, "好，我们已经找到了几个好像很重要的句子。[r]之后要怎么做？");
+
 		}
+
 		case(1)
+
 		{
+
 			SetImageVisible(cutinChara1, false);
+
 			SetImageVisible(cutinChara2, true);
-			SetTalkEx(cutinChara2, "やはり選択肢が有るという事は、[r]消去法が良いと思うんじゃがのう");
+
+			SetTalkEx(cutinChara2, "既然有了选项，[r]我觉得果然还是使用排除法比较好吧。");
+
 		}
+
 		case(2)
+
 		{
+
 			SetImageVisible(cutinChara3, true);
-			SetTalkEx(cutinChara3, "なるほど");
+
+			SetTalkEx(cutinChara3, "原来如此。");
+
 		}
+
 		case(3)
+
 		{
-			SetTalkEx(cutinChara3, "いくつかのキーワードを使うと、有り得ない組み合わせ[r]というのが何種類か出てくるようでございますな");
+
+			SetTalkEx(cutinChara3, "使用几个关键词，似乎得以判断出[r]数个不可能的组合了。");
+
 		}
+
 		case(4)
+
 		{
-			SetTalkEx(cutinChara3, "これでだいぶ選択肢も絞れるかも[r]しれません。ラクククク");
+
+			SetTalkEx(cutinChara3, "这样一来说不定就能[r]迅速缩小选项了呢。拉库库库库。");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara2, imgCharaSasha[5]);
+
 			SetImageVisible(cutinChara3, false);
-			SetTalkEx(cutinChara2, "しかし、それでもまだ消せない[r]選択肢が有るのも確かじゃ");
+
+			SetTalkEx(cutinChara2, "不过就算如此，也确实还有几个[r]消不掉的选项啊。");
+
 		}
+
 		case(6)
+
 		{
-			SetTalkEx(cutinChara2, "単純に出来るか否かの消去法、すなわちアリバイ[r]だけでは犯人は絞れないという事になるのう");
+
+			SetTalkEx(cutinChara2, "也就是说，只靠单纯的“能不能做到”这种排除法——[r]也就是“不在场证明”——可没法揪出犯人啊。");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+

@@ -1,282 +1,564 @@
-//#����e����[Single]
+//#東方弾幕風[Single]
+
 #ScriptVersion[3]
-#Title["2��1��ځ@��bA"]
-#Text["2��1��ځ@��bA"]
+
+#Title["2面1周目　会話A"]
+
+#Text["2面1周目　会話A"]
+
 #Background[""]
+
 #System["./../../../system/System_Main.dnh"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./../../../lib/lib_boss.dnh"
+
 #include"./../../../lib/lib_talk.dnh"
 
 
+
+
+
 @Event {
+
 	alternative(GetEventType())
+
 	case(EV_REQUEST_LIFE)		{ SetScriptResult( 0);	}
+
 	case(EV_REQUEST_TIMER)		{ SetScriptResult(-1);	}
+
 	BossEvent();
+
 }
+
+
 
 @Initialize {
-	Boss_Init();	//����ݒ�
+
+	Boss_Init();	//初期設定
+
 	objEnemy  = CreateBossTalk(BOSS_ID_UKA);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	// ���@�w���Z�b�g
+
+	// 魔法陣リセット
+
 	BossEffect_ResetMagicCircle();
 
-	// ��b����
+
+
+	// 会話準備
+
 	StartTalk();
 
-	// �o�ꃂ�[�V�����i�ŏ��͔�\���j
+
+
+	// 登場モーション（最初は非表示）
+
 	wait(60);
+
 	
+
 	FuncTalk();
+
 	
-	//���̃V�[����
+
+	//次のシーンへ
+
 	FinishTalk(true);
+
 	Boss_Finalize(objEnemy, false, false);
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinBoss1   = CreateTalkObject(BOSS_ID_UKA, true);
+
 	let cutinPlayer1 = CreateTalkObject(BOSS_ID_SANAE, false);
+
 	let cutinPlayer2 = CreateTalkObject(BOSS_ID_MINAYU, false);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	let pathBoss1 = imgCharaUka;
+
 	let pathPlayer1 = imgCharaSanae;
+
 	let pathPlayer2 = imgCharaMinayu;
+
 	
-	// �B��
+
+	// 隠す
+
 	SetImageVisible(cutinBoss1, false);
-	// �ŏ��ɑO�ɏo�Ă���L����
+
+	// 最初に前に出てくるキャラ
+
 	SetImageFoward(cutinPlayer1, true);
+
 	
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let xIni = CenX;
+
 		let yIni = 140;
+
 		
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "刚才的家伙是强大的妖怪呢。[r]到底是和那种家伙结成了同伴呢？");
+
+			SetTalkEx(cutinPlayer1, "刚才的家伙是强大的妖怪呢。[r]到底是谁和这种家伙结成了同伙呢？");
+
 		}
+
 		case(1)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
-			SetTalkEx(cutinPlayer2, "恐怕是萱野姫军里的某人吧。");
+
+			SetTalkEx(cutinPlayer2, "恐怕是萱野姬军里的谁吧。");
+
 		}
+
 		case(2)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[5]);
+
 			SetTalkEx(cutinPlayer2, "刚才的大太法师是地面系。");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+
 			SetTalkEx(cutinPlayer2, "爱宕军里电气系和火系居多，[r]所以雇佣了地面系的保镖吧。");
+
 		}
+
 		case(4)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+
 			SetTalkEx(cutinPlayer1, "那么，爱宕军的人，[r]都被挡在刚才的地方无法前进了？");
+
 		}
+
 		case(5)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer2, "我觉得由于我们是飞行系，[r]地面系才对我们无效。");
+
+			SetTalkEx(cutinPlayer2, "可我感觉，我们大家都在飞，[r]地面系不是应该无效吗？");
+
 		}
+
 		case(6)
+
 		{
-			SetImageVisible(cutinBoss1, false);	// �{�X�摜�o���t���O
+
+			SetImageVisible(cutinBoss1, false);	// ボス画像出現フラグ
+
+
 
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
 			SetTalkEx(cutinPlayer1, "看起来，雇佣保镖的人也是个笨蛋呢。[r]到底是何方人士呢？");
+
 		}
+
 		case(7)
+
 		{
+
 			EnterBoss(objEnemy, xIni, yIni);
-			BossScene_SetNameVisible(objScene, true);	//�{�X�l�[���\�����
-			SetImageVisible(cutinBoss1, true);	// �{�X�摜�o���t���O
+
+			BossScene_SetNameVisible(objScene, true);	//ボスネーム表示状態
+
+			SetImageVisible(cutinBoss1, true);	// ボス画像出現フラグ
+
+
 
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "作为笨蛋还真是对不住那！");
+
+			SetTalkEx(cutinBoss1, "是笨蛋还真是对不起啊！");
+
 			SetFukidashiType(cutinBoss1, FUKIDASHI_ANGER);
-			SetBossName(cutinBoss1, 280, 220);	// �{�X�l�[���\��
+
+			SetBossName(cutinBoss1, 280, 220);	// ボスネーム表示
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinPlayer1, "真少见，是槌之子小姐呢！[r]我还是第一次见！");
+
+			SetTalkEx(cutinPlayer1, "真少见，是野槌蛇呢！[r]我还是第一次见！");
+
 		}
+
 		case(9)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "原来如此，是萱野姫大人的使魔啊。");
+
+			SetTalkEx(cutinPlayer1, "原来如此，是萱野姬大人的使魔啊。");
+
 		}
+
 		case(10)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
+
 			SetTalkEx(cutinBoss1, "真是的，那个大太法师，[r]明明看起来挺强，可还是没法挡住你们。");
+
 		}
+
 		case(11)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[6]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "你办事也不靠谱呢。");
+
+			SetTalkEx(cutinPlayer1, "你也是办事抓不住重点呢。");
+
 		}
+
 		case(12)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "咦，咦，[r]我确实总是被这样说啊！");
+
+			SetTalkEx(cutinBoss1, "够啦够啦，[r]我总是被这么说！");
+
 			SetFukidashiType(cutinBoss1, FUKIDASHI_AFRAID);
+
 		}
+
 		case(13)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinBoss1, "正因为如此，[r]才总是没有升职（出世）的机会啊！");
+
+			SetTalkEx(cutinBoss1, "正因为如此，[r]才让升职的机会一次又一次地溜走啊！");
+
 			SetFukidashiType(cutinBoss1, FUKIDASHI_AFRAID);
+
 		}
+
 		case(14)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[3]);
-			SetTalkEx(cutinPlayer1, "那样的人不考虑一下加入守矢教吗？[r]收集到的信仰越多，升职就越快哟！");
+
+			SetTalkEx(cutinPlayer1, "对于你这种情况，不考虑一下加入守矢教吗？[r]收集到的信仰越多，升职就越快哟！");
+
 		}
+
 		case(15)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[2]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
+
 			SetTalkEx(cutinPlayer2, "早苗小姐！");
+
 			SetFukidashiType(cutinPlayer2, FUKIDASHI_ANGER);
+
 		}
+
 		case(16)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[6]);
+
 			SetTalkEx(cutinPlayer1, "不好意思……");
+
 		}
+
 		case(17)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[4]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "虽然不太明白，真是奇怪的家伙。");
+
+			SetTalkEx(cutinBoss1, "虽然不太明白，不过还真是奇怪的家伙。");
+
 		}
+
 		case(18)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
 			SetTalkEx(cutinBoss1, "既然中将阁下下达了指令，[r]就决不能让你们通过这里！");
+
 		}
+
 		case(19)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[5]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
 			SetTalkEx(cutinPlayer2, "虽然和你没有过节，[r]既然妨碍到我们了就只有一决胜负了呢。");
+
 		}
+
 		case(20)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
 			SetTalkEx(cutinPlayer1, "把她打倒后让她改教吧！");
+
 		}
+
 		case(21)
+
 		{
+
 			//  BGM
+
 			PlayMusicWithName( 5, true, 30 );
 
+
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
+
 			alternative(Difficult)
-			case(D_EASY) { SetTalkEx(cutinBoss1, "你们这些家伙的败北，[r]正处于我的90％置信区间中！"); }
-			case(D_NORM) { SetTalkEx(cutinBoss1, "你们这些家伙的败北，[r]正处于我的95％置信区间中！"); }
-			case(D_HARD) { SetTalkEx(cutinBoss1, "你们这些家伙的败北，[r]正处于我的99％置信区间中！"); }
-			case(D_LUNA) { SetTalkEx(cutinBoss1, "你们这些家伙的败北，[r]正处于我的99.9％置信区间中！"); }
+
+			case(D_EASY) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的90％置信区间中！"); }
+
+			case(D_NORM) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的95％置信区间中！"); }
+
+			case(D_HARD) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的99％置信区间中！"); }
+
+			case(D_LUNA) { SetTalkEx(cutinBoss1, "你们两个混蛋的败北，[r]正处于我的99.9％置信区间中！"); }
+
 		}
+
 		case(22)
+
 		{
+
 			ObjPrim_SetTexture(cutinBoss1,     pathBoss1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer1, pathPlayer1[3]);
+
 			ObjPrim_SetTexture(cutinPlayer2, pathPlayer2[2]);
-			SetTalkEx(cutinBoss1, "你们这些家伙在实力上和我的显著性差异，[r]就让你们弄个明白吧！");
+
+			SetTalkEx(cutinBoss1, "你们两个混蛋在实力上和我的显著性差异，[r]就让你们弄个明白吧！");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+
 task EnterBoss(objEnemy, xIni, yIni)
+
 {
+
 	if (Obj_GetValueD(objEnemy, "BOSS_MOVED", false)) { return; }
+
 	Obj_SetValue(objEnemy, "BOSS_MOVED", true);
+
 	
+
 	SetMovePositionHermite(objEnemy, xIni, yIni,
+
 		600, 45, 100, 150, 90);
+
 	SetAction(objEnemy, ACT_MOVE_L, 90);
+
 }
+

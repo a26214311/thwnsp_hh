@@ -1,113 +1,226 @@
-//#����e����[Stage]
+//#東方弾幕風[Stage]
+
 #ScriptVersion[3]
-#Title["�q���g����6"]
-#Text["�q���g����6"]
+
+#Title["ヒントその6"]
+
+#Text["ヒントその6"]
+
+
 
 //---------------------------------------------------------------------
 
-// �֐���荞��
+
+
+// 関数取り込み
+
 #include"./lib_commontitle.dnh"
+
 #include"./lib_talkTitle.dnh"
 
+
+
 @Initialize {
+
 	SetAutoDeleteObject(true);
+
 	Task_Main();
+
 }
+
+
 
 @MainLoop {
+
 	yield;
 
+
+
 }
 
-// ���C���^�X�N
+
+
+// メインタスク
+
 task Task_Main()
+
 {
-	//��b����
+
+	//会話処理
+
 	FuncTalk();
 
+
+
 	FinishTalk(true);
+
 	CloseScript( GetOwnScriptID() );
+
 }
 
-// ��b����
+
+
+// 会話処理
+
 function FuncTalk()
+
 {
-	// �I�u�W�F�N�g�쐬
+
+	// オブジェクト作成
+
 	let cutinChara1   = CreateTalkObject(BOSS_ID_KOUKAI, false);
+
 	let cutinChara2   = CreateTalkObject(BOSS_ID_ANZA, true);
+
 	
-	// �摜�t�@�C��
+
+	// 画像ファイル
+
 	ObjPrim_SetTexture(cutinChara1, imgCharaKoukai[5]);
+
 	ObjPrim_SetTexture(cutinChara2, imgCharaAnza[2]);
+
 	
+
 	SetImageFoward(cutinChara1, true);
+
 	wait(15);
+
 	
+
 	let talkID = 0;
+
 	loop
+
 	{
+
 		let talkType = FuncTalkSingle(talkID);
+
 		if (talkType == 0) { break; }
+
 		talkID = max(0, talkID+WaitNext());
+
 	}
 
-	// ��b�����P���i�����߂����o����悤�Ɂj
+
+
+	// 会話処理単発（巻き戻しも出来るように）
+
 	function FuncTalkSingle(talkID)
+
 	{
+
 		let talk_type = 1;
+
 		alternative(talkID)
+
 		case(0)
+
 		{
-			SetTalkEx(cutinChara1, "こうやって私達が推理してるのって[r]なんか違和感有るよな");
+
+			SetTalkEx(cutinChara1, "我们两个就这么推理起来[r]似乎有些违和。");
+
 		}
+
 		case(1)
+
 		{
-			SetTalkEx(cutinChara2, "まあ、別にこのヒント集の会話は本編[r]とは全く別個で取り扱われてるんで");
+
+			SetTalkEx(cutinChara2, "嘛，反正这个线索集的对话[r]和本篇是视为完全独立的。");
+
 		}
+
 		case(2)
+
 		{
-			SetTalkEx(cutinChara2, "誰が何のヒントを言っても[r]それで犯人って訳じゃないですよ。");
+
+			SetTalkEx(cutinChara2, "就算谁说了什么线索，[r]也不代表她就是犯人哦。");
+
 		}
+
 		case(3)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara1, imgCharaKoukai[2]);
-			SetTalkEx(cutinChara1, "じゃあ本編のヒントだが、");
+
+			SetTalkEx(cutinChara1, "那么说个本篇的线索啊，");
+
 		}
+
 		case(4)
+
 		{
-			SetTalkEx(cutinChara1, "ミステリーの原則で、提示されていない[r]情報を推理に組み込まないってのが有るんだ");
+
+			SetTalkEx(cutinChara1, "推理的原则有一条是，未被提示的资讯，[r]不会放在推理之中。");
+
 		}
+
 		case(5)
+
 		{
-			SetTalkEx(cutinChara2, "例えば私達が実は本編で犯人を知って[r]いるなんて事は有り得ません。[r]提示されてませんからね");
+
+			SetTalkEx(cutinChara2, "比如说，我们两个实际上在本篇里[r]不可能知道犯人是谁。[r]因为这个没被提到。");
+
 		}
+
 		case(6)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara1, imgCharaKoukai[4]);
-			SetTalkEx(cutinChara1, "おっと、勘違いするなよ？[r]ここまでは、ルナティックレべルの[r]推理をする人間に向けたヒントだ");
+
+			SetTalkEx(cutinChara1, "喂，可别会错意了哦？[r]这些是面向做着[r]Lunatic级的推理的人的线索。");
+
 		}
+
 		case(7)
+
 		{
-			SetTalkEx(cutinChara1, "そう、動機を推理する人間に向けたな");
+
+			SetTalkEx(cutinChara1, "没错，是面向推理“动机”的人的。");
+
 		}
+
 		case(8)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara2, imgCharaAnza[6]);
-			SetTalkEx(cutinChara2, "この物語、確かに動機が謎解きの中核[r]になるのは確かなんですが");
+
+			SetTalkEx(cutinChara2, "确实这个故事中，[r]动机是解谜的核心，");
+
 		}
+
 		case(9)
+
 		{
-			SetTalkEx(cutinChara2, "もしそれで犯人を当てようとすると、[r]かなり難しい推理をする事になります");
+
+			SetTalkEx(cutinChara2, "不过想借此找出犯人，[r]可是相当困难的推理。");
+
 		}
+
 		case(10)
+
 		{
+
 			ObjPrim_SetTexture(cutinChara1, imgCharaKoukai[2]);
-			SetTalkEx(cutinChara1, "ただエクストラを解放したいだけなら、[r]動機は一旦無視して考えるのも有りかも[r]しれないって事だ");
+
+			SetTalkEx(cutinChara1, "如果只是想解锁Extra的话，[r]暂时无视动机去考虑[r]可能会更好。");
+
 		}
+
 		others
+
 		{
+
 			return(0);
+
 		}
+
 		return(talk_type);
+
 	}
+
 }
+
