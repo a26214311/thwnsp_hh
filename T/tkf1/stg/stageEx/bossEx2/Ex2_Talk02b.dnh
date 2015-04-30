@@ -208,7 +208,7 @@ function FuncTalk()
 		{
 			SetTalkEx(cutinDescri, "要跳过解決篇吗？");
 
-			let tmp_res = SetChoiseWindow(72, 404, ["いいえ", "はい"]);
+			let tmp_res = SetChoiseWindow(72, 404, ["否", "是"]);
 			if (tmp_res == 1) { resultSkilp = true; }
 			else { resultSkilp = false; }
 			// 発言自動送り
@@ -237,7 +237,7 @@ function FuncTalk2()
 	Obj_SetValue(cutinBoss2, "BOSS_NAME", "天雄·萱野芽出");
 	Obj_SetValue(cutinBoss3, "BOSS_NAME", "门冬羽日");
 	Obj_SetValue(cutinPlayer1, "BOSS_NAME", "雾雨魔理沙");
-	Obj_SetValue(cutinPlayer2, "BOSS_NAME", "白菊·萱野·L	");
+	Obj_SetValue(cutinPlayer2, "BOSS_NAME", "白菊·萱野·L");
 	
 	// 画像ファイル
 	let pathBoss1 = imgCharaKayano;
