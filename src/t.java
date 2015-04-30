@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,12 +14,13 @@ public class t {
 	static int c=0;
 	static int sn=0;
 	public static void main(String[] args) {
-		String folder = "T/tkf2";
-		c=0;
-		sn=0;
-		TObig(folder);
-		returnbig("T/tkf3");
-		comparer(folder);
+		String folder = "T/TK";
+//		c=0;
+//		sn=0;
+//		TObig(folder);
+//		returnbig("T/tkf3");
+//		comparer(folder);
+		exptalk(folder);
 		System.out.println("total font:"+hs.size());
 		System.out.println(hs);
 		System.out.println("finish");
@@ -70,7 +72,7 @@ public class t {
 			}else{
 				ArrayList<String> r = readfile(files[i]);
 				try {
-					String newfilepath = files[i].getPath().replaceAll("/TK/", "/tkf1/");
+					String newfilepath = files[i].getPath().replaceAll("/TK/", "/tkf9/");
 		    		File newfile = new File(newfilepath);
 		    		new File(newfile.getParent()).mkdirs();
 		    		FileOutputStream fo = new FileOutputStream(newfile);
@@ -78,7 +80,7 @@ public class t {
 					out.write(r.get(1));
 					out.close();
 		    		if(r.get(0).length()>3){
-		    			String newfilepath2 = files[i].getPath().replaceAll("/TK/", "/tkf2/");
+		    			String newfilepath2 = files[i].getPath().replaceAll("/TK/", "/tkf6/");
 			    		File newfile2 = new File(newfilepath2);
 			    		new File(newfile2.getParent()).mkdirs();
 			    		FileOutputStream fo2 = new FileOutputStream(newfile2);
@@ -115,9 +117,10 @@ public class t {
 		    		File newfile = new File(newfilepath);
 		    		new File(newfile.getParent()).mkdirs();
 		    		FileOutputStream fo = new FileOutputStream(newfile);
-		    		OutputStreamWriter out = new OutputStreamWriter(fo,"utf-8");	
+		    		OutputStreamWriter out = new OutputStreamWriter(fo,"x-UTF-16LE-BOM");	
 					out.write(r.get(1));
 					out.close();
+//		    		writeToFile(r.get(1), newfile);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -130,7 +133,26 @@ public class t {
 		}	
 	}
 	
-	
+	public static void writeToFile(String text, File f){  
+		try {
+	        System.out.println("writeToFile function started.");  
+	        String encoding = "UTF-16";  
+	        FileOutputStream fos = new FileOutputStream(f);  
+	        OutputStreamWriter writer = new OutputStreamWriter(fos, encoding);  
+	        BufferedWriter bw = new BufferedWriter(writer);  
+	        bw.write(text);  
+	        bw.flush();  
+	        writer.flush();  
+	        fos.flush();  
+	        bw.close();  
+	        writer.close();  
+	        fos.close();  
+	        System.out.println("writeToFile function finished.");  
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+    }  
 	
 	
 	
@@ -209,7 +231,15 @@ public class t {
 			}
 			String s;
 			while ((s = br.readLine()) != null) {
-				if(s.indexOf("SetTalkEx(")>=0){
+				if(s.indexOf("#include\"./../../../lib/lib_boss.dnh\"")>=0){
+					if(br.readLine().equals("#include\"./../../../lib/lib_talk.dnh\"")){
+						s = "#include\"./../../../lib/lib_boss.dnh\""+rn
+								+rn+"#include\"./../lib/lib_talk.dnh\"";
+					}else{
+						System.out.println("err:"+s);
+					}
+				}
+				if(s.indexOf("SetTalkEx")>=0){
 					String[] a = s.split("\"");
 					if(a.length==3){
 						String translatedchat = br2.readLine();
@@ -219,12 +249,12 @@ public class t {
 							String tcr=tc.trim();
 							content=content+a[0]+"\""+tcr+"\""+a[2]+rn;
 						}else{
-							System.out.println("error e length:"+translatedchat);
+							System.out.println("error e length:"+translatedchat+"."+filename.getName());
 							content=content+a[0]+"\""+translatedchat+"\""+a[2]+rn;
 						}
 						
 					}else{
-						System.out.println(s);
+						System.out.println(s+","+filename.getName());
 					}
 				}else if(s.indexOf("return(\"")>=0){
 					String[] a = s.split("\"");
