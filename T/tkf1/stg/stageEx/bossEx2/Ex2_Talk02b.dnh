@@ -321,7 +321,7 @@ function FuncTalk2()
 		case(10)
 		{
 			ObjPrim_SetTexture(cutinBoss3, pathBoss3[3]);
-			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "一周目里这个时间顺序推理是最难的啊！[r]不如说二周目时的时间顺序很简单了！");
+			SetTalkEx_Umineko(cutinDescri, cutinBoss3, "一周目里这个时间顺序推理是最难的啊！[r]不如说二周目时的时间顺序很简单！");
 		}
 		case(11)
 		{
